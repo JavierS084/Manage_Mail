@@ -1,0 +1,65 @@
+
+## get all the users
+GET http://localhost:3030/users
+
+### get userID
+
+GET http://localhost:3030/user/1
+
+###Create a new user
+
+POST http://localhost:3030/user/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Informatica",
+  "email": "informatica@uni.edu.py",
+  "password": "uniadmin1996",
+  "confPassword": "uniadmin1996",
+  "role": "admin"
+}   
+
+### Update a user
+PUT  http://localhost:3030/user/update/a8f5593e-8c73-463d-a486-c5e7d4daabe5 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Jose Perez",
+  "email": "admin@gmail.com",
+  "password": "123456",
+  "confPassword": "123456",
+  "role": "admin"
+}   
+
+### DELETE
+DELETE  http://localhost:3030/user/delete/1df6de62-ec55-43e5-9a7d-e405892c6fa5
+
+
+### Login
+POST http://localhost:3030/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "informatica@uni.edu.py",
+  "password": "uniadmin1996"
+}
+
+### user
+GET http://localhost:3030/me
+
+###
+DELETE http://localhost:3030/logout
+
+
+
+###
+POST http://localhost:3030/request/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "solicitud": "backend",
+
+}
+### get all the users
+GET  http://localhost:3030/mails
+
