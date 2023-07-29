@@ -1,11 +1,11 @@
-import { useState } from "react";
-import Link from "next/link";
+//import { useState } from "react";
+import {Link } from "react-router-dom";/*
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { IconHomeCog, IconUserCircle, IconLogout } from "@tabler/icons-react";
+import { IconHomeCog, IconUserCircle, IconLogout } from "@tabler/icons-react";*/
 
 export default function Head() {
-  
+  /*
   const options = [
     {
       name: "end",
@@ -58,11 +58,11 @@ export default function Head() {
       </>
     );
   }
-
+*/
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <Link className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           Mail System
         </Link>
         <button
@@ -79,22 +79,22 @@ export default function Head() {
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" href="/">
+              <Link className="nav-link" to="/">
                 Inicio <span className="visually-hidden">(current)</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="/mails">
+              <Link className="nav-link" to="/mails">
                 Correos
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="/dependencies">
+              <Link className="nav-link" to="/dependencies">
                 Dependencias
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="/groups">
+              <Link className="nav-link" to="/groups">
                 Grupos
               </Link>
             </li>
@@ -103,7 +103,7 @@ export default function Head() {
               <Link
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
-                href="#"
+                to="#"
                 role="button"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -111,10 +111,10 @@ export default function Head() {
                 Otros
               </Link>
               <div className="dropdown-menu">
-                <Link className="dropdown-item" href="/request">
+                <Link className="dropdown-item" to="/request">
                   Formato de Solicitud
                 </Link>
-                <Link className="dropdown-item" href="/mail-type">
+                <Link className="dropdown-item" to="/mail-type">
                   Tipo de Correo
                 </Link>
                 
@@ -122,13 +122,13 @@ export default function Head() {
             </li>
           
             <li className="nav-item">
-              <Link className="nav-link" href="/administration">
+              <Link className="nav-link" to="/administration">
                 Administracion
               </Link>
             </li>
           </ul>
           <form className="d-flex">
-           <Example/>
+           
           </form>
         </div>
       </div>

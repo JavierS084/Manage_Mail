@@ -31,47 +31,59 @@ export const Login = () => {
     dispatch(LoginUser({ email, password }));
   };
   return (
-    <div className="row">
-      <form onSubmit={Auth}>
-        <div className="login col-md-3 mx-auto ">
-          <h3 className="Auth-form-title">Inicio Sesi&oacute;n</h3>
+    <div className="container col-md-5 mt-4 p-4">
+      <div className="card col-md-center">
+        <div className="card-body">
+          <form onSubmit={Auth}>
+            <div className="row mx-auto">
+              <h3 className="d-flex justify-content-center">
+                Inicio Sesi&oacute;n
+              </h3>
+              <fieldset className="pt-4">
+                <div className="form-group">
+                  {isError && <p className="error">{message}</p>}
+                  <label className="form-label mt-4">Email</label>
 
-          <div className="form-group flex-column d-flex">
-            {isError && <p className="error">{message}</p>}
-            <label className="label">Email</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label mt-4">Password</label>
+                  <input
+                    className="form-control"
+                    type={shown ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="*******"
+                  />
 
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-            />
-          </div>
-          <div className="form-group flex-column d-flex">
-            <label className="label">Password</label>
-            <input
-              type={shown ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="*******"
-            />
-
-              {shown ? (
-                <i className="col align-self-end fas fa-eye" onClick={switchShown} />
-              ) : (
-                <i className="col align-self-end fas fa-eye-slash fas-eye" onClick={switchShown} />
-              )
-              }
-            
-            
-          </div>
-          <div className="form-group flex-column d-flex">
-            <button type="submit" className="btn btn-primary">
-              {isLoading ? "Cargando..." : "Iniciar Sesión"}
-            </button>
-          </div>
+                  {shown ? (
+                    <i
+                      className="col align-self-end fas fa-eye"
+                      onClick={switchShown}
+                    />
+                  ) : (
+                    <i
+                      className="col align-self-end fas fa-eye-slash fas-eye"
+                      onClick={switchShown}
+                    />
+                  )}
+                </div>
+                <div className="mt-4 form-group">
+                  <button type="submit" className="btn btn-primary">
+                    {isLoading ? "Cargando..." : "Iniciar Sesión"}
+                  </button>
+                </div>
+              </fieldset>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
