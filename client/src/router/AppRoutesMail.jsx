@@ -3,10 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getMe } from "../auth/authSlice";
-import  Head  from "../components/Navigation/Head";
+import Navigation from "../components/Navigation/Navigation";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
-
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -22,14 +21,13 @@ export default function AppRoutesMail() {
 
   return (
     <>
-      <Head/>
-      <Routes>
-        <Route exact path="/home" element={<Home />} />
-        <Route path="/*" element={<NotFound />} />
-   
-      </Routes>
- 
-    
+     <Navigation/>
+      <div className="container pt-4">
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
     </>
   );
 }

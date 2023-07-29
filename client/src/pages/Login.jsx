@@ -30,6 +30,7 @@ export const Login = () => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
   };
+
   return (
     <div className="container col-md-5 mt-4 p-4">
       <div className="card col-md-center">
@@ -42,18 +43,19 @@ export const Login = () => {
               <fieldset className="pt-4">
                 <div className="form-group">
                   {isError && <p className="error">{message}</p>}
-                  <label className="form-label mt-4">Email</label>
+                  <label className="form-label mt-4">Correo electrónico</label>
 
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
+                    placeholder="Correo electrónico"
+                    required
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label mt-4">Password</label>
+                  <label className="form-label mt-4">Contraseña</label>
                   <input
                     className="form-control"
                     type={shown ? "text" : "password"}

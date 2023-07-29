@@ -20,7 +20,7 @@ export const Login = async (req, res) =>{
 
 export const Me = async (req, res) =>{
     if(!req.session.userId){
-        return res.status(401).json({msg: "Please login to your account!"});
+        return res.status(401).json({msg: "¡Por favor, ingrese a su cuenta!"});
     }
     const user = await User.findOne({
         attributes:['uuid','name','email','role'],

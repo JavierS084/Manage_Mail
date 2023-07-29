@@ -22,10 +22,10 @@ const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({
     db: db
 });
-/*
+
 (async () => {
     await db.sync();
-})();*/
+})();
 
 app.use(session({
     secret: process.env.SESS_SECRET,
@@ -54,9 +54,7 @@ app.use(mailRoutes);
 
 store.sync();
 
-const nDate = new Date().toLocaleString('es-ES', {
-    timeZone: 'America/Asuncion'
-});
+
 
 
 app.listen(process.env.APP_PORT, hostname, () => {

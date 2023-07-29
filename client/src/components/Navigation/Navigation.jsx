@@ -1,64 +1,7 @@
-//import { useState } from "react";
-import {Link } from "react-router-dom";/*
-import Button from "react-bootstrap/Button";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { IconHomeCog, IconUserCircle, IconLogout } from "@tabler/icons-react";*/
+import { Link } from "react-router-dom";
+import DrawerExample from "../Drawer/DrawerExample";
 
-export default function Head() {
-  /*
-  const options = [
-    {
-      name: "end",
-      scroll: true,
-      backdrop: true,
-    },
-  ];
-
-  function OffCanvasExample({ name, ...props }) {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const toggleShow = () => setShow((s) => !s);
-    return (
-      <>
-        <Button variant="primary" onClick={toggleShow} className="me-2">
-          <IconHomeCog color="white" size={24} />
-        </Button>
-        <Offcanvas show={show} onHide={handleClose} {...props}>
-          <Offcanvas.Header closeButton>
-            <IconUserCircle color="blue" size={24} />
-            <Offcanvas.Title> Perfil</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <p>User name</p>
-            <div className="d-flex align-items-end flex-column">
-              <div className="mt-auto p2">
-                <p>
-                  Salir
-                  <IconLogout
-                    className="justify-content-end pl-4"
-                    color="blue"
-                    size={24}
-                  />
-                </p>
-              </div>
-            </div>
-          </Offcanvas.Body>
-        </Offcanvas>
-      </>
-    );
-  }
-
-  function Example() {
-    return (
-      <>
-        {["end"].map((placement, idx) => (
-          <OffCanvasExample key={idx} placement={placement} name={placement} />
-        ))}
-      </>
-    );
-  }
-*/
+export function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
@@ -98,7 +41,7 @@ export default function Head() {
                 Grupos
               </Link>
             </li>
-            
+
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
@@ -117,21 +60,22 @@ export default function Head() {
                 <Link className="dropdown-item" to="/mail-type">
                   Tipo de Correo
                 </Link>
-                
               </div>
             </li>
-          
+
             <li className="nav-item">
               <Link className="nav-link" to="/administration">
                 Administracion
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
-           
-          </form>
+          <div className="d-flex">
+            
+        <DrawerExample /> 
+          </div>
         </div>
       </div>
     </nav>
   );
 }
+export default Navigation;
