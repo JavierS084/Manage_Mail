@@ -1,7 +1,7 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
-function Home() {
+export function Home() {
   return (
     <div className="card">
       <div className="card-body">

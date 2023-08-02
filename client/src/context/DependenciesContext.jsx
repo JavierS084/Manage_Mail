@@ -1,6 +1,6 @@
-"use client"
+
 import { useState, createContext, useContext } from "react";
-import { getAllDependencies, getDependency, createDependency, updateDependency, deleteDependency } from "@/api/DependenciesApi";
+import { getAllDependencies, getDependency, createDependency, updateDependency, deleteDependency } from "../api/DependenciesApi";
 
 const contextDependencies = createContext();
 // esto es un hook

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getMe } from "../auth/authSlice";
 import Navigation from "../components/Navigation/Navigation";
-import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
+import DependenciesPage from "../pages/DependenciesPage";
+import {Home, NotFound} from "../pages";
+import { DependenciesProvider } from "../context";
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -21,12 +22,15 @@ export default function AppRoutesMail() {
 
   return (
     <>
-     <Navigation/>
+      <Navigation />
       <div className="container pt-4">
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
+        <DependenciesProvider>
+          <Routes>
+          <Route path="/dependencies" element={<DependenciesPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </DependenciesProvider>
       </div>
     </>
   );

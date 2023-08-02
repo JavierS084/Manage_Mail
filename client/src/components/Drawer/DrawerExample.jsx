@@ -52,7 +52,7 @@ export function DrawerExample() {
               Cancelar
             </Button>
             <Button onClick={logout} colorScheme="blue">
-              Salir
+              Cerrar Sesion
             </Button>
           </DrawerFooter>
         </DrawerContent>
