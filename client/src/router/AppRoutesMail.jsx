@@ -23,17 +23,18 @@ export default function AppRoutesMail() {
   }, [dispatch, isError, navigate]);
 
   return (
-    <MailTypeProvide>
-     <Navigation/>
-      <div className="container pt-4">
+    <MailTypeProvider>
       <DependenciesProvider>
+        <Navigation/>
+      <div className="container pt-4">
           <Routes>
           <Route path="/dependencies" element={<DependenciesPage />} />
           <Route path="/mail-types" element={<MailTypesPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
-        </DependenciesProvider>      </div>
+             </div>
+        </DependenciesProvider> 
     </MailTypeProvider>
   );
 }
