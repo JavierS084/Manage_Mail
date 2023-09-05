@@ -16,7 +16,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 
-export function DrawerExample() {
+export function DrawerNav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -43,16 +43,18 @@ export function DrawerExample() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Bienvenido: {user ? <>{user.name}</> : <></>}</DrawerHeader>
+          <DrawerHeader>
+            Bienvenido: {user ? <>{user.name}</> : <></>}
+          </DrawerHeader>
 
           <DrawerBody></DrawerBody>
-
+            <hr />
           <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancelar
             </Button>
-            <Button onClick={logout} colorScheme="blue">
-              Salir
+            <Button className="ml-2"  onClick={logout} colorScheme="blue">
+              Salir {">>>"}
             </Button>
           </DrawerFooter>
         </DrawerContent>
@@ -60,4 +62,4 @@ export function DrawerExample() {
     </>
   );
 }
-export default DrawerExample;
+export default DrawerNav;

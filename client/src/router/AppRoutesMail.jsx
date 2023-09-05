@@ -6,6 +6,8 @@ import { getMe } from "../auth/authSlice";
 import Navigation from "../components/Navigation/Navigation";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
+import MailTypeProvider from "../context/MailTypeContext";
+import MailTypesPage from "../pages/MailTypesPage";
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -20,14 +22,15 @@ export default function AppRoutesMail() {
   }, [dispatch, isError, navigate]);
 
   return (
-    <>
+    <MailTypeProvider>
      <Navigation/>
       <div className="container pt-4">
         <Routes>
           <Route path="/home" element={<Home />} />
+          <Route path="/mail-types" element={<MailTypesPage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
-    </>
+    </MailTypeProvider>
   );
 }
