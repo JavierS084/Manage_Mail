@@ -7,6 +7,8 @@ import Navigation from "../components/Navigation/Navigation";
 import DependenciesPage from "../pages/DependenciesPage";
 import {Home, NotFound} from "../pages";
 import { DependenciesProvider } from "../context";
+import MailTypeProvider from "../context/MailTypeContext";
+import MailTypesPage from "../pages/MailTypesPage";
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -21,17 +23,17 @@ export default function AppRoutesMail() {
   }, [dispatch, isError, navigate]);
 
   return (
-    <>
-      <Navigation />
+    <MailTypeProvide>
+     <Navigation/>
       <div className="container pt-4">
-        <DependenciesProvider>
+      <DependenciesProvider>
           <Routes>
           <Route path="/dependencies" element={<DependenciesPage />} />
+          <Route path="/mail-types" element={<MailTypesPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
-        </DependenciesProvider>
-      </div>
-    </>
+        </DependenciesProvider>      </div>
+    </MailTypeProvider>
   );
 }

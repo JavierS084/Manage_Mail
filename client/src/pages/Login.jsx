@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset, getMe } from "../auth/authSlice";
+import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +52,7 @@ export const Login = () => {
                     className="form-control"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Correo electrónico"
+                    placeholder="Ingrese su correo electrónico"
                     required
                   />
                 </div>
@@ -63,19 +65,25 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="*******"
                   />
-
-                  {shown ? (
-                    <i
-                      className="col align-self-end fas fa-eye"
-                      onClick={switchShown}
-                    />
+                </div>
+                <div className="form-group">
+                  {password && shown ? (
+                    <p>
+                      <label className="form-label mt-4 p-2">
+                        Ocultar contraseña: {""}
+                      </label>
+                      <IconSquareCheck onClick={switchShown} />
+                    </p>
                   ) : (
-                    <i
-                      className="col align-self-end fas fa-eye-slash fas-eye"
-                      onClick={switchShown}
-                    />
+                    <p>
+                      <label className="form-label mt-4 m-2">
+                        Mostrar contraseña:{" "}
+                      </label>
+                      <IconSquare onClick={switchShown} />
+                    </p>
                   )}
                 </div>
+                <hr/>
                 <div className="mt-4 form-group">
                   <button type="submit" className="btn btn-primary">
                     {isLoading ? "Cargando..." : "Iniciar Sesión"}

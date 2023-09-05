@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import DrawerExample from "../Drawer/DrawerExample";
+import DrawerNav from "../Drawer/DrawerNav";
 
 export function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Mail System
+          Manage Mail
         </Link>
         <button
           className="navbar-toggler"
@@ -57,7 +57,7 @@ export function Navigation() {
                 <Link className="dropdown-item" to="/request">
                   Formato de Solicitud
                 </Link>
-                <Link className="dropdown-item" to="/mail-type">
+                <Link className="dropdown-item" to="/mail-types">
                   Tipo de Correo
                 </Link>
               </div>
@@ -71,7 +71,7 @@ export function Navigation() {
           </ul>
           <div className="d-flex">
             
-        <DrawerExample /> 
+        <DrawerNav /> 
           </div>
         </div>
       </div>

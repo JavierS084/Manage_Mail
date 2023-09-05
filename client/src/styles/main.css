@@ -21,3 +21,7 @@ h1 {
 .obligatorio{
   color: red;
 }
+
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+  display: initial !important;
+}

@@ -45,7 +45,7 @@ export const createMailType = async (req, res) => {
         await MailType.create({
             tipo: tipo
         });
-        res.status(201).json({ msg: "MailType Created Successfuly" });
+        res.status(201).json({ msg: "Se ha creado correctamente el tipo de correo" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -89,7 +89,7 @@ export const deleteMailType = async (req, res) => {
                 id: mailType.id
             }
         });
-        res.status(200).json({ msg: "MailType deleted successfuly" });
+        res.status(200).json({ msg: "Se ha borrado correctamente el tipo de correo" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
