@@ -7,7 +7,7 @@ export const Login = async (req, res) =>{
             email: req.body.email
         }
     });
-    if(!user) return res.status(404).json({msg: "User not found"});
+    if(!user) return res.status(404).json({msg: "Usuario no encontrado"});
     const match = await argon2.verify(user.password, req.body.password);
     if(!match) return res.status(400).json({msg: "Wrong Password"});
     req.session.userId = user.uuid;
@@ -28,7 +28,7 @@ export const Me = async (req, res) =>{
             uuid: req.session.userId
         }
     });
-    if(!user) return res.status(404).json({msg: "User not found"});
+    if(!user) return res.status(404).json({msg: "Usuario no encontrado"});
     res.status(200).json(user);
 }
 

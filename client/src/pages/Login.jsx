@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset, getMe } from "../auth/authSlice";
 import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -28,6 +30,15 @@ export const Login = () => {
     dispatch(reset());
   }, [user, isSuccess, dispatch, navigate]);
 
+  
+  useEffect(() => {
+    if (isSuccess && message.length) {
+      toast.success(message);
+    } else if (isError && message.length ) {
+      toast.error(message);
+    }
+  },[message]);
+
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
@@ -35,6 +46,7 @@ export const Login = () => {
 
   return (
     <div className="container col-md-5 mt-4 p-4">
+      <ToastContainer />
       <div className="card col-md-center">
         <div className="card-body">
           <form onSubmit={Auth}>
@@ -44,7 +56,7 @@ export const Login = () => {
               </h3>
               <fieldset className="pt-4">
                 <div className="form-group">
-                  {isError && <p className="error">{message}</p>}
+                  
                   <label className="form-label mt-4">Correo electrónico</label>
 
                   <input
@@ -69,17 +81,17 @@ export const Login = () => {
                 <div className="form-group">
                   {password && shown ? (
                     <p>
-                      <label className="form-label mt-4 p-2">
-                        Ocultar contraseña: {""}
-                      </label>
                       <IconSquareCheck onClick={switchShown} />
+                      <label className="form-label mt-4 p-2">
+                        Ocultar contraseña
+                      </label>
                     </p>
                   ) : (
                     <p>
-                      <label className="form-label mt-4 m-2">
-                        Mostrar contraseña:{" "}
-                      </label>
                       <IconSquare onClick={switchShown} />
+                      <label className="form-label mt-4 m-2">
+                        Mostrar contraseña
+                      </label>
                     </p>
                   )}
                 </div>

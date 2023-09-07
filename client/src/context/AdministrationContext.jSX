@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, createContext, useContext } from "react";
 import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "../api/UsersApi";
