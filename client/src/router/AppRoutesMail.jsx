@@ -10,14 +10,14 @@ import { DependenciesProvider, MailTypeProvider} from "../context";
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError} = useSelector((state) => state.auth);
+  const { isError, user} = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isError) {
+    if (isError && !user) {
       navigate("/");
     }
     dispatch(getMe());
-  }, [dispatch, isError, navigate]);
+  }, [dispatch, isError]);
 
   return (
     <MailTypeProvider>

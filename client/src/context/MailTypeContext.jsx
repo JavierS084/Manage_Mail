@@ -18,6 +18,7 @@ export const useMailTypes = () => {
 };
 
 export const MailTypeProvider = ({ children }) => {
+  
   const [mailTypes, setMailTypes] = useState([]);
   const [msg, setMsg] = useState("");
   const [msgError, setMsgError] = useState("");
@@ -25,11 +26,13 @@ export const MailTypeProvider = ({ children }) => {
   async function loadTypes() {
     const response = await getAllTypes();
     setMailTypes(response.data);
+     setMsg(response.data.msg)
   }
 
   const getType = async (id) => {
     try {
       const response = await getmailType(id);
+      setMsg(response.data.msg)
       return response.data;
     } catch (error) {
       setMsgError(error.response.data.msg);

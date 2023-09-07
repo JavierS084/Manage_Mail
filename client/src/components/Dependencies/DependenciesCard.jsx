@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from " ";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-hot-toast";
-import { useDependencies } from "../context/DependenciesContext";
+
+import { useDependencies } from "../../context/DependenciesContext";
 
 export default function DependenciesCard({ dependencies }) {
   const { delDp, setDependencies } = useDependencies();
@@ -138,7 +138,7 @@ export default function DependenciesCard({ dependencies }) {
                 onClick={() => {
                   delDp(select);
                   setSelect([]);
-                  toast.success("Se ha eliminado Correctamente");
+
                   handleClose();
                 }}
                 type="button"

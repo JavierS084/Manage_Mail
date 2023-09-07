@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useDependencies } from "../context/DependenciesContext";
+import { useDependencies } from "../../context/DependenciesContext";
 
 function Search() {
   const { dependencies, loadDependencies } = useDependencies();

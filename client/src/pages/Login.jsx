@@ -28,7 +28,7 @@ export const Login = () => {
     }
     dispatch(getMe());
     dispatch(reset());
-  }, [user, isSuccess, dispatch, navigate]);
+  }, [user, isSuccess, dispatch]);
 
   
   useEffect(() => {

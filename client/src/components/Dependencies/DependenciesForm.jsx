@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+
 import { Formik, Form } from "formik";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useDependencies } from "../context/DependenciesContext";
+import { useDependencies } from "../../context/DependenciesContext";
 
 function DependenciesForm() {
   const { crDp, upDp, getDp, msg } = useDependencies();
@@ -51,19 +50,9 @@ function DependenciesForm() {
         onSubmit={async (values) => {
           if (params.id) {
             await upDp(params.id, values);
-            toast.success(
-              "La dependencia " +
-                values.dependencia +
-                " se ha actualizado correctamente"
-            );
+
             navigate("/dependencies");
           } else {
-            
-            toast.success(
-              "La dependencia " +
-                values.dependencia +
-                " se ha guardado correctamente"
-            );
             await crDp(values);
           }
           setDependency({

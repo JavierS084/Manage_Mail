@@ -25,3 +25,7 @@ h1 {
 :where(img, svg, video, canvas, audio, iframe, embed, object) {
   display: initial !important;
 }
+
+.icon-notify{
+  color: white;
+}

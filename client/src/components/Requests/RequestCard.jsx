@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-hot-toast";
 
-import { useRequests } from "../context/RequestsContext";
+import { useRequests } from "../../context/RequestsContext";
 
 export default function RequestCard({ requests }) {
   const { delRequest, setRequest } = useRequests();

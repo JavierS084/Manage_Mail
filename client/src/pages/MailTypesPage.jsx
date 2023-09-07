@@ -6,22 +6,22 @@ import MailTypesCard from "../components/MailTypes/MailTypesCard";
 import { useMailTypes } from "../context/MailTypeContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-function MailTypesPage() {
+
+
+export function MailTypesPage() {
   const { mailTypes, loadTypes, msg, msgError } = useMailTypes();
 
-  const notify = () =>{ 
-    if(msg.length){
+  useEffect(() => {
 
+    if (msg) {
       toast.success(msg);
-    }else if(msgError){
+    } else if (msgError) {
       toast.error(msgError);
     }
-  }
-  useEffect(() => {
-    notify();
+
     const timer = setTimeout(() => {
       loadTypes();
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timer);
   }, [msg, msgError]);

@@ -2,15 +2,24 @@
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import DependenciesCard from "../components/DependenciesCard";
-import DependenciesForm from "../components/DependenciesForm";
+import DependenciesCard from "../components/Dependencies/DependenciesCard";
+import DependenciesForm from "../components/Dependencies/DependenciesForm";
 import { useDependencies } from "../context/DependenciesContext";
-import DependenciesSearch from "../components/DependenciesSearch";
+import DependenciesSearch from "../components/Dependencies/DependenciesSearch";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export function DependenciesPage() {
-  const { dependencies, loadDependencies, msg } = useDependencies();
+  const { dependencies, loadDependencies, msg, msgError } = useDependencies();
 
   useEffect(() => {
+
+    if (msg) {
+      toast.success(msg);
+    } else if (msgError) {
+      toast.error(msgError);
+    }
     const timer = setTimeout(() => {
       loadDependencies();
     }, 1000);
@@ -34,6 +43,7 @@ export function DependenciesPage() {
 
   return (
     <div className="card">
+      <ToastContainer />
       <div className="card-body">
         <Tabs
           defaultActiveKey="listDependencies"

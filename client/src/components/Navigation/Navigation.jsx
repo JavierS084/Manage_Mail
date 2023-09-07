@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import DrawerNav from "../Drawer/DrawerNav";
+import { IconBellFilled } from "@tabler/icons-react";
 
 export function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/home">
           Manage Mail
         </Link>
         <button
@@ -22,7 +23,7 @@ export function Navigation() {
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/home">
                 Inicio <span className="visually-hidden">(current)</span>
               </Link>
             </li>
@@ -70,8 +71,12 @@ export function Navigation() {
             </li>
           </ul>
           <div className="d-flex">
-            
-        <DrawerNav /> 
+            <button>
+              <IconBellFilled className="icon-notify"  size={24} />
+    
+            </button>
+
+            <DrawerNav />
           </div>
         </div>
       </div>
