@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
 import { useDependencies } from "../../context/DependenciesContext";
 
 export default function DependenciesCard({ dependencies }) {
@@ -138,7 +137,6 @@ export default function DependenciesCard({ dependencies }) {
                 onClick={() => {
                   delDp(select);
                   setSelect([]);
-
                   handleClose();
                 }}
                 type="button"

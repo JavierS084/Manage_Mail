@@ -7,17 +7,17 @@ import {
   updateType,
 } from "../api/typesApi";
 
-const MailTypeContext = createContext();
+const MailTypesContext = createContext();
 
 export const useMailTypes = () => {
-  const context = useContext(MailTypeContext);
+  const context = useContext(MailTypesContext);
   if (context === undefined) {
     throw new Error("useType must be used within a TypeContextProvider");
   }
   return context;
 };
 
-export const MailTypeProvider = ({ children }) => {
+export const MailTypesProvider = ({ children }) => {
   
   const [mailTypes, setMailTypes] = useState([]);
   const [msg, setMsg] = useState("");
@@ -73,7 +73,7 @@ export const MailTypeProvider = ({ children }) => {
   };
 
   return (
-    <MailTypeContext.Provider
+    <MailTypesContext.Provider
       value={{
         mailTypes,
         loadTypes,
@@ -86,7 +86,7 @@ export const MailTypeProvider = ({ children }) => {
       }}
     >
       {children}
-    </MailTypeContext.Provider>
+    </MailTypesContext.Provider>
   );
 };
-export default MailTypeProvider;
+export default MailTypesProvider;

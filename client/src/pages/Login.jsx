@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoginUser, reset, getMe } from "../auth/authSlice";
 import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
+import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LoginUser, reset, getMe } from "../auth/authSlice";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,21 +24,23 @@ export const Login = () => {
   );
 
   useEffect(() => {
-    if (user || isSuccess) {
-      navigate("/home");
-    }
-    dispatch(getMe());
-    dispatch(reset());
+    const timer = setTimeout(() => {
+      if (user || isSuccess) {
+        navigate("/home");
+      }
+      dispatch(getMe());
+      dispatch(reset());
+    }, 200);
+    return () => clearTimeout(timer);
   }, [user, isSuccess, dispatch]);
 
-  
   useEffect(() => {
     if (isSuccess && message.length) {
       toast.success(message);
-    } else if (isError && message.length ) {
+    } else if (isError && message.length) {
       toast.error(message);
     }
-  },[message]);
+  }, [message]);
 
   const Auth = (e) => {
     e.preventDefault();
@@ -45,18 +48,26 @@ export const Login = () => {
   };
 
   return (
-    <div className="container col-md-5 mt-4 p-4">
+    <div className="container col-md-4 mt-4 p-4">
       <ToastContainer />
       <div className="card col-md-center">
         <div className="card-body">
           <form onSubmit={Auth}>
             <div className="row mx-auto">
+              <div className="d-flex justify-content-center pb-4">
+                <Image
+                  borderRadius="full"
+                  boxSize="150px"
+                  src="https://image.lexica.art/full_jpg/a3400786-d7fd-4196-a3dd-0b34aa8439b3"
+                  alt="Manage mail"
+                />
+              </div>
+
               <h3 className="d-flex justify-content-center">
                 Inicio Sesi&oacute;n
               </h3>
               <fieldset className="pt-4">
                 <div className="form-group">
-                  
                   <label className="form-label mt-4">Correo electrónico</label>
 
                   <input
@@ -95,7 +106,7 @@ export const Login = () => {
                     </p>
                   )}
                 </div>
-                <hr/>
+                <hr />
                 <div className="mt-4 form-group">
                   <button type="submit" className="btn btn-primary">
                     {isLoading ? "Cargando..." : "Iniciar Sesión"}

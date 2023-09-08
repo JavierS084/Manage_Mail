@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -9,12 +8,10 @@ import DependenciesSearch from "../components/Dependencies/DependenciesSearch";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export function DependenciesPage() {
   const { dependencies, loadDependencies, msg, msgError } = useDependencies();
 
   useEffect(() => {
-
     if (msg) {
       toast.success(msg);
     } else if (msgError) {
@@ -28,7 +25,7 @@ export function DependenciesPage() {
   }, [msg]);
 
   function renderlista() {
-    if (dependencies.length === 0) {
+    if (!dependencies.length) {
       return (
         <div className="card">
           <div className="card-body">

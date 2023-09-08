@@ -1,29 +1,34 @@
-
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import RequestForm from "../components/RequestForm";
-import RequestCard from "../components/RequestCard";
-import { useRequests } from "../../context/RequestsContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import RequestForm from "../components/Requests/RequestForm";
+import RequestCard from "../components/Requests/RequestCard";
+import { useRequests } from "../context/RequestsContext";
 
-function Request() {
-  const { requests, loadRequests, msg } = useRequests();
+export function RequestsPage() {
+  const { requests, loadRequests, msg, msgError } = useRequests();
 
   useEffect(() => {
+    if (msg) {
+      toast.success(msg);
+    } else if (msgError) {
+      toast.error(msgError);
+    }
     const timer = setTimeout(() => {
       loadRequests();
-    }, 1000);
+    }, 200);
 
     return () => clearTimeout(timer);
-  }, [msg]);
+  }, [msg, msgError]);
 
   function renderlista() {
-    if (requests.length === 0) {
+    if (!requests.length) {
       return (
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">No existe solicitudes disponibles</h1>
-            
           </div>
         </div>
       );
@@ -33,34 +38,36 @@ function Request() {
   }
 
   return (
-    <div>
-      <Tabs
-        defaultActiveKey="listRequest"
-        id="uncontrolled-tab-example"
-        className="mb-3"
-      >
-        <Tab eventKey="listRequest" title="Solicitudes">
-          <div
-            className="tab-pane fade active show"
-            id="listaSolicituds"
-            role="tabpanel"
-          >
-            <article>{renderlista()}</article>
-          </div>
-        </Tab>
-        <Tab eventKey="addDependency" title="Crear Solicitud">
-          <div
-            className="tab-pane fade active show"
-            id="createRequest"
-            role="tabpanel"
-          >
-            {<RequestForm />}
-          </div>
-        </Tab>
-        
-      </Tabs>
+    <div className="card">
+      <ToastContainer />
+      <div className="card-body">
+        <Tabs
+          defaultActiveKey="listRequest"
+          id="uncontrolled-tab-example"
+          className="mb-3"
+        >
+          <Tab eventKey="listRequest" title="Solicitudes">
+            <div
+              className="tab-pane fade active show"
+              id="listaSolicituds"
+              role="tabpanel"
+            >
+              <article>{renderlista()}</article>
+            </div>
+          </Tab>
+          <Tab eventKey="addDependency" title="Crear Solicitud">
+            <div
+              className="tab-pane fade active show"
+              id="createRequest"
+              role="tabpanel"
+            >
+              {<RequestForm />}
+            </div>
+          </Tab>
+        </Tabs>
+      </div>
     </div>
   );
 }
 
-export default Request;
+export default RequestsPage;

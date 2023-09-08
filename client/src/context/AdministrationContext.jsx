@@ -1,6 +1,6 @@
 
 import { useState, createContext, useContext } from "react";
-import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "../api/UsersApi";
+import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "@/api/UsersApi";
 
 const contextAdministration = createContext();
 // esto es un hook
@@ -13,7 +13,7 @@ export const useAdministrations = () => {
 
 }
 
-export const AdministrationProvider = ({ children }) => {
+export const AdministrationsProvider = ({ children }) => {
     const [administrations, setAdministrations] = useState([]);
     const [msg, setMsg] = useState("");
 

@@ -1,6 +1,6 @@
-"use client"
+
 import { createContext, useContext, useState } from "react";
-import { getAllRequests, getRequest, createRequest, updateRequest, deleteRequest } from "@/api/requestsApi";
+import { getAllRequests, getRequest, createRequest, updateRequest, deleteRequest } from "../api/requestsApi";
 
 const contextRequest = createContext();
 
