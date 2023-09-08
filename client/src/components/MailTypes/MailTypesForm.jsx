@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMailTypes } from "../../context/MailTypeContext";
+import { useMailTypes } from "../../context/MailTypesContext";
 
 function MailTypesForm() {
   const { crType, upType, getType } = useMailTypes();

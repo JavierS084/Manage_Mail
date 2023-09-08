@@ -55,7 +55,7 @@ export function Navigation() {
                 Otros
               </Link>
               <div className="dropdown-menu">
-                <Link className="dropdown-item" to="/request">
+                <Link className="dropdown-item" to="/requests">
                   Formato de Solicitud
                 </Link>
                 <Link className="dropdown-item" to="/mail-types">

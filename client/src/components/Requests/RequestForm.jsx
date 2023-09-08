@@ -1,17 +1,13 @@
-
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import { Formik, Form } from "formik";
 import { useParams, useNavigate } from "react-router-dom";
-
 import { useRequests } from "../../context/RequestsContext";
 
 function RequestsForm() {
   const { crRequest, upRequest, gtRequest } = useRequests();
   const params = useParams();
 
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
   const [request, setRequest] = useState({
     solicitud: "",
@@ -43,9 +39,7 @@ function RequestsForm() {
 
           if (!values.solicitud) {
             errores.solicitud = "Por favor ingrese una solicitud";
-          } else if (
-            !/^.{2}[A-z Á-ź\D\s\s\s\s\s\s]+$/.test(values.solicitud)
-          ) {
+          } else if (!/^.{2}[A-z Á-ź\D\s\s\s\s\s\s]+$/.test(values.solicitud)) {
             errores.solicitud = "Por favor ingrese un solicitud Valida";
           }
           return errores;
@@ -53,19 +47,10 @@ function RequestsForm() {
         onSubmit={async (values) => {
           if (params.id) {
             await upRequest(params.id, values);
-            toast.success(
-              "La solicitud " +
-                values.solicitud +
-                " se ha actualizado correctamente"
-            );
+
             navigate("/requests");
           } else {
             await crRequest(values);
-            toast.success(
-              "La solicitud " +
-                values.solicitud +
-                " se ha guardado correctamente"
-            );
           }
           setRequest({
             solicitud: "",
@@ -84,8 +69,6 @@ function RequestsForm() {
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
               <div className="form-group col-md-6 p-4">
-            
-
                 <h2>Crear una nueva solicitud</h2>
                 <fieldset>
                   <label className="form-label mt-4" id="readOnlyInput">

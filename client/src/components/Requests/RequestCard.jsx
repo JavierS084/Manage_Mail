@@ -1,10 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-hot-toast";
-
 import { useRequests } from "../../context/RequestsContext";
 
 export default function RequestCard({ requests }) {
@@ -137,7 +134,6 @@ export default function RequestCard({ requests }) {
                 onClick={() => {
                   delRequest(select);
                   setSelect([]);
-                  toast.success("Se ha eliminado Correctamente");
                   handleClose();
                 }}
                 type="button"
