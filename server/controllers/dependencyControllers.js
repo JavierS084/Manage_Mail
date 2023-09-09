@@ -48,7 +48,7 @@ export const createDependency = async (req, res) => {
         await Dependencies.create({
             dependencia: dependencia
         });
-        res.status(201).json({ msg: "Dependency Created Successfuly" });
+        res.status(201).json({ msg: "La dependencia se ha creado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -63,7 +63,7 @@ export const updateDependency = async (req, res) => {
                 id: req.params.id
             }
         });
-        if (!dependency) return res.status(404).json({ msg: "Data not found" });
+        if (!dependency) return res.status(404).json({ msg: "Contenido no encontrado" });
         const { dependencia } = req.body;
 
         await Dependencies.update({ dependencia }, {
@@ -72,7 +72,7 @@ export const updateDependency = async (req, res) => {
             }
         });
 
-        res.status(200).json({ msg: "Dependency updated successfuly" });
+        res.status(200).json({ msg: "La dependencia se ha actualizando correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -92,7 +92,7 @@ export const deleteDependency = async (req, res) => {
                 id: dependency.id
             }
         });
-        res.status(200).json({ msg: "Dependency deleted successfuly" });
+        res.status(200).json({ msg: "La dependencia se ha eliminado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

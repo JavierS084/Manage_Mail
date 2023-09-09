@@ -63,7 +63,7 @@ export const createGroup = async (req, res) => {
                 dateInicialG: dateInicialG,
                 dateFinalG: dateFinalG,
             });
-            res.status(201).json({ msg: "Group Created Successfuly" });
+            res.status(201).json({ msg: "El grupo se ha creado correctamente" });
 
         } else {
 
@@ -73,7 +73,7 @@ export const createGroup = async (req, res) => {
                 dateInicialG: dateInicialG,
 
             });
-            res.status(201).json({ msg: "Group Created Successfuly" });
+            res.status(201).json({ msg: "El grupo se ha creado correctamente" });
         }
 
     } catch (error) {
@@ -108,7 +108,7 @@ export const updateGroup = async (req, res) => {
             });
         }
 
-        res.status(200).json({ msg: "group updated successfuly" });
+        res.status(200).json({ msg: "El grupo se ha actualizado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -128,7 +128,7 @@ export const deleteGroup = async (req, res) => {
                 id: group.id
             }
         });
-        res.status(200).json({ msg: "Group deleted successfuly" });
+        res.status(200).json({ msg: "El grupo se ha eliminado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

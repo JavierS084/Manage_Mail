@@ -27,7 +27,7 @@ export const DependenciesProvider = ({ children }) => {
   async function loadDependencies() {
     const response = await getAllDependencies();
     setDependencies(response.data);
-    setMsg(response.data.msg);
+
   }
 
   const getDp = async (id) => {
@@ -48,6 +48,7 @@ export const DependenciesProvider = ({ children }) => {
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
+      console.error(error.response.data)
     }
   };
   const upDp = async (id, newFields) => {

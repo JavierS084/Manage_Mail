@@ -20,7 +20,6 @@ export const RequestsProvider = ({ children }) => {
     async function loadRequests() {
         const response = await getAllRequests();
         setRequests(response.data);
-        setMsg(response.data.msg)
 
     }
 

@@ -16,7 +16,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 
-export function DrawerExample() {
+export function DrawerNav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -60,4 +60,4 @@ export function DrawerExample() {
     </>
   );
 }
-export default DrawerExample;
+export default DrawerNav;

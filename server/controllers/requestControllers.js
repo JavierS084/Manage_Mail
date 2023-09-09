@@ -45,7 +45,7 @@ export const createRequest = async (req, res) => {
         await Request.create({
             solicitud: solicitud
         });
-        res.status(201).json({ msg: "Request Created Successfuly" });
+        res.status(201).json({ msg: "El tipo de solicitud se ha creado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -69,7 +69,7 @@ export const updateRequest = async (req, res) => {
             }
         });
 
-        res.status(200).json({ msg: "Request updated successfuly" });
+        res.status(200).json({ msg: "El tipo de solicitud se ha actualizado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -89,7 +89,7 @@ export const deleteRequest = async (req, res) => {
                 id: request.id
             }
         });
-        res.status(200).json({ msg: "Request deleted successfuly" });
+        res.status(200).json({ msg: "El tipo de solicitud se ha eliminado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

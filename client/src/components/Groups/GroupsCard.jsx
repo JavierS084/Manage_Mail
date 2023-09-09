@@ -1,22 +1,26 @@
-
-/*import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useRouter } from "next/navigation";
-import { useGroups } from "@/context/GroupsContext";
+import { useGroups } from "../../context/GroupsContext";
 
 export default function GroupCard({ groups }) {
-  const { delGroup } = useGroups();
+  const { delGroup, setGroups } = useGroups();
   const [accion, setAccion] = useState(false);
   const [select, setSelect] = useState([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   let date = new Date();
-  let output = String(date.getDate()).padStart(2, '0') + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + date.getFullYear();
+  let output =
+    String(date.getDate()).padStart(2, "0") +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    date.getFullYear();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     //pasando los 10 segundos se deshabilita el boton eliminar
@@ -44,7 +48,7 @@ export default function GroupCard({ groups }) {
   };
 
   function Orden(columna) {
-    const datosOrdenados = [...requests];
+    const datosOrdenados = [...groups];
 
     datosOrdenados.sort((datoA, datoB) => {
       if (datoA[columna] < datoB[columna]) {
@@ -56,7 +60,7 @@ export default function GroupCard({ groups }) {
       return 0;
     });
 
-    setRequest(datosOrdenados);
+    setGroups(datosOrdenados);
     setOrdenAscendente(!ordenAscendente);
   }
 
@@ -78,7 +82,7 @@ export default function GroupCard({ groups }) {
               type="button"
               className="btn btn-warning m-1 px-4"
               disabled={!accion}
-              onClick={() => router.push(`/groups/edit/${select}`)}
+              onClick={() => navigate(`/groups/edit/${select}`)}
             >
               Editar
             </button>
@@ -115,12 +119,14 @@ export default function GroupCard({ groups }) {
                   <td>{group.email}</td>
                   <td>{group.description}</td>
                   <td>{group.dateInicialG}</td>
-                  {output >= group.dateFinalG ? (
-                    <td id="fechared">
-                      {group.dateFinalG}
-                    </td>
+                  {group.dateFinalG ? (
+                    output >= group.dateFinalG ? (
+                      <td id="fechared">{group.dateFinalG}</td>
+                    ) : (
+                      <td>{group.dateFinalG}</td>
+                    )
                   ) : (
-                    <td>{group.dateFinalG}</td>
+                    <td>Sin fecha de finalizacion</td>
                   )}
                 </tr>
               ))}
@@ -146,9 +152,8 @@ export default function GroupCard({ groups }) {
               <Button
                 variant="danger"
                 onClick={() => {
-                  delRequest(select);
+                  delGroup(select);
                   setSelect([]);
-                  toast.success("Se ha eliminado Correctamente");
                   handleClose();
                 }}
                 type="button"
@@ -162,4 +167,3 @@ export default function GroupCard({ groups }) {
     </div>
   );
 }
-*/

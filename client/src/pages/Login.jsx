@@ -30,7 +30,7 @@ export const Login = () => {
       }
       dispatch(getMe());
       dispatch(reset());
-    }, 200);
+    }, 300);
     return () => clearTimeout(timer);
   }, [user, isSuccess, dispatch]);
 
