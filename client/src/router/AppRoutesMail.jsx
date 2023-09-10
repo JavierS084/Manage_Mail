@@ -21,13 +21,13 @@ import {
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError, user } = useSelector((state) => state.auth);
+  const { isError} = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isError && !user) {
+    dispatch(getMe());
+    if (isError) {
       navigate("/");
     }
-    dispatch(getMe());
   }, [dispatch, isError]);
 
   return (

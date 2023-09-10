@@ -5,6 +5,7 @@ import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
 import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Orbit } from '@uiball/loaders'
 import { LoginUser, reset, getMe } from "../auth/authSlice";
 
 export const Login = () => {
@@ -25,14 +26,14 @@ export const Login = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (user || isSuccess) {
+      dispatch(getMe());
+      if (user && isSuccess) {
         navigate("/home");
       }
-      dispatch(getMe());
       dispatch(reset());
-    }, 300);
+    }, 500);
     return () => clearTimeout(timer);
-  }, [user, isSuccess, dispatch]);
+  }, [isSuccess, dispatch]);
 
   useEffect(() => {
     if (isSuccess && message.length) {
@@ -41,7 +42,7 @@ export const Login = () => {
       toast.error(message);
     }
   }, [message]);
-
+console.log(dispatch)
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
@@ -100,16 +101,19 @@ export const Login = () => {
                   ) : (
                     <p>
                       <IconSquare onClick={switchShown} />
-                      <label className="form-label mt-4 m-2">
+                      <label className="form-label mt-4 p-2">
                         Mostrar contraseña
                       </label>
                     </p>
                   )}
                 </div>
                 <hr />
-                <div className="mt-4 form-group">
+                <div className="d-flex p-2 justify-content-end">
+                  <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div className="form-group pt-2 flex-column d-flex">
                   <button type="submit" className="btn btn-primary">
-                    {isLoading ? "Cargando..." : "Iniciar Sesión"}
+                    {isLoading ? <Orbit size={25}  speed={1.5} color="white" /> : "Iniciar Sesión"}
                   </button>
                 </div>
               </fieldset>

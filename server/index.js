@@ -36,12 +36,17 @@ app.use(session({
         secure: 'auto'
     }
 }));
-
+/**El middleware cors vereifica si el usuario utiliza credenciles para enviar
+ * la peticion y solo que pertenezcan a es dns accederan como tambien esta restringido los metodos
+ */
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     origin: true,
 }));
+
+
 
 app.use(express.json());
 app.use(userRoute);
@@ -55,7 +60,10 @@ app.use(mailRoutes);
 store.sync();
 
 
-
+/**
+ * El Puerto se inicializa en el archivo .env 
+ * El hostname esta declarado para que solo desde un dominio pueda ser consultado
+ */
 
 app.listen(process.env.APP_PORT, hostname, () => {
     console.log(`Server running at http://${hostname}:${process.env.APP_PORT}/`);
