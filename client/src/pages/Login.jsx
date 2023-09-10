@@ -5,8 +5,9 @@ import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
 import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Orbit } from '@uiball/loaders'
+import { Orbit } from "@uiball/loaders";
 import { LoginUser, reset, getMe } from "../auth/authSlice";
+import { OtpInputPage } from "./auth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -42,12 +43,15 @@ export const Login = () => {
       toast.error(message);
     }
   }, [message]);
-console.log(dispatch)
+
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
   };
-
+  const ForgotPassword = () => {
+    return <OtpInputPage email={email} />;
+  };
+  console.log(email)
   return (
     <div className="container col-md-4 mt-4 p-4">
       <ToastContainer />
@@ -109,11 +113,17 @@ console.log(dispatch)
                 </div>
                 <hr />
                 <div className="d-flex p-2 justify-content-end">
-                  <a href="#">¿Olvidaste tu contraseña?</a>
+                  <a onClick={ForgotPassword} href="/verification-otp">
+                    ¿Olvidaste tu contraseña?{" "}
+                  </a>
                 </div>
                 <div className="form-group pt-2 flex-column d-flex">
                   <button type="submit" className="btn btn-primary">
-                    {isLoading ? <Orbit size={25}  speed={1.5} color="white" /> : "Iniciar Sesión"}
+                    {isLoading ? (
+                      <Orbit size={25} speed={1.5} color="white" />
+                    ) : (
+                      "Iniciar Sesión"
+                    )}
                   </button>
                 </div>
               </fieldset>
