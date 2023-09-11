@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
 import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,6 +15,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
 
   const [shown, setShown] = useState(false);
+  const [otp, setOTP] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,9 +50,25 @@ export const Login = () => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
   };
-  const ForgotPassword = () => {
-    return <OtpInputPage email={email} />;
-  };
+  
+  function navigateToOtp() {
+    if (email) {
+      const OTP = Math.floor(Math.random() * 9000 + 1000);
+      console.log(OTP);
+      setOTP(OTP);
+
+      axios
+        .post("http://localhost:3030/send_recovery_email", {
+          OTP,
+          recipient_email: email,
+        })
+        .then(() => OtpInputPage("otp"))
+        .catch(console.log);
+      return;
+    }
+    return alert("Please enter your email");
+  }
+
   console.log(email)
   return (
     <div className="container col-md-4 mt-4 p-4">
@@ -113,7 +131,7 @@ export const Login = () => {
                 </div>
                 <hr />
                 <div className="d-flex p-2 justify-content-end">
-                  <a onClick={ForgotPassword} href="/verification-otp">
+                  <a onClick={navigateToOtp} href="/verification-otp">
                     ¿Olvidaste tu contraseña?{" "}
                   </a>
                 </div>

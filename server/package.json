@@ -19,6 +19,7 @@
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.9.5",
     "sequelize": "^6.23.1"
   },
   "devDependencies": {
