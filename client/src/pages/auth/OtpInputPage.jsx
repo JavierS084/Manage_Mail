@@ -44,23 +44,23 @@ export function OtpInputPage({ email }) {
     return () => clearInterval(interval);
   }, [disable]);
   return (
-    <div className="container col-md-4 mt-4 p-4">
-      <div className="card col-md-center">
-        <div className="card-body">
+    <div className="container mx-auto row col-3 mt-4 pt-4">
+      <div className="card ">
+        <div className="card-body mx-auto">
           <div className="d-flex justify-content-center">
             <h3>Verificación de correo</h3>
           </div>
-          <div className="d-flex justify-content-center text-gray-400">
+          <div className="d-flex justify-content-center">
             <p>Hemos enviado un código a tu correo electrónico {email} </p>
           </div>
 
           <div>
             <form>
-              <div className="d-flex flex-row col-md-9">
+              <div className="d-flex flex-row col-9">
                 <div className="form-group col-4 p-3">
                   <input
                     className="form-control"
-                    type="text"
+                    type="number"
                     onChange={(e) =>
                       setOTPinput([
                         e.target.value,
@@ -69,12 +69,13 @@ export function OtpInputPage({ email }) {
                         OTPinput[3],
                       ])
                     }
-                  ></input>
+                    
+                  />
                 </div>
                 <div className="form-group col-4 p-3">
                   <input
                     className="form-control"
-                    type="text"
+                    type="number"
                     onChange={(e) =>
                       setOTPinput([
                         OTPinput[0],
@@ -83,28 +84,30 @@ export function OtpInputPage({ email }) {
                         OTPinput[3],
                       ])
                     }
-                  ></input>
-                </div>
-              
-                <div className="form-group col-4 p-3">
-                  <input
-                    className="form-control"
-                    type="text"
-                    onChange={(e) =>
-                      setOTPinput([
-                        OTPinput[0],
-                        OTPinput[1],
-                        e.target.value,
-                        OTPinput[3],
-                      ])
-                    }
-                  ></input>
-                </div>
                 
+                  />
+                </div>
+
                 <div className="form-group col-4 p-3">
                   <input
                     className="form-control"
-                    type="text"
+                    type="number"
+                    onChange={(e) =>
+                      setOTPinput([
+                        OTPinput[0],
+                        OTPinput[1],
+                        e.target.value,
+                        OTPinput[3],
+                      ])
+                    }
+                    
+                  />
+                </div>
+
+                <div className="form-group col-4 p-3">
+                  <input
+                    className="form-control"
+                    type="number"
                     onChange={(e) =>
                       setOTPinput([
                         OTPinput[0],
@@ -113,7 +116,8 @@ export function OtpInputPage({ email }) {
                         e.target.value,
                       ])
                     }
-                  ></input>
+                    
+                  />
                 </div>
               </div>
 
@@ -135,7 +139,9 @@ export function OtpInputPage({ email }) {
                     }}
                     onClick={() => resendOTP()}
                   >
-                    {disable ? `Reenviar OTP en ${timerCount}s` : "Reenviar OTP"}
+                    {disable
+                      ? `Reenviar OTP en ${timerCount}s`
+                      : "Reenviar OTP"}
                   </a>
                 </div>
               </div>

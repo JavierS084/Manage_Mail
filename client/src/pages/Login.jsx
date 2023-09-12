@@ -64,9 +64,10 @@ export const Login = () => {
         })
         .then(() => OtpInputPage("otp"))
         .catch(console.log);
+        navigate("/verification-otp");
       return;
     }
-    return alert("Please enter your email");
+    return alert("Por favor ingrese su correo para recuperar");
   }
 
   console.log(email)
@@ -131,7 +132,7 @@ export const Login = () => {
                 </div>
                 <hr />
                 <div className="d-flex p-2 justify-content-end">
-                  <a onClick={navigateToOtp} href="/verification-otp">
+                  <a onClick={navigateToOtp}>
                     ¿Olvidaste tu contraseña?{" "}
                   </a>
                 </div>

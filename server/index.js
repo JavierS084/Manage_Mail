@@ -4,6 +4,7 @@ import session from "express-session";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import SequelizeStore from "connect-session-sequelize";
+
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
 import requestRoutes from "./routes/requestRoutes.js";
@@ -11,6 +12,8 @@ import dependencyRoutes from "./routes/dependencyRoutes.js";
 import typeRoutes from "./routes/typeRoutes.js";
 import groupRoutes from "./routes/groupRoutes.js";
 import mailRoutes from "./routes/mailRoutes.js";
+import sendMailRoute from "./routes/sendMailRoute.js"
+
 import db from "./config/database.js"
 
 const hostname = 'localhost';
@@ -50,18 +53,18 @@ app.use(cors({
 
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
-app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes);
+app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes, sendMailRoute);
 
 
 store.sync();
-
-const enviarMail = async () =>{
+/*
+const enviarMail = async () => {
     const config = {
         host: "smtp.gmail.com",
         port: 587,
         auth: {
-          user: process.env.MY_EMAIL,
-          pass: process.env.MY_PASSWORD
+            user: process.env.MY_EMAIL,
+            pass: process.env.MY_PASSWORD
         }
     }
 
@@ -77,7 +80,7 @@ const enviarMail = async () =>{
     console.log(info)
 }
 //enviarMail();
-  
+*/
 /**
  * El Puerto se inicializa en el archivo .env 
  * El hostname esta declarado para que solo desde un dominio pueda ser consultado
