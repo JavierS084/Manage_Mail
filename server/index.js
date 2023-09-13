@@ -2,9 +2,8 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+//import nodemailer from "nodemailer";
 import SequelizeStore from "connect-session-sequelize";
-
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
 import requestRoutes from "./routes/requestRoutes.js";
