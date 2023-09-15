@@ -7,8 +7,8 @@ import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Orbit } from "@uiball/loaders";
-import { LoginUser, reset, getMe } from "../auth/authSlice";
-import { OtpInputPage } from "./auth";
+import { LoginUser, reset, getMe } from "../../auth/authSlice";
+import { OtpInputPage } from ".";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -70,7 +70,6 @@ export const Login = () => {
     return alert("Por favor ingrese su correo para recuperar");
   }
 
-  console.log(email)
   return (
     <div className="container col-md-4 mt-4 p-4">
       <ToastContainer />

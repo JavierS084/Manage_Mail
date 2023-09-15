@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useAdministrations } from "../../context";
 
-export function OtpInputPage({ email }) {
+export function OtpInputPage() {
+  const { email, otp,} = useAdministrations();
   const [timerCount, setTimer] = React.useState(60);
   const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
   const [disable, setDisable] = useState(true);
@@ -11,8 +13,8 @@ export function OtpInputPage({ email }) {
     if (disable) return;
     axios
       .post("http://localhost:5000/send_recovery_email", {
-        /* OTP: otp,
-            recipient_email: email,*/
+        OTP: otp,
+            recipient_email: email,
       })
       .then(() => setDisable(true))
       .then(() => alert("A new OTP has succesfully been sent to your email."))

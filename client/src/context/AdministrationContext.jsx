@@ -1,6 +1,6 @@
 
 import { useState, createContext, useContext } from "react";
-import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "@/api/UsersApi";
+import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "../api/UsersApi";
 
 const contextAdministration = createContext();
 // esto es un hook
@@ -16,6 +16,7 @@ export const useAdministrations = () => {
 export const AdministrationsProvider = ({ children }) => {
     const [administrations, setAdministrations] = useState([]);
     const [msg, setMsg] = useState("");
+    const [otp, setOTP] = useState([]);
 
     async function loadUsers() {
 
@@ -66,7 +67,7 @@ export const AdministrationsProvider = ({ children }) => {
         }
     }
     return (
-        <contextAdministration.Provider value={{ administrations, loadUsers, gtUser, crUser, upUser, delUser, msg }}>
+        <contextAdministration.Provider value={{ administrations, loadUsers, gtUser, crUser, upUser, delUser, msg, otp, setOTP }}>
             {children}
         </contextAdministration.Provider>
     )

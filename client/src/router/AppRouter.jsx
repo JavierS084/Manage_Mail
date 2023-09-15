@@ -1,6 +1,6 @@
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Login from "../pages/Login";
+import Login from "../pages/auth/Login";
 import OtpInputPage from "../pages/auth/OtpInputPage";
 
 import AppRoutesMail from "./AppRoutesMail";
