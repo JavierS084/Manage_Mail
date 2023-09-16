@@ -3,10 +3,10 @@ import { getAllRequests, getRequest, createRequest, updateRequest, deleteRequest
 import { verifyUser } from "../middlewares/authUser.js";
 const router = Router();
 
-router.get('/requests', getAllRequests);
-router.get('/request/:id', getRequest);
-router.post('/request/create', createRequest);
-router.put('/request/update/:id', updateRequest);
-router.delete('/request/delete/:id', deleteRequest);
+router.get('/requests',verifyUser, getAllRequests);
+router.get('/request/:id',verifyUser, getRequest);
+router.post('/request/create',verifyUser, createRequest);
+router.put('/request/update/:id',verifyUser, updateRequest);
+router.delete('/request/delete/:id',verifyUser, deleteRequest);
 
 export default router;

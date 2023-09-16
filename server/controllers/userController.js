@@ -29,23 +29,26 @@ export const getUserById = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
+    try {
 
     const { name, email, password, confPassword, role } = req.body;
     if (password !== confPassword) return res.status(400).json({ msg: "Password and Confirm Password do not match" });
     const hashPassword = await argon2.hash(password);
-    try {
         await User.create({
             name: name,
             email: email,
             password: hashPassword,
             role: role
         });
-        res.status(201).json({ msg: "Register Successful" });
+        res.status(201).json({ msg: "Usuario registrado correctamente" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
 }
+/*
+export const resetPassword = (req, res) => {
 
+}*/
 export const updateUser = async (req, res) => {
     const user = await User.findOne({
         where: {
@@ -91,7 +94,7 @@ export const deleteUser = async (req, res) => {
                 id: user.id
             }
         });
-        res.status(200).json({ msg: "User Deleted" });
+        res.status(200).json({ msg: "Usuario eliminado correctamente" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }

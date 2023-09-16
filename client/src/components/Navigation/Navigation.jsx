@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DrawerNav from "../Drawer/DrawerNav";
-import { IconBellFilled } from "@tabler/icons-react";
+import DrawerNotification from "../Drawer/DrawerNotification";
 
 export function Navigation() {
   return (
@@ -65,17 +65,14 @@ export function Navigation() {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/administration">
-                Administracion
+              <Link className="nav-link" to="/administrations">
+                Administración
               </Link>
             </li>
           </ul>
           <div className="d-flex">
-            <button>
-              <IconBellFilled className="icon-notify"  size={24} />
-    
-            </button>
-
+            
+            <DrawerNotification/>
             <DrawerNav />
           </div>
         </div>

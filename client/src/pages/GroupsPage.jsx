@@ -1,67 +1,67 @@
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import GroupCard from "../components/Groups/GroupsCard";
+import GroupForm from "../components/Groups/GroupsForm";
+import { useGroups } from "../context/GroupsContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import RequestForm from "../components/Requests/RequestForm";
-import RequestCard from "../components/Requests/RequestCard";
-import { useRequests } from "../context/RequestsContext";
 
-export function RequestsPage() {
-  const { requests, loadRequests, msg, msgError } = useRequests();
+export function GroupsPage() {
+  const { groups, loadGroups, msg, msgError } = useGroups();
 
   useEffect(() => {
     if (msg) {
-      toast.success(msg);
-    } else if (msgError) {
-      toast.error(msgError);
-    }
+        toast.success(msg);
+      } else if (msgError) {
+        toast.error(msgError);
+      }
     const timer = setTimeout(() => {
-      loadRequests();
+      loadGroups();
     }, 500);
 
     return () => clearTimeout(timer);
   }, [msg, msgError]);
 
   function renderlista() {
-    if (!requests.length) {
+    if (!groups.length) {
       return (
         <div className="card">
           <div className="card-body">
-            <h1 className="card-title">No existe solicitudes disponibles</h1>
+            <h1 className="card-title">No existe Grupos disponibles</h1>
           </div>
         </div>
       );
     } else {
-      return <RequestCard requests={requests} />;
+      return <GroupCard groups={groups} />;
     }
   }
 
   return (
     <div className="card">
-      <ToastContainer />
+        <ToastContainer />
       <div className="card-body">
         <Tabs
-          defaultActiveKey="listRequest"
+          defaultActiveKey="groupsList"
           id="uncontrolled-tab-example"
           className="mb-3"
         >
-          <Tab eventKey="listRequest" title="Solicitudes">
+          <Tab eventKey="groupsList" title="Grupos">
             <div
               className="tab-pane fade active show"
-              id="listaSolicituds"
+              id="listaGrupos"
               role="tabpanel"
             >
               <article>{renderlista()}</article>
             </div>
           </Tab>
-          <Tab eventKey="addDependency" title="Crear Solicitud">
+          <Tab eventKey="addDependency" title="Crear Grupos">
             <div
               className="tab-pane fade active show"
               id="createRequest"
               role="tabpanel"
             >
-              {<RequestForm />}
+              {<GroupForm />}
             </div>
           </Tab>
         </Tabs>
@@ -70,4 +70,4 @@ export function RequestsPage() {
   );
 }
 
-export default RequestsPage;
+export default GroupsPage;

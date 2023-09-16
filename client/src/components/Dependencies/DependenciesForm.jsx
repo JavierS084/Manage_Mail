@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-
 import { Formik, Form } from "formik";
-import { useParams, useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { useDependencies } from "../../context/DependenciesContext";
 
 function DependenciesForm() {
-  const { crDp, upDp, getDp, msg } = useDependencies();
+  const { crDp, upDp, getDp } = useDependencies();
   const params = useParams();
-  const navigate = useNavigate();
+ 
 
   const [dependency, setDependency] = useState({
     dependencia: "",
@@ -27,7 +25,10 @@ function DependenciesForm() {
   }, []);
 
   const clearInput = () => {
-    setDependency([]);
+    const timer = setTimeout(() => {
+      setDependency([]);
+    }, 200);
+    return () => clearTimeout(timer);
   };
 
   return (
@@ -51,7 +52,7 @@ function DependenciesForm() {
           if (params.id) {
             await upDp(params.id, values);
 
-            navigate("/dependencies");
+            
           } else {
             await crDp(values);
           }
@@ -72,7 +73,6 @@ function DependenciesForm() {
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
               <div className="form-group col-md-6 p-4">
-                <p className="pl-5">{msg}</p>
 
                 <h2>Crear una Nueva Dependencia</h2>
                 <fieldset>

@@ -1,12 +1,10 @@
-/*
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
-import { useRouter, useParams } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { useGroups } from "@/context/GroupsContext";
+import { useParams } from "react-router-dom";
+import { useGroups } from "../../context/GroupsContext";
 
 export function GroupForm() {
-  const { groups, crGroup, gtGroup, upGroup } = useGroups();
+  const { crGroup, gtGroup, upGroup } = useGroups();
   const [group, setGroup] = useState({
     email: "",
     description: "",
@@ -15,7 +13,7 @@ export function GroupForm() {
   });
 
   const params = useParams();
-  const router = useRouter();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       const loadGroup = async () => {
@@ -35,13 +33,9 @@ export function GroupForm() {
   }, []);
 
   const clearInput = () => {
-    setGroup([]);
-  };
-
-  const verGroup = () => {
     const timer = setTimeout(() => {
-      router.push("/groups");
-    }, 1000);
+      setGroup([]);
+    }, 200);
     return () => clearTimeout(timer);
   };
 
@@ -71,20 +65,11 @@ export function GroupForm() {
           }
           return errores;
         }}
-        onSubmit={async (values, actions) => {
+        onSubmit={async (values) => {
           if (params.id) {
             await upGroup(params.id, values);
-            toast.success(
-              "El grupo " +
-                values.description +
-                " se ha actualizado correctamente"
-            );
-            verGroup();
           } else {
             await crGroup(values);
-            toast.success(
-              "El grupo " + values.description + " se ha guardado correctamente"
-            );
           }
 
           setGroup({
@@ -195,4 +180,3 @@ export function GroupForm() {
 }
 
 export default GroupForm;
-*/

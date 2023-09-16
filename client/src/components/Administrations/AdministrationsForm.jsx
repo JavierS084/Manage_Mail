@@ -1,16 +1,17 @@
-/*
+
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import { Formik, Form } from "formik";
 import FormSelect from "react-bootstrap/Form";
-import { useRouter, useParams } from "next/navigation";
-import { useAdministrations } from "@/context/AdministrationContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAdministrations } from "../../context/AdministrationsContext";
 import { IconArrowLeft } from "@tabler/icons-react";
 
-function AdministrationForm() {
-  const { administrations, crUser, upUser, gtUser, msg } = useAdministrations();
+function AdministrationsForm() {
+  const { administrations, crUser, upUser, gtUser } = useAdministrations();
   const params = useParams();
-  const router = useRouter();
+  const navigate = useNavigate();
+
+
   const [administration, setAdministration] = useState({
     name: "",
     role: "",
@@ -35,7 +36,11 @@ function AdministrationForm() {
   }, []);
 
   const clearInput = () => {
-    setAdministration([]);
+    const timer = setTimeout(() => {
+      
+      setAdministration([]);
+    }, 200);
+    return () => clearTimeout(timer);
   };
 
   return (
@@ -75,19 +80,16 @@ function AdministrationForm() {
 
           return errores;
         }}
-        onSubmit={async (values, actions) => {
+        onSubmit={async (values) => {
           if (params.uuid) {
             await upUser(params.uuid, values);
-            toast.success(
-              "El usuario " + values.name + " se ha actualizado correctamente"
-            );
-            router.push("/administration");
+           
+          
           } else {
             await crUser(values);
-            toast.success(
-              "El usuario " + values.name + " se ha guardado correctamente"
-            );
+            
           }
+          console.log(values)
           setAdministration({
             name: "",
             role: "",
@@ -115,7 +117,7 @@ function AdministrationForm() {
                       <IconArrowLeft
                         className="mt-1"
                         type="button"
-                        onClick={() => router.push(`/administration/`)}
+                        onClick={() => navigate(`/administration/`)}
                         color="grey"
                         size={28}
                       />
@@ -131,7 +133,7 @@ function AdministrationForm() {
                     </h2>
                   </div>
                 </div>
-                <p className="error pl-5">{msg}</p>
+               
 
                 <fieldset>
                   <div className="form-group">
@@ -261,5 +263,4 @@ function AdministrationForm() {
   );
 }
 
-export default AdministrationForm;
-*/
+export default AdministrationsForm;

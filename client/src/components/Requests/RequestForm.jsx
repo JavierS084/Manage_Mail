@@ -26,7 +26,10 @@ function RequestsForm() {
   }, []);
 
   const clearInput = () => {
-    setRequest([]);
+    const timer = setTimeout(() => {
+      setRequest([]);
+    }, 200);
+    return () => clearTimeout(timer);
   };
 
   return (

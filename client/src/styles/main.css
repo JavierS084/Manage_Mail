@@ -16,7 +16,8 @@ h1 {
 }
 
 #fechared {
-  color: rgb(202, 44, 44);
+  color: red;
+  font-weight: 600;
 }
 .obligatorio{
   color: red;
