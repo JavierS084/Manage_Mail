@@ -10,13 +10,13 @@ import {
   MailTypesPage,
   RequestsPage,
   GroupsPage,
+  AdministrationsPage,
 } from "../pages";
 import {
   DependenciesProvider,
   MailTypesProvider,
   RequestsProvider,
   GroupsProvider,
-
 } from "../context";
 
 export default function AppRoutesMail() {
@@ -32,26 +32,28 @@ export default function AppRoutesMail() {
   }, [dispatch, isError]);
 
   return (
-
-      <GroupsProvider>
-        <MailTypesProvider>
-          <DependenciesProvider>
-            <RequestsProvider>
-              <Navigation />
-              <div className="container pt-4">
-                <Routes>
-                  <Route path="/dependencies" element={<DependenciesPage />} />
-                  <Route path="/groups" element={<GroupsPage />} />
-                  <Route path="/mail-types" element={<MailTypesPage />} />
-                  <Route path="/requests" element={<RequestsPage />} />
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/*" element={<NotFound />} />
-                </Routes>
-              </div>
-            </RequestsProvider>
-          </DependenciesProvider>
-        </MailTypesProvider>
-      </GroupsProvider>
-
+    <GroupsProvider>
+      <MailTypesProvider>
+        <DependenciesProvider>
+          <RequestsProvider>
+            <Navigation />
+            <div className="container pt-4">
+              <Routes>
+                <Route
+                  path="/administrations"
+                  element={<AdministrationsPage />}
+                />
+                <Route path="/dependencies" element={<DependenciesPage />} />
+                <Route path="/groups" element={<GroupsPage />} />
+                <Route path="/mail-types" element={<MailTypesPage />} />
+                <Route path="/requests" element={<RequestsPage />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </RequestsProvider>
+        </DependenciesProvider>
+      </MailTypesProvider>
+    </GroupsProvider>
   );
 }

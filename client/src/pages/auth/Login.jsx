@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
 import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Orbit } from "@uiball/loaders";
 import { LoginUser, reset, getMe } from "../../auth/authSlice";
-import { OtpInputPage } from ".";
+//import { OtpInputPage } from "./OtpInputPage";
+import { useAdministrations } from "../../context";
+//import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
+  const { sendEmailRecovery }= useAdministrations();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [shown, setShown] = useState(false);
   const [otp, setOTP] = useState();
+  const [shown, setShown] = useState(false);
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,18 +58,10 @@ export const Login = () => {
       const OTP = Math.floor(Math.random() * 9000 + 1000);
       console.log(OTP);
       setOTP(OTP);
+      sendEmailRecovery(email, OTP)
+      navigate("/verification-otp", {email, otp});
 
-      axios
-        .post("http://localhost:3030/send_recovery_email", {
-          OTP,
-          recipient_email: email,
-        })
-        .then(() => OtpInputPage("otp"))
-        .catch(console.log);
-        navigate("/verification-otp");
-      return;
     }
-    return alert("Por favor ingrese su correo para recuperar");
   }
 
   return (

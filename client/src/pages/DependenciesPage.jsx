@@ -19,7 +19,7 @@ export function DependenciesPage() {
     }
     const timer = setTimeout(() => {
       loadDependencies();
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [msg]);

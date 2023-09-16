@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-hot-toast";
-import { useAdministrations } from "@/context/AdministrationContext";
+import { useNavigate } from "react-router-dom";
+import { useAdministrations } from "../../context/AdministrationsContext";
 
 function AdministrationCard({ administrations }) {
   const { delUser, setAdministrations } = useAdministrations();
   const [accion, setAccion] = useState(false);
   const [select, setSelect] = useState([]);
+  const [ordenAscendente, setOrdenAscendente] = useState(true);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const router = useRouter();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     //pasando los 10 segundos se deshabilita el boton eliminar
     const timer = setTimeout(() => {
@@ -71,7 +73,7 @@ function AdministrationCard({ administrations }) {
           type="button"
           className="btn btn-warning m-1 px-4"
           disabled={!accion}
-          onClick={() => router.push(`/administration/edit/${select}`)}
+          onClick={() => navigate(`administration/edit/${select}`)}
         >
           Editar
         </button>
@@ -132,7 +134,7 @@ function AdministrationCard({ administrations }) {
               onClick={() => {
                 delUser(select);
                 setSelect([]);
-                toast.success("Se ha eliminado Correctamente");
+
                 handleClose();
               }}
               type="button"

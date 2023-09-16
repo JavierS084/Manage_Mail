@@ -18,7 +18,7 @@ export function RequestsPage() {
     }
     const timer = setTimeout(() => {
       loadRequests();
-    }, 200);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [msg, msgError]);

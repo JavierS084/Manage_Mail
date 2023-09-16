@@ -65,8 +65,8 @@ export function Navigation() {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/administration">
-                Administracion
+              <Link className="nav-link" to="/administrations">
+                Administración
               </Link>
             </li>
           </ul>

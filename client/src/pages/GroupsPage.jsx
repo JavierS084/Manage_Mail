@@ -18,7 +18,7 @@ export function GroupsPage() {
       }
     const timer = setTimeout(() => {
       loadGroups();
-    }, 200);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [msg, msgError]);

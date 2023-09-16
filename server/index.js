@@ -11,7 +11,7 @@ import dependencyRoutes from "./routes/dependencyRoutes.js";
 import typeRoutes from "./routes/typeRoutes.js";
 import groupRoutes from "./routes/groupRoutes.js";
 import mailRoutes from "./routes/mailRoutes.js";
-import sendMailRoute from "./routes/sendMailRoute.js"
+
 
 import db from "./config/database.js"
 
@@ -49,10 +49,11 @@ app.use(cors({
     origin: true,
 }));
 
+export const TOKEN_SECRET = process.env.TOKEN_SECRET || "secret";
 
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
-app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes, sendMailRoute);
+app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes);
 
 
 store.sync();

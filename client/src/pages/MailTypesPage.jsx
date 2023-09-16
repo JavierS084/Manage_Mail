@@ -19,7 +19,7 @@ export function MailTypesPage() {
 
     const timer = setTimeout(() => {
       loadTypes();
-    }, 200);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [msg, msgError]);
