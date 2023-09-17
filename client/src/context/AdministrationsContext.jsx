@@ -53,10 +53,13 @@ export const AdministrationsProvider = ({ children }) => {
     }
   };
 
-  const sendEmailRecovery = async(recipent_email, otp) => {
+  const sendEmailRecovery = async(recipent_email) => {
     try {
-      const response = await sendEmail(recipent_email, otp);
-      setMsg(response.data.msg);
+      const response = await sendEmail(recipent_email);
+      if (response.status === 210) {
+        setMsg(response.data.msg);
+      }
+      console.log(response)
     } catch (error) {
       setMsgError(error.response.data.msg);
     }

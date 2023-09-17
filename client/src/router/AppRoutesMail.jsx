@@ -43,6 +43,10 @@ export default function AppRoutesMail() {
                   path="/administrations"
                   element={<AdministrationsPage />}
                 />
+                 <Route
+                  path="/administrations/edit/:uuid"
+                  element={<AdministrationsPage />}
+                />
                 <Route path="/dependencies" element={<DependenciesPage />} />
                 <Route path="/groups" element={<GroupsPage />} />
                 <Route path="/mail-types" element={<MailTypesPage />} />

@@ -73,7 +73,7 @@ function AdministrationCard({ administrations }) {
           type="button"
           className="btn btn-warning m-1 px-4"
           disabled={!accion}
-          onClick={() => navigate(`administration/edit/${select}`)}
+          onClick={() => navigate(`/administrations/edit/${select}`)}
         >
           Editar
         </button>

@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import argon2 from "argon2";
 
 
+
 export const getUsers = async (req, res) => {
     try {
         const response = await User.findAll({
@@ -45,10 +46,8 @@ export const createUser = async (req, res) => {
         res.status(400).json({ msg: error.message });
     }
 }
-/*
-export const resetPassword = (req, res) => {
 
-}*/
+
 export const updateUser = async (req, res) => {
     const user = await User.findOne({
         where: {
@@ -99,3 +98,10 @@ export const deleteUser = async (req, res) => {
         res.status(400).json({ msg: error.message });
     }
 }
+
+
+
+
+
+
+
