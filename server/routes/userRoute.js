@@ -5,6 +5,7 @@ import {
     createUser,
     updateUser,
     deleteUser,
+    resetPassword,
 } from "../controllers/userController.js";
 
 import { verifyUser, adminOnly } from "../middlewares/authUser.js";
@@ -16,6 +17,7 @@ router.get('/users',verifyUser, adminOnly, getUsers); ;
 router.get('/user/:id',verifyUser, adminOnly, getUserById);
 router.post('/user/create',verifyUser, adminOnly,createUser);
 router.put('/user/update/:id',verifyUser, adminOnly, updateUser);
+router.put('/user/reset-password/:uuid', resetPassword);
 router.delete('/user/delete/:id',verifyUser, adminOnly, deleteUser);
 
 export default router;

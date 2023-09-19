@@ -5,7 +5,8 @@ import {
   createUser,
   updateUser,
   deleteUser,
-  sendEmail
+  sendEmail, 
+  resetPasswordUser,
 } from "../api/UsersApi";
 
 const contextAdministrations = createContext();
@@ -76,6 +77,17 @@ export const AdministrationsProvider = ({ children }) => {
     }
   };
 
+  const resetPassword = async (uuid, newFields) => {
+    try {
+      const response = await resetPasswordUser(uuid, newFields);
+      if (response.status === 200) {
+        setMsg(response.data.msg);
+      }
+    } catch (error) {
+      setMsgError(error.response.data.msg);
+    }
+  };
+
   const delUser = async (id) => {
     try {
       const response = await deleteUser(id);
@@ -98,7 +110,8 @@ export const AdministrationsProvider = ({ children }) => {
         delUser,
         msg,
         msgError,
-        sendEmailRecovery
+        sendEmailRecovery,
+        resetPassword,
       }}
     >
       {children}

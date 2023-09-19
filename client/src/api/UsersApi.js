@@ -21,5 +21,10 @@ export const updateUser = async (id, newFields) =>
     await axios.put(`http://localhost:3030/user/update/${id}`, newFields);
 
 
+export const resetPasswordUser = async (uuid, newFields) =>
+    await axios.put(`http://localhost:3030/user/reset-password//${uuid}`, newFields);
+
+
+
 export const deleteUser = async (id) =>
     await axios.delete(`http://localhost:3030/user/delete/${id}`);

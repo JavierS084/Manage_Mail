@@ -4,7 +4,8 @@ import Login from "../pages/auth/Login";
 import { AdministrationsProvider } from "../context";
 
 import AppRoutesMail from "./AppRoutesMail";
-import ResetPassword from "../pages/auth/ResetPassword";
+import ResetPasswordPage from "../pages/auth/ResetPassword";
+
 
 export const AppRouter = () => {
   return (
@@ -13,7 +14,7 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/*" element={<AppRoutesMail />} />
           <Route path="/" element={<Login />} />
-          <Route path="/reset-password/:uuid" element={<ResetPassword />} />
+          <Route path="/reset-password/:uuid" element={<ResetPasswordPage />} />
         </Routes>
       </AdministrationsProvider>
     </BrowserRouter>

@@ -103,5 +103,32 @@ export const deleteUser = async (req, res) => {
 
 
 
-
-
+export const resetPassword = async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            uuid: req.params.uuid
+        }
+    });
+    if (!user) return res.status(404).json({ msg: "Usuario no encontrado" });
+    const { password, confPassword} = req.body;
+    let hashPassword;
+    if (password === "" || password === null) {
+        hashPassword = user.password
+    } else {
+        hashPassword = await argon2.hash(password);
+    }
+    try {
+        if (password !== confPassword) return res.status(400).json({ msg: "La contraseña no coincide con la confirmación de contraseña" });
+        await User.update({
+           
+            password: hashPassword,
+        }, {
+            where: {
+                uuid: user.uuid
+            }
+        });
+        res.status(200).json({ msg: "El usuario ha sido actualizado correctamente" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+}

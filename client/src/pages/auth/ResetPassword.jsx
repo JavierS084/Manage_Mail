@@ -1,14 +1,13 @@
 
 import { useState} from "react";
 import { Formik, Form } from "formik";
-
-import { useNavigate, } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAdministrations } from "../../context/AdministrationsContext";
 
 
-function ResetPassword() {
-  const { crUser } = useAdministrations();
-
+function ResetPasswordPage() {
+  const { resetPassword } = useAdministrations();
+  const params = useParams();
   const navigate = useNavigate();
 
 
@@ -45,7 +44,7 @@ function ResetPassword() {
           return errores;
         }}
         onSubmit={async (values) => {
-          await crUser(values)
+          await resetPassword(values)
           console.log(values)
           
           setAdministration({
@@ -65,12 +64,12 @@ function ResetPassword() {
         }) => (
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
-              <div className="form-group col-md-6 p-4">
+              <div className="form-group col-md-4 p-4">
                 <div className="d-flex flex-row">
                   
-                  <div className="col-md-8 flex-column  d-flex">
+                  <div className="col-md-6 flex-column  d-flex">
                     <h2>
-                      Reset passsword
+                      Cambiar contraseña
                     </h2>
                   </div>
                 </div>
@@ -146,4 +145,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default ResetPasswordPage;

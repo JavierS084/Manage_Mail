@@ -83,7 +83,8 @@ const enviarMail = async () => {
 */
 /**
  * El Puerto se inicializa en el archivo .env 
- * El hostname esta declarado para que solo desde un dominio pueda ser consultado
+ * El hostname esta declarado para que solo desde un, process.env.USER_NAME, process.env.PASSWORD_USER , {
+    host: "localhost", dominio pueda ser consultado
  */
 
 app.listen(process.env.APP_PORT, hostname, () => {
