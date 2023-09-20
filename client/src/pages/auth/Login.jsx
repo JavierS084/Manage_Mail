@@ -6,16 +6,15 @@ import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import { Orbit } from "@uiball/loaders";
 import { LoginUser, reset, getMe } from "../../auth/authSlice";
-//import { OtpInputPage } from "./OtpInputPage";
 import { useAdministrations } from "../../context";
-//import axios from "axios";
+
 import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
-  const { sendEmailRecovery }= useAdministrations();
+  const { sendEmailRecovery, msg, msgError }= useAdministrations();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOTP] = useState();
+  //const [otp, setOTP] = useState();
   const [shown, setShown] = useState(false);
  
   const dispatch = useDispatch();
@@ -46,7 +45,16 @@ export const Login = () => {
     } else if (isError && message.length) {
       toast.error(message);
     }
+  
   }, [message]);
+
+  useEffect(() => {
+    if(msg){
+      toast.success(msg)
+    }else if (msgError) {
+      toast.error(msgError)
+    }
+  },[msg, msgError])
 
   const Auth = (e) => {
     e.preventDefault();
@@ -54,14 +62,8 @@ export const Login = () => {
   };
   
   function navigateToOtp() {
-    if (email) {
-      const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
-      setOTP(OTP);
-      sendEmailRecovery(email, OTP)
-      navigate("/verification-otp", {email, otp});
+    sendEmailRecovery(email)
 
-    }
   }
 
   return (

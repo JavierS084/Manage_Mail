@@ -5,7 +5,8 @@ import {
   createUser,
   updateUser,
   deleteUser,
-  sendEmail
+  sendEmail, 
+  resetPasswordUser,
 } from "../api/UsersApi";
 
 const contextAdministrations = createContext();
@@ -53,10 +54,13 @@ export const AdministrationsProvider = ({ children }) => {
     }
   };
 
-  const sendEmailRecovery = async(recipent_email, otp) => {
+  const sendEmailRecovery = async(recipent_email) => {
     try {
-      const response = await sendEmail(recipent_email, otp);
-      setMsg(response.data.msg);
+      const response = await sendEmail(recipent_email);
+      if (response.status === 210) {
+        setMsg(response.data.msg);
+      }
+      console.log(response)
     } catch (error) {
       setMsgError(error.response.data.msg);
     }
@@ -65,6 +69,17 @@ export const AdministrationsProvider = ({ children }) => {
   const upUser = async (id, newFields) => {
     try {
       const response = await updateUser(id, newFields);
+      if (response.status === 200) {
+        setMsg(response.data.msg);
+      }
+    } catch (error) {
+      setMsgError(error.response.data.msg);
+    }
+  };
+
+  const resetPassword = async (id, newFields) => {
+    try {
+      const response = await resetPasswordUser(id, newFields);
       if (response.status === 200) {
         setMsg(response.data.msg);
       }
@@ -94,8 +109,10 @@ export const AdministrationsProvider = ({ children }) => {
         upUser,
         delUser,
         msg,
+        setMsg,
         msgError,
-        sendEmailRecovery
+        sendEmailRecovery,
+        resetPassword,
       }}
     >
       {children}

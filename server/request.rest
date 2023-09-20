@@ -12,37 +12,53 @@ POST http://localhost:3030/user/create HTTP/1.1
 Content-Type: application/json
 
 {
-"name": "Jose Perez",
-  "email": "admin@gmail.com",
-  "password": "123456",
-  "confPassword": "123456",
-  "role": "admin"
-}   
-
-### Update a user
-PUT  http://localhost:3030/user/update/a8f5593e-8c73-463d-a486-c5e7d4daabe5 HTTP/1.1
-Content-Type: application/json
-
-{
-  "name": "Jose Perez",
+ "name": "Jose Perez",
   "email": "codeark35@gmail.com",
   "password": "123456",
   "confPassword": "123456",
   "role": "admin"
 }   
 
+### Update a user
+PUT  http://localhost:3030/user/update/ba3e99b5-ca11-4c80-a2f1-0674ea2c975e HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Jose Perez",
+  "email": "codeark35@gmail.com",
+  "password": "12345",
+  "confPassword": "12345",
+  "role": "admin"
+}   
+
+
+
+### Reset password
+PUT http://localhost:3030/user/reset-password/ba3e99b5-ca11-4c80-a2f1-0674ea2c975e HTTP/1.1
+Content-Type: application/json
+
+{
+  "password": 123,
+  "confPassword": 123,
+  
+}
+
+
+
 ### DELETE
 DELETE  http://localhost:3030/user/delete/1df6de62-ec55-43e5-9a7d-e405892c6fa5
 
 
 ### Login
-POST http://localhost:3030/login HTTP/1.1
+POST http://localhost:3030/login HTTP/1.1 
 Content-Type: application/json
 
 {
-  "email": "admin@gmail.com",
-  "password": "123456",
+"email": "codeark35@gmail.com", 
+"password": "123456"
 }
+
+
 
 ### user
 GET http://localhost:3030/me
@@ -63,3 +79,12 @@ Content-Type: application/json
 ### get all the users
 GET  http://localhost:3030/mails
 
+### prueba
+POST http://localhost:3030/send_recovery_email HTTP/1.1
+Content-Type: application/json
+
+{
+  "recipient_email": "codeark35@gmail.com"
+  
+
+}

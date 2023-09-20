@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import argon2 from "argon2";
 
 
+
 export const getUsers = async (req, res) => {
     try {
         const response = await User.findAll({
@@ -31,9 +32,9 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
 
-    const { name, email, password, confPassword, role } = req.body;
-    if (password !== confPassword) return res.status(400).json({ msg: "Password and Confirm Password do not match" });
-    const hashPassword = await argon2.hash(password);
+        const { name, email, password, confPassword, role } = req.body;
+        if (password !== confPassword) return res.status(400).json({ msg: "Password and Confirm Password do not match" });
+        const hashPassword = await argon2.hash(password);
         await User.create({
             name: name,
             email: email,
@@ -45,26 +46,24 @@ export const createUser = async (req, res) => {
         res.status(400).json({ msg: error.message });
     }
 }
-/*
-export const resetPassword = (req, res) => {
 
-}*/
+
 export const updateUser = async (req, res) => {
-    const user = await User.findOne({
-        where: {
-            uuid: req.params.id
-        }
-    });
-    if (!user) return res.status(404).json({ msg: "User not found" });
-    const { name, email, password, confPassword, role } = req.body;
-    let hashPassword;
-    if (password === "" || password === null) {
-        hashPassword = user.password
-    } else {
-        hashPassword = await argon2.hash(password);
-    }
     try {
-        if (password !== confPassword) return res.status(400).json({ msg: "Password and Confirm Password do not match" });
+        const user = await User.findOne({
+            where: {
+                uuid: req.params.id
+            }
+        });
+        if (!user) return res.status(404).json({ msg: "User not found" });
+        const { name, email, password, confPassword, role } = req.body;
+        let hashPassword;
+        if (password === "" || password === null || password === undefined) {
+            hashPassword = user.password
+        } else {
+            hashPassword = await argon2.hash(password);
+        }
+        if (password !== confPassword) return res.status(400).json({ msg: "La contraseña no coincide con la confirmación de contraseña" });
         await User.update({
             name: name,
             email: email,
@@ -75,7 +74,7 @@ export const updateUser = async (req, res) => {
                 id: user.id
             }
         });
-        res.status(200).json({ msg: "User Updated" });
+        res.status(200).json({ msg: "El usuario fue actualizado correctamente" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
@@ -95,6 +94,46 @@ export const deleteUser = async (req, res) => {
             }
         });
         res.status(200).json({ msg: "Usuario eliminado correctamente" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+}
+
+
+
+
+
+export const resetPassword = async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            uuid: req.params.id
+        }
+    });
+
+
+    if (!user) return res.status(404).json({ msg: "Usuario no encontrado" });
+    const { password, confPassword } = req.body;
+    let hashPassword;
+
+    if (password === "" || password === null) {
+        hashPassword = user.password
+    } else {
+        hashPassword = await argon2.hash(password);
+    }
+    try {
+        if (password !== confPassword) return res.status(400).json({ msg: "La contraseña no coincide con la confirmación de contraseña" });
+        await User.update({
+
+            name: user.name,
+            email: user.email,
+            password: hashPassword,
+            role: user.role
+        }, {
+            where: {
+                id: user.id
+            }
+        });
+        res.status(200).json({ msg: "El usuario ha reseteado correctamente su contraseña" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }

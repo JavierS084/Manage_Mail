@@ -1,9 +1,11 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Login from "../pages/auth/Login";
-import OtpInputPage from "../pages/auth/OtpInputPage";
+
 import { AdministrationsProvider } from "../context";
 
 import AppRoutesMail from "./AppRoutesMail";
+import ResetPasswordPage from "../pages/auth/ResetPassword";
+
 
 export const AppRouter = () => {
   return (
@@ -12,7 +14,7 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/*" element={<AppRoutesMail />} />
           <Route path="/" element={<Login />} />
-          <Route path="/verification-otp" element={<OtpInputPage />} />
+          <Route path="/reset-password/:uuid" element={<ResetPasswordPage />} />
         </Routes>
       </AdministrationsProvider>
     </BrowserRouter>
