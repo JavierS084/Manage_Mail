@@ -1,23 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import {  useParams } from "react-router-dom";
+import {  useParams, useNavigate } from "react-router-dom";
 import { useAdministrations } from "../../context/AdministrationsContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function ResetPasswordPage() {
-  const { resetPassword } = useAdministrations();
+export function ResetPasswordPage() {
+  const { resetPassword, msg, msgError, setMsg } = useAdministrations();
   const params = useParams();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [administration, setAdministration] = useState({
     password: "",
     confPassword: "",
   });
 
+  useEffect(() => {
+
+    if (msg) {
+      toast.success(msg);
+      setMsg("")
+      
+    } else if (msgError) {
+      toast.error(msgError);
+    }
+    const timer = setTimeout(() => {
+     
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [msg]);
+
+
   const clearInput = () => {
     const timer = setTimeout(() => {
       setAdministration([]);
     }, 200);
-    return () => clearTimeout(timer);
+
+
+    const timer2 = setTimeout(() => {
+      navigate("/")
+    }, 1000);
+    return () => clearTimeout(timer, timer2);
   };
 
   return (
@@ -38,8 +62,8 @@ function ResetPasswordPage() {
         }}
         onSubmit={async (values) => {
           if (params.uuid) {
-            await resetPassword(values);
-            console.log(params.uuid, values);
+            await resetPassword(params.uuid, values);
+            console.log(values);
           }
           setAdministration({
             password: "",
@@ -58,9 +82,10 @@ function ResetPasswordPage() {
         }) => (
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
+            <ToastContainer />
               <div className="form-group col-md-4 p-4">
                 <div className="d-flex flex-row">
-                  <div className="col-md-6 flex-column  d-flex">
+                  <div className="flex-column  d-flex">
                     <h2>Cambiar contraseña</h2>
                   </div>
                 </div>

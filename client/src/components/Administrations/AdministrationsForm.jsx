@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import FormSelect from "react-bootstrap/Form";
@@ -6,11 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAdministrations } from "../../context/AdministrationsContext";
 import { IconArrowLeft } from "@tabler/icons-react";
 
-function AdministrationsForm() {
+export function AdministrationsForm() {
   const { administrations, crUser, upUser, gtUser } = useAdministrations();
   const params = useParams();
   const navigate = useNavigate();
-
 
   const [administration, setAdministration] = useState({
     name: "",
@@ -37,7 +35,6 @@ function AdministrationsForm() {
 
   const clearInput = () => {
     const timer = setTimeout(() => {
-      
       setAdministration([]);
     }, 200);
     return () => clearTimeout(timer);
@@ -65,16 +62,16 @@ function AdministrationsForm() {
           } else {
             administrations.map((mail) => (
               <span key={mail.id}>
-                {mail.email === values.email
+                {!params.uuid && mail.email === values.email
                   ? (errores.email =
                       "El correo ya está en uso, escriba uno diferente")
                   : ""}
               </span>
             ));
           }
-          if (!values.password) {
+          if (!params.uuid && !values.password) {
             errores.password = "Por favor ingrese la contraseña";
-          } else if (values.confPassword !== values.password) {
+          } else if (!params.uuid && values.confPassword !== values.password) {
             errores.confPassword = "Las contraseñas no coinciden";
           }
 
@@ -83,13 +80,10 @@ function AdministrationsForm() {
         onSubmit={async (values) => {
           if (params.uuid) {
             await upUser(params.uuid, values);
-           
-          
           } else {
             await crUser(values);
-            
           }
-          console.log(values)
+          // console.log(values)
           setAdministration({
             name: "",
             role: "",
@@ -117,7 +111,7 @@ function AdministrationsForm() {
                       <IconArrowLeft
                         className="mt-1"
                         type="button"
-                        onClick={() => navigate(`/administration/`)}
+                        onClick={() => navigate(`/administrations/`)}
                         color="grey"
                         size={28}
                       />
@@ -133,7 +127,6 @@ function AdministrationsForm() {
                     </h2>
                   </div>
                 </div>
-               
 
                 <fieldset>
                   <div className="form-group">
@@ -157,7 +150,10 @@ function AdministrationsForm() {
                     </small>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="exampleInputEmail1" className="form-label mt-4">
+                    <label
+                      htmlFor="exampleInputEmail1"
+                      className="form-label mt-4"
+                    >
                       Dirección de correo electrónico
                     </label>
                     <input

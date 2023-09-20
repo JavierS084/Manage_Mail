@@ -77,9 +77,9 @@ export const AdministrationsProvider = ({ children }) => {
     }
   };
 
-  const resetPassword = async (uuid, newFields) => {
+  const resetPassword = async (id, newFields) => {
     try {
-      const response = await resetPasswordUser(uuid, newFields);
+      const response = await resetPasswordUser(id, newFields);
       if (response.status === 200) {
         setMsg(response.data.msg);
       }
@@ -109,6 +109,7 @@ export const AdministrationsProvider = ({ children }) => {
         upUser,
         delUser,
         msg,
+        setMsg,
         msgError,
         sendEmailRecovery,
         resetPassword,

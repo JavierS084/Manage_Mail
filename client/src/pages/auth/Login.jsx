@@ -6,9 +6,8 @@ import { Image } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import { Orbit } from "@uiball/loaders";
 import { LoginUser, reset, getMe } from "../../auth/authSlice";
-//import { OtpInputPage } from "./OtpInputPage";
 import { useAdministrations } from "../../context";
-//import axios from "axios";
+
 import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
