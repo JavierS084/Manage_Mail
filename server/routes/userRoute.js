@@ -7,6 +7,7 @@ import {
     deleteUser,
     resetPassword,
 } from "../controllers/userController.js";
+import {recoveryPassword } from '../controllers/sendMailControllers.js'
 
 import { verifyUser, adminOnly } from "../middlewares/authUser.js";
 
@@ -17,6 +18,7 @@ router.get('/users',verifyUser, adminOnly, getUsers); ;
 router.get('/user/:id',verifyUser, adminOnly, getUserById);
 router.post('/user/create',verifyUser, adminOnly,createUser);
 router.put('/user/update/:id',verifyUser, adminOnly, updateUser);
+router.post('/send_recovery_email',  recoveryPassword);
 router.put('/user/reset-password/:uuid', resetPassword);
 router.delete('/user/delete/:id',verifyUser, adminOnly, deleteUser);
 

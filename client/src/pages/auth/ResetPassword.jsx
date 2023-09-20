@@ -1,27 +1,21 @@
-
-import { useState} from "react";
+import { useState } from "react";
 import { Formik, Form } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useAdministrations } from "../../context/AdministrationsContext";
-
 
 function ResetPasswordPage() {
   const { resetPassword } = useAdministrations();
   const params = useParams();
-  const navigate = useNavigate();
-
+  //const navigate = useNavigate();
 
   const [administration, setAdministration] = useState({
     password: "",
     confPassword: "",
   });
 
-
   const clearInput = () => {
     const timer = setTimeout(() => {
-      
       setAdministration([]);
-      
     }, 200);
     return () => clearTimeout(timer);
   };
@@ -34,7 +28,6 @@ function ResetPasswordPage() {
         validate={(values) => {
           let errores = {};
 
-         
           if (!values.password) {
             errores.password = "Por favor ingrese la contraseña";
           } else if (values.confPassword !== values.password) {
@@ -44,9 +37,10 @@ function ResetPasswordPage() {
           return errores;
         }}
         onSubmit={async (values) => {
-          await resetPassword(values)
-          console.log(values)
-          
+          if (params.uuid) {
+            await resetPassword(values);
+            console.log(params.uuid, values);
+          }
           setAdministration({
             password: "",
             confPassword: "",
@@ -66,17 +60,12 @@ function ResetPasswordPage() {
             <div className="row justify-content-center">
               <div className="form-group col-md-4 p-4">
                 <div className="d-flex flex-row">
-                  
                   <div className="col-md-6 flex-column  d-flex">
-                    <h2>
-                      Cambiar contraseña
-                    </h2>
+                    <h2>Cambiar contraseña</h2>
                   </div>
                 </div>
-               
 
                 <fieldset>
-                  
                   <div className="form-group">
                     <label
                       htmlFor="exampleInputPassword1"
@@ -124,7 +113,6 @@ function ResetPasswordPage() {
                     </small>
                   </div>
                 </fieldset>
-            
 
                 <div className="mt-4">
                   <button
