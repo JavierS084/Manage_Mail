@@ -14,7 +14,7 @@ import mailRoutes from "./routes/mailRoutes.js";
 
 import db from "./config/database.js"
 
-const hostname = 'localhost';
+
 dotenv.config();
 
 const app = express();
@@ -43,7 +43,7 @@ app.use(session({
 
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: `http://${process.env.HOSTNAME}:5173`,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     origin: true,
 }));
@@ -62,7 +62,7 @@ store.sync();
     host: "localhost", dominio pueda ser consultado
  */
 
-app.listen(process.env.APP_PORT, hostname, () => {
-    console.log(`Server running at http://${hostname}:${process.env.APP_PORT}/`);
+app.listen(process.env.APP_PORT, process.env.HOSTNAME, () => {
+    console.log(`Server running at http://${process.env.HOSTNAME}:${process.env.APP_PORT}/`);
 });
 

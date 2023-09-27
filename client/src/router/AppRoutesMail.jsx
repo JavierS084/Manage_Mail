@@ -23,14 +23,14 @@ import { AdministrationsForm } from "../components";
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMe());
     if (isError) {
       navigate("/");
     }
-  }, [dispatch, isError]);
+  }, [dispatch, isError, navigate]);
 
   return (
     <GroupsProvider>
@@ -40,14 +40,20 @@ export default function AppRoutesMail() {
             <Navigation />
             <div className="container pt-4">
               <Routes>
-                <Route
-                  path="/administrations"
-                  element={<AdministrationsPage />}
-                />
-                <Route
-                  path="/administrations/edit/:uuid"
-                  element={<AdministrationsForm />}
-                />
+                {user && user.role === "admin" ? (
+                  <>
+                    <Route
+                      path="/administrations"
+                      element={<AdministrationsPage />}
+                    />
+                    <Route
+                      path="/administrations/edit/:uuid"
+                      element={<AdministrationsForm />}
+                    />
+                  </>
+                ) : (
+                  <>{navigate("/home")}</>
+                )}
                 <Route path="/dependencies" element={<DependenciesPage />} />
                 <Route path="/groups" element={<GroupsPage />} />
                 <Route path="/mail-types" element={<MailTypesPage />} />

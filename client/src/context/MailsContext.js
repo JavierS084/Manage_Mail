@@ -1,4 +1,4 @@
-"use client"
+
 import { useContext, createContext, useState } from "react";
 import { getAllMails, getMailUser, getMail, createMail, updateMail, deleteMail } from "../api/mailsApi";
 
