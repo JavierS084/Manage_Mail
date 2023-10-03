@@ -42,7 +42,7 @@ export function DrawerNav() {
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+      <Button ref={btnRef} colorScheme="white" onClick={onOpen}>
         <IconHomeCog color="white" size={24} />
       </Button>
       <Drawer
@@ -98,7 +98,7 @@ export function DrawerNav() {
           <PopoverPassword/>
           <Divider />
           <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
+            <Button colorScheme="gray" variant="outline" mr={3} onClick={onClose}>
               Volver
             </Button>
             <Button onClick={logout} colorScheme="blue">

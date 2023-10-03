@@ -1,2 +1,2 @@
-export *  from './ResetPassword';
+export *  from './ResetPasswordPage';
 export * from  './Login';

@@ -1,7 +1,6 @@
 import React from "react";
-import {Popover, PopoverTrigger, Button, PopoverBody, PopoverContent, PopoverHeader, PopoverFooter, PopoverCloseButton, PopoverArrow, Box, ButtonGroup} from "@chakra-ui/react";
-
-
+import {Popover, PopoverTrigger, Button, PopoverBody, PopoverContent, PopoverHeader, PopoverFooter, PopoverCloseButton, PopoverArrow} from "@chakra-ui/react";
+import { ResetPassword } from "../auth/ResetPassword" 
 export function PopoverPassword() {
     const initialFocusRef = React.useRef()
     return (
@@ -14,14 +13,13 @@ export function PopoverPassword() {
           <Button>Quieres renovar tu contraseña? </Button>
         </PopoverTrigger>
         <PopoverContent color='white' bg='blue.800' borderColor='blue.800'>
-          <PopoverHeader pt={4} fontWeight='bold' border='0'>
+          <PopoverHeader pt={4} fontWeight='bold' border='0' bg='red.500'>
            Atencion!! este proceso es irreversible
           </PopoverHeader>
           <PopoverArrow bg='blue.800' />
           <PopoverCloseButton />
           <PopoverBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore.
+            <ResetPassword/>
           </PopoverBody>
           <PopoverFooter
             border='0'
@@ -29,14 +27,7 @@ export function PopoverPassword() {
             alignItems='center'
             justifyContent='space-between'
             pb={4}
-          >
-            <Box fontSize='sm'>Step 2 of 4</Box>
-            <ButtonGroup size='sm'>
-              <Button colorScheme='green'>Volver atras</Button>
-              <Button colorScheme='blue' ref={initialFocusRef}>
-                Enviar
-              </Button>
-            </ButtonGroup>
+          > 
           </PopoverFooter>
         </PopoverContent>
       </Popover>

@@ -12,6 +12,7 @@ export function Navigation() {
           Manage Mail
         </Link>
         <button
+         
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"

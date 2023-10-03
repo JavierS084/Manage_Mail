@@ -13,6 +13,7 @@ import {
   AdministrationsPage,
 } from "../pages";
 import {
+  AdministrationsProvider,
   DependenciesProvider,
   MailTypesProvider,
   RequestsProvider,
@@ -23,7 +24,7 @@ import { AdministrationsForm } from "../components";
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError, user } = useSelector((state) => state.auth);
+  const { isError } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMe());
@@ -33,6 +34,7 @@ export default function AppRoutesMail() {
   }, [dispatch, isError, navigate]);
 
   return (
+    <AdministrationsProvider>
     <GroupsProvider>
       <MailTypesProvider>
         <DependenciesProvider>
@@ -40,20 +42,15 @@ export default function AppRoutesMail() {
             <Navigation />
             <div className="container pt-4">
               <Routes>
-                {user && user.role === "admin" ? (
-                  <>
-                    <Route
-                      path="/administrations"
-                      element={<AdministrationsPage />}
-                    />
-                    <Route
-                      path="/administrations/edit/:uuid"
-                      element={<AdministrationsForm />}
-                    />
-                  </>
-                ) : (
-                  <>{navigate("/home")}</>
-                )}
+                <Route
+                  path="/administrations"
+                  element={<AdministrationsPage />}
+                />
+                <Route
+                  path="/administrations/edit/:uuid"
+                  element={<AdministrationsForm />}
+                />
+
                 <Route path="/dependencies" element={<DependenciesPage />} />
                 <Route path="/groups" element={<GroupsPage />} />
                 <Route path="/mail-types" element={<MailTypesPage />} />
@@ -66,5 +63,6 @@ export default function AppRoutesMail() {
         </DependenciesProvider>
       </MailTypesProvider>
     </GroupsProvider>
+    </AdministrationsProvider>
   );
 }
