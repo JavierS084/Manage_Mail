@@ -1,4 +1,4 @@
-"use client"
+
 import { useContext, createContext, useState } from "react";
 import { getAllMails, getMailUser, getMail, createMail, updateMail, deleteMail } from "../api/mailsApi";
 
@@ -13,7 +13,7 @@ export const useMails = () => {
     return context;
 }
 
-export const MailProvider = ({ children }) => {
+export const MailsProvider = ({ children }) => {
     const [mails, setMails] = useState([]);
     const [ gp, setGp ] = useState(false);
     const [msg, setMsg] = useState("");
@@ -92,4 +92,4 @@ export const MailProvider = ({ children }) => {
     )
 }
 
-export default MailProvider;
+export default MailsProvider;

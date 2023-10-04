@@ -1,8 +1,8 @@
-/*
-import { useEffect, useState } from "react";
-import { useMails } from "@/context/MailsContext";
 
-function MailSearch() {
+import { useEffect, useState } from "react";
+import { useMails } from "../../context/MailsContext";
+
+export function MailSearch() {
   const { mails, loadMails } = useMails();
 
   useEffect(() => {
@@ -102,4 +102,3 @@ function MailSearch() {
 }
 
 export default MailSearch;
-*/

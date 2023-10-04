@@ -8,8 +8,16 @@ const Dependencies = db.define('dependencies', {
     dependencia:{
         type: DataTypes.STRING,
         allowNull: false,
-        validate:{
-            notEmpty: true,
+        unique: {
+            msg: 'La dependencia no puede ser igual a un existente'
+        },
+        validate: {
+            isEmail: {
+                msg: 'la dependencia no es valida'
+            },
+            notEmpty: {
+                msg: 'Ingrese una depencia primeramente'
+            }
         }
     },
 

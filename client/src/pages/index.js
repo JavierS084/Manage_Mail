@@ -6,3 +6,4 @@ export * from "./GroupsPage"
 export * from "./NotFound";
 export * from "./auth";
 export * from "./AdministrationsPage";
+export * from "./MailsPage";

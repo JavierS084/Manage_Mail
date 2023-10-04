@@ -14,7 +14,7 @@ import mailRoutes from "./routes/mailRoutes.js";
 
 import db from "./config/database.js"
 
-const hostname = 'localhost';
+
 dotenv.config();
 
 const app = express();
@@ -26,8 +26,8 @@ const store = new sessionStore({
 /*
 (async () => {
     await db.sync();
-})();
-*/
+})();*/
+
 app.use(session({
     secret: process.env.SESS_SECRET,
     resave: false,
@@ -37,13 +37,14 @@ app.use(session({
         secure: 'auto'
     }
 }));
+store.sync();
 /**El middleware cors vereifica si el usuario utiliza credenciles para enviar
  * la peticion y solo que pertenezcan a es dns accederan como tambien esta restringido los metodos
  */
 
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: `http://${process.env.HOSTNAME}:5173`,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     origin: true,
 }));
@@ -55,14 +56,13 @@ app.use(express.json({ limit: "25mb" }));
 app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes);
 
 
-store.sync();
 /**
  * El Puerto se inicializa en el archivo .env 
  * El hostname esta declarado para que solo desde un, process.env.USER_NAME, process.env.PASSWORD_USER , {
     host: "localhost", dominio pueda ser consultado
  */
 
-app.listen(process.env.APP_PORT, hostname, () => {
-    console.log(`Server running at http://${hostname}:${process.env.APP_PORT}/`);
+app.listen(process.env.APP_PORT, process.env.HOSTNAME, () => {
+    console.log(`Server running at http://${process.env.HOSTNAME}:${process.env.APP_PORT}/`);
 });
 

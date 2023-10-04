@@ -127,7 +127,7 @@ export const Login = () => {
                 </div>
                 <hr />
                 <div className="d-flex p-2 justify-content-end">
-                  <a onClick={navigateToOtp}>
+                  <a className='resetPassword' onClick={navigateToOtp}>
                     ¿Olvidaste tu contraseña?{" "}
                   </a>
                 </div>

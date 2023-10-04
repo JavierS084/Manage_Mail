@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { IconArrowLeft } from "@tabler/icons-react";
 import { useGroups } from "../../context/GroupsContext";
 
 export function GroupForm() {
@@ -13,6 +14,7 @@ export function GroupForm() {
   });
 
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -92,6 +94,30 @@ export function GroupForm() {
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
               <div className="form-group col-md-9 p-4">
+
+              <div className="d-flex flex-row">
+                  {params.id ? (
+                    <div className="col-sm-1 flex-column d-flex">
+                      <IconArrowLeft
+                        className="mt-1"
+                        type="button"
+                        onClick={() => navigate(`/groups`)}
+                        color="grey"
+                        size={28}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <div className="col-md-8 flex-column  d-flex">
+                    <h2>
+                      {params.uuid
+                        ? "Editar Grupo"
+                        : "Crear un nuevo Grupo"}
+                    </h2>
+                  </div>
+                </div>
+
                 <fieldset>
                   <div className="form-group">
                     <label className="form-label mt-4">Correo de Grupo</label>

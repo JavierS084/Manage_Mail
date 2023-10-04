@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import DrawerNav from "../Drawer/DrawerNav";
 import DrawerNotification from "../Drawer/DrawerNotification";
+import { useSelector } from "react-redux";
 
 export function Navigation() {
+  const { user } = useSelector((state) => state.auth);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
@@ -10,6 +12,7 @@ export function Navigation() {
           Manage Mail
         </Link>
         <button
+         
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -63,12 +66,18 @@ export function Navigation() {
                 </Link>
               </div>
             </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/administrations">
-                Administración
-              </Link>
-            </li>
+            {
+              user && user.role === "admin" ? (
+                <li className="nav-item">
+                <Link className="nav-link" to="/administrations">
+                  Administración
+                </Link>
+              </li>
+              ):(
+                <></>
+              )
+            }
+           
           </ul>
           <div className="d-flex">
             

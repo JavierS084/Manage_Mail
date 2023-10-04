@@ -1,27 +1,28 @@
-/*
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-hot-toast";
-import { useMails } from "@/context/MailsContext";
 
-export default function MailCard({ mails }) {
+import { useMails } from "../../context";
+
+export function MailCard({ mails }) {
   const { delMail, setMails } = useMails();
   const [accion, setAccion] = useState(false);
   const [select, setSelect] = useState([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
+  const navigate = useNavigate();
   //const [ selectedit , setSelectedit] = useState();
   let date = new Date();
-  let output = String(date.getDate()).padStart(2, '0') + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + date.getFullYear();
-
-  
-
+  let output =
+    String(date.getDate()).padStart(2, "0") +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    date.getFullYear();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const router = useRouter();
 
   useEffect(() => {
     //pasando los 10 segundos se deshabilita el boton eliminar
@@ -67,7 +68,7 @@ export default function MailCard({ mails }) {
 
   return (
     <div className="row">
-      <div className="card ">
+      <div className="card">
         <div className="card-body">
           <h2 className="card-title">Lista de Correos</h2>
           <div className="col-md-5">
@@ -83,7 +84,7 @@ export default function MailCard({ mails }) {
               type="button"
               className="btn btn-warning m-1 px-4"
               disabled={!accion}
-              onClick={() => router.push(`/mails/edit/${select}`)}
+              onClick={() => navigate(`/mails/edit/${select}`)}
             >
               Editar
             </button>
@@ -134,10 +135,14 @@ export default function MailCard({ mails }) {
                   <td>{mail.request.solicitud}</td>
                   <td>{mail.dateSolicitud}</td>
                   <td>{mail.dateInicial}</td>
-                  {output >= mail.dateFinal ? (
-                    <td id="fechared">{mail.dateFinal}</td>
+                  {mail.dateFinal ? (
+                    output >= mail.dateFinal ? (
+                      <td id="fechared">{mail.dateFinal}</td>
+                    ) : (
+                      <td>{mail.dateFinal}</td>
+                    )
                   ) : (
-                    <td>{mail.dateFinal}</td> 
+                    <td>Sin fecha de finalización</td>
                   )}
                 </tr>
               ))}
@@ -165,7 +170,7 @@ export default function MailCard({ mails }) {
                 onClick={() => {
                   delMail(select);
                   setSelect([]);
-                  toast.success("Se ha eliminado Correctamente");
+
                   handleClose();
                 }}
                 type="button"
@@ -179,4 +184,4 @@ export default function MailCard({ mails }) {
     </div>
   );
 }
-*/
+export default MailCard;

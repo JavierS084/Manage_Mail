@@ -11,12 +11,15 @@ import {
   RequestsPage,
   GroupsPage,
   AdministrationsPage,
+  MailsPage
 } from "../pages";
 import {
+  AdministrationsProvider,
   DependenciesProvider,
   MailTypesProvider,
   RequestsProvider,
   GroupsProvider,
+  MailsProvider,
 } from "../context";
 import { AdministrationsForm } from "../components";
 
@@ -30,35 +33,47 @@ export default function AppRoutesMail() {
     if (isError) {
       navigate("/");
     }
-  }, [dispatch, isError]);
+  }, [dispatch, isError, navigate]);
 
   return (
-    <GroupsProvider>
-      <MailTypesProvider>
-        <DependenciesProvider>
-          <RequestsProvider>
-            <Navigation />
-            <div className="container pt-4">
-              <Routes>
-                <Route
-                  path="/administrations"
-                  element={<AdministrationsPage />}
-                />
-                <Route
-                  path="/administrations/edit/:uuid"
-                  element={<AdministrationsForm />}
-                />
-                <Route path="/dependencies" element={<DependenciesPage />} />
-                <Route path="/groups" element={<GroupsPage />} />
-                <Route path="/mail-types" element={<MailTypesPage />} />
-                <Route path="/requests" element={<RequestsPage />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </RequestsProvider>
-        </DependenciesProvider>
-      </MailTypesProvider>
-    </GroupsProvider>
+    <AdministrationsProvider>
+      <MailsProvider>
+        <GroupsProvider>
+          <MailTypesProvider>
+            <DependenciesProvider>
+              <RequestsProvider>
+                <Navigation />
+               
+                  <Routes>
+                    <Route
+                      path="/administrations"
+                      element={<AdministrationsPage />}
+                    />
+                    <Route
+                      path="/mails"
+                      element={<MailsPage />}
+                    />
+                    <Route
+                      path="/administrations/edit/:uuid"
+                      element={<AdministrationsForm />}
+                    />
+
+                    <Route
+                      path="/dependencies"
+                      element={<DependenciesPage />}
+                    />
+                    <Route path="/groups" element={<GroupsPage />} />
+                    <Route path="/mail-types" element={<MailTypesPage />} />
+                    <Route path="/requests" element={<RequestsPage />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/*" element={<NotFound />} />
+                  </Routes>
+                
+              </RequestsProvider>
+            </DependenciesProvider>
+          </MailTypesProvider>
+        </GroupsProvider>
+      </MailsProvider>
+    </AdministrationsProvider>
   );
 }

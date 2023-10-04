@@ -12,10 +12,10 @@ export function GroupsPage() {
 
   useEffect(() => {
     if (msg) {
-        toast.success(msg);
-      } else if (msgError) {
-        toast.error(msgError);
-      }
+      toast.success(msg);
+    } else if (msgError) {
+      toast.error(msgError);
+    }
     const timer = setTimeout(() => {
       loadGroups();
     }, 500);
@@ -38,33 +38,35 @@ export function GroupsPage() {
   }
 
   return (
-    <div className="card">
+    <div className="container pt-4">
+      <div className="card">
         <ToastContainer />
-      <div className="card-body">
-        <Tabs
-          defaultActiveKey="groupsList"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab eventKey="groupsList" title="Grupos">
-            <div
-              className="tab-pane fade active show"
-              id="listaGrupos"
-              role="tabpanel"
-            >
-              <article>{renderlista()}</article>
-            </div>
-          </Tab>
-          <Tab eventKey="addDependency" title="Crear Grupos">
-            <div
-              className="tab-pane fade active show"
-              id="createRequest"
-              role="tabpanel"
-            >
-              {<GroupForm />}
-            </div>
-          </Tab>
-        </Tabs>
+        <div className="card-body">
+          <Tabs
+            defaultActiveKey="groupsList"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="groupsList" title="Grupos">
+              <div
+                className="tab-pane fade active show"
+                id="listaGrupos"
+                role="tabpanel"
+              >
+                <article>{renderlista()}</article>
+              </div>
+            </Tab>
+            <Tab eventKey="addDependency" title="Crear Grupos">
+              <div
+                className="tab-pane fade active show"
+                id="createRequest"
+                role="tabpanel"
+              >
+                {<GroupForm />}
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

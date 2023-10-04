@@ -22,7 +22,7 @@ export const useAdministrations = () => {
 export const AdministrationsProvider = ({ children }) => {
   const [administrations, setAdministrations] = useState([]);
   
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState(""); 
   const [msgError, setMsgError] = useState("");
 
 

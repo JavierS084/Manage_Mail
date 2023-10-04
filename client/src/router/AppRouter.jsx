@@ -4,7 +4,7 @@ import Login from "../pages/auth/Login";
 import { AdministrationsProvider } from "../context";
 
 import AppRoutesMail from "./AppRoutesMail";
-import ResetPasswordPage from "../pages/auth/ResetPassword";
+import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 
 
 export const AppRouter = () => {

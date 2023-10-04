@@ -12,7 +12,6 @@ export function AdministrationsPage() {
   const { administrations, loadUsers, msg, msgError } = useAdministrations();
 
   useEffect(() => {
-
     if (msg) {
       toast.success(msg);
     } else if (msgError) {
@@ -39,29 +38,31 @@ export function AdministrationsPage() {
   }
 
   return (
-    <div className="card">
-      <ToastContainer />
-      <div className="card-body">
-        <Tabs
-          defaultActiveKey="listaUsers"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab eventKey="listaUsers" title="Lista de Usuarios">
-            <div
-              className="tab-pane fade active show"
-              id="listaUsers"
-              role="tabpanel"
-            >
-              {renderlista()}
-            </div>
-          </Tab>
-          <Tab eventKey="crearUsers" title="Crear Usuarios">
-            <AdministrationForm />
-          </Tab>
-          <Tab eventKey="notification" title="Notificacion"></Tab>
-          <Tab eventKey="administracion" title="Administracion"></Tab>
-        </Tabs>
+    <div className="container pt-4">
+      <div className="card">
+        <ToastContainer />
+        <div className="card-body">
+          <Tabs
+            defaultActiveKey="listaUsers"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="listaUsers" title="Lista de Usuarios">
+              <div
+                className="tab-pane fade active show"
+                id="listaUsers"
+                role="tabpanel"
+              >
+                {renderlista()}
+              </div>
+            </Tab>
+            <Tab eventKey="crearUsers" title="Crear Usuarios">
+              <AdministrationForm />
+            </Tab>
+            <Tab eventKey="notification" title="Notificacion"></Tab>
+            <Tab eventKey="administracion" title="Administracion"></Tab>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
