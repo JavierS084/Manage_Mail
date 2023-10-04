@@ -33,7 +33,7 @@ export function ResetPassword() {
 
     return () => clearTimeout(timer);
   };
-  console.log(user.uuid)
+
 
   return (
     <Formik

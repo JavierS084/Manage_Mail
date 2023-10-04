@@ -26,8 +26,8 @@ const store = new sessionStore({
 /*
 (async () => {
     await db.sync();
-})();
-*/
+})();*/
+
 app.use(session({
     secret: process.env.SESS_SECRET,
     resave: false,
@@ -37,6 +37,7 @@ app.use(session({
         secure: 'auto'
     }
 }));
+store.sync();
 /**El middleware cors vereifica si el usuario utiliza credenciles para enviar
  * la peticion y solo que pertenezcan a es dns accederan como tambien esta restringido los metodos
  */
@@ -55,7 +56,6 @@ app.use(express.json({ limit: "25mb" }));
 app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes);
 
 
-store.sync();
 /**
  * El Puerto se inicializa en el archivo .env 
  * El hostname esta declarado para que solo desde un, process.env.USER_NAME, process.env.PASSWORD_USER , {

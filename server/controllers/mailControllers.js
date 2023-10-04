@@ -163,7 +163,7 @@ export const createMail = async (req, res) => {
                 dependencyId: dependencyId,
                 groupId: groupId
             });
-            res.status(201).json({ msg: "Mail Created Successfuly" });
+            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
 
         } else if (!dateFinal && !groupId) {
             await Mail.create({
@@ -175,7 +175,7 @@ export const createMail = async (req, res) => {
                 requestId: requestId,
                 dependencyId: dependencyId,
             });
-            res.status(201).json({ msg: "Mail Created Successfuly" });
+            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
         } else if (!groupId && dateFinal) {
             await Mail.create({
                 user: user,
@@ -188,7 +188,7 @@ export const createMail = async (req, res) => {
                 dependencyId: dependencyId,
 
             });
-            res.status(201).json({ msg: "Mail Created Successfuly" });
+            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
         } else if (!dateFinal && groupId) {
             await Mail.create({
                 user: user,
@@ -200,7 +200,7 @@ export const createMail = async (req, res) => {
                 dependencyId: dependencyId,
                 groupId: groupId
             });
-            res.status(201).json({ msg: "Mail Created Successfuly" });
+            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
         }
     } catch (error) {
         res.status(500).json({ msg: error.message });

@@ -126,7 +126,7 @@ export default function GroupCard({ groups }) {
                       <td>{group.dateFinalG}</td>
                     )
                   ) : (
-                    <td>Sin fecha de finalizacion</td>
+                    <td>Sin fecha de finalización</td>
                   )}
                 </tr>
               ))}

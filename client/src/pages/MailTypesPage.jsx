@@ -41,33 +41,35 @@ export function MailTypesPage() {
   }
 
   return (
-    <div className="card">
-      <ToastContainer />
-      <div className="card-body">
-        <Tabs
-          defaultActiveKey="listMailtypes"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab eventKey="listMailtypes" title="Tipo de Correo">
-            <div
-              className="tab-pane fade active show"
-              id="listaSolicituds"
-              role="tabpanel"
-            >
-              <article>{renderlista()}</article>
-            </div>
-          </Tab>
-          <Tab eventKey="addtype" title="Crear Tipo de correo">
-            <div
-              className="tab-pane fade active show"
-              id="createRequest"
-              role="tabpanel"
-            >
-              {<MailTypesForm />}
-            </div>
-          </Tab>
-        </Tabs>
+    <div className="container pt-4">
+      <div className="card">
+        <ToastContainer />
+        <div className="card-body">
+          <Tabs
+            defaultActiveKey="listMailtypes"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="listMailtypes" title="Tipo de Correo">
+              <div
+                className="tab-pane fade active show"
+                id="listaSolicituds"
+                role="tabpanel"
+              >
+                <article>{renderlista()}</article>
+              </div>
+            </Tab>
+            <Tab eventKey="addtype" title="Crear Tipo de correo">
+              <div
+                className="tab-pane fade active show"
+                id="createRequest"
+                role="tabpanel"
+              >
+                {<MailTypesForm />}
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

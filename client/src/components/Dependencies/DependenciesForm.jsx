@@ -13,7 +13,7 @@ function DependenciesForm() {
   });
 
   useEffect(() => {
-    const loadDependencies = async () => {
+    const load_Dependencies = async () => {
       if (params && params.id) {
         const dependency = await getDp(params.id);
         setDependency({
@@ -21,13 +21,17 @@ function DependenciesForm() {
         });
       }
     };
-    loadDependencies();
+    load_Dependencies();
   }, []);
 
-  const clearInput = () => {
+
+ // console.log(dependency)
+  const clearInput  = () => {
+
     const timer = setTimeout(() => {
-      setDependency([]);
-    }, 200);
+      setDependency([])
+      
+    }, 300);
     return () => clearTimeout(timer);
   };
 
@@ -55,6 +59,7 @@ function DependenciesForm() {
             
           } else {
             await crDp(values);
+       
           }
           setDependency({
             dependencia: "",
@@ -80,14 +85,14 @@ function DependenciesForm() {
                     Nueva dependencia
                   </label>
                   <input
-                    className="form-control"
                     type="text"
                     placeholder="Inserte aqui la nueva dependencia..."
                     data-listener-added_8ef6daa8="true"
                     name="dependencia"
-                    onChange={handleChange}
                     value={values.dependencia}
+                    onChange={handleChange}
                     onBlur={handleBlur}
+                    className="form-control"
                   />
                   {touched.dependencia && errors.dependencia && (
                     <span className="error pl-5">{errors.dependencia}</span>
