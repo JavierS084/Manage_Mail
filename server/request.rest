@@ -13,10 +13,11 @@ Content-Type: application/json
 
 {
  "name": "Jose Perez",
-  "email": "codeark35@gmail.com",
+  "email": "jsanchez@uni.edu.py",
   "password": "123456",
   "confPassword": "123456",
-  "role": "admin"
+  "role": "admin",
+  "notification": "true"
 }   
 
 ### Update a user

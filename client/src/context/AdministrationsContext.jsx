@@ -50,7 +50,7 @@ export const AdministrationsProvider = ({ children }) => {
       //console.error(response.data)
     } catch (error) {
       setMsgError(error.response.data.msg);
-    //  console.error(error.response.data)
+      console.error(error.response.data)
     }
   };
 

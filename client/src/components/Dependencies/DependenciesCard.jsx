@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
-import {Button, Modal} from "react-bootstrap";
+import Pagination from "react-bootstrap/Pagination";
+import { Button, Modal } from "react-bootstrap";
 //import Modal from "react-bootstrap";
 import { useDependencies } from "../../context/DependenciesContext";
 
@@ -18,6 +18,7 @@ export default function DependenciesCard({ dependencies }) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  console.log(itemsPerPage);
 
   // Esto calcula los elementos que se deben mostrar en la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -128,7 +129,6 @@ export default function DependenciesCard({ dependencies }) {
                       key={dependency.id}
                     />
                   </td>
-
                   <td>{dependency.id}</td>
                   <td>{dependency.dependencia}</td>
                   <td>{dependency.createdAt}</td>
@@ -137,26 +137,34 @@ export default function DependenciesCard({ dependencies }) {
             </tbody>
             <nav>
               <ul className="pagination">
-
-                <select className="selectPage"  name="selectPage" id="">
+                <select
+                  className="selectPage"
+                  name="selectPage"
+                  onChange={(event) =>
+                    setItemsPerPage(parseInt(event.target.value))
+                  }
+                >
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
-            
                 </select>
 
-                
-                {pageNumbers.map((number) => (
-                  <li key={number} className="page-item">
-                    <a
-                      onClick={(event) => handlePageChange(event, number)}
-                      href={`p=${number}`}
-                      className="page-link"
-                    >
-                      {number}
-                    </a>
-                  </li>
-                ))}
+                <Pagination>
+                  <Pagination.First />
+
+                  {pageNumbers.map((number) => (
+                    <>
+                      <Pagination.Item
+                        onClick={(event) => handlePageChange(event, number)}
+                        href={`?page=${number}`}
+                      >
+                        {number}
+                      </Pagination.Item>
+                    </>
+                  ))}
+
+                  <Pagination.Last />
+                </Pagination>
               </ul>
             </nav>
           </table>
@@ -195,4 +203,3 @@ export default function DependenciesCard({ dependencies }) {
     </div>
   );
 }
-
