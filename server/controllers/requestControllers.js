@@ -1,10 +1,11 @@
 import { createClient } from 'redis';
+import dotenv from "dotenv";
 import Request from '../models/requestModel.js'
 
 
 const client = createClient({
-    host: "127.0.0.1",
-    port: 6379,
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
 });
 
 client.on('error', err => console.log('Redis Client Error', err));
