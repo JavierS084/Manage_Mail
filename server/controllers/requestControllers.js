@@ -1,20 +1,46 @@
+import { createClient } from 'redis';
 import Request from '../models/requestModel.js'
+
+
+const client = createClient({
+    host: "127.0.0.1",
+    port: 6379,
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
 
 export const getAllRequests = async (req, res) => {
     try {
-        let response;
-        response = await Request.findAll({
+        await client.connect();
+        // Search Data in Redis
+        const reply = await client.get("requests")
+        // if exists returns from redis and finish with response
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+
+        const response = await Request.findAll({
             attributes: ['id', 'solicitud'],
 
         });
-        console.table(response);
-        res.status(200).json(response);
+        // Saving the results in Redis. The "EX" and 30, sets an expiration of 30 Seconds
+        await client.set(
+            "requests",
+            JSON.stringify(response),
+            {
+                EX: 30,
+            }
+        );
+
+        res.status(200).json({ source: 'api', data: response });
 
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+        client.disconnect();
     }
+};
 
-}
+
+
 
 export const getRequest = async (req, res) => {
     try {
