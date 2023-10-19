@@ -125,7 +125,7 @@ export function MailCard({ mails }) {
                   <td>{mail.user}</td>
                   <td>{mail.dependency.dependencia}</td>
                   {mail.group ? (
-                    <td className="ml-2 text-center">
+                    <td>
                       {mail.group.description}
                     </td>
                   ) : (

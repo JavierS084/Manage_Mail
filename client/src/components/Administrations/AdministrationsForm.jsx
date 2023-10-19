@@ -6,7 +6,8 @@ import { useAdministrations } from "../../context/AdministrationsContext";
 import { IconArrowLeft } from "@tabler/icons-react";
 
 export function AdministrationsForm() {
-  const { administrations, crUser, upUser, gtUser } = useAdministrations();
+  const { administrations, crUser, upUser, gtUser/*, sendEmailNotification */} = useAdministrations();
+  //const [notificar, setNotificar] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -16,6 +17,7 @@ export function AdministrationsForm() {
     email: "",
     password: "",
     confPassword: "",
+    notification: false,
   });
   useEffect(() => {
     const loadAdministration = async () => {
@@ -27,6 +29,7 @@ export function AdministrationsForm() {
           email: administration.email,
           password: administration.password,
           confPassword: administration.confPassword,
+          
         });
       }
     };
@@ -39,7 +42,16 @@ export function AdministrationsForm() {
     }, 200);
     return () => clearTimeout(timer);
   };
-
+/*
+  const sendNotification = () => {
+    if (notificar === false) {
+      setNotificar(true);
+     // sendEmailNotification(administration.email, administration )
+    } else {
+      setNotificar(false);
+    }
+  };*/
+  
   return (
     <div className="card">
       <Formik
@@ -239,6 +251,27 @@ export function AdministrationsForm() {
                     <option value="admin">Administrador</option>
                   </FormSelect.Select>
                 </fieldset>
+                <fieldset className="form-group">
+                  <legend className="mt-4"></legend>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckDefault"
+                      name="notification"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      checked={values.notification}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefault"
+                    >
+                      Notificar por correo al usuario ?
+                    </label>
+                  </div>
+                </fieldset>
+                <hr />
 
                 <div className="mt-4">
                   <button

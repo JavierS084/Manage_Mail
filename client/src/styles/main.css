@@ -37,3 +37,16 @@ div#card-mail.card {
 .resetPassword{
   cursor: pointer;
 }
+
+select.selectPage {
+  background-color: rgb(218, 218, 218);
+  max-width: 10rem;
+  max-height: 4rem;
+  margin: 1rem 0rem 1rem 0.5rem;
+  padding: 0rem 0.5rem 0rem 1rem;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}

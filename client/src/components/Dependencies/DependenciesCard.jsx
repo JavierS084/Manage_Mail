@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-//import PropTypes from " ";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import Pagination from "react-bootstrap/Pagination";
+import { Button, Modal } from "react-bootstrap";
+//import Modal from "react-bootstrap";
 import { useDependencies } from "../../context/DependenciesContext";
 
 export default function DependenciesCard({ dependencies }) {
@@ -15,6 +15,28 @@ export default function DependenciesCard({ dependencies }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  console.log(itemsPerPage);
+
+  // Esto calcula los elementos que se deben mostrar en la página actual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = dependencies.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Manejar cambio de página
+  const handlePageChange = (event, pageNumber) => {
+    event.preventDefault();
+    setCurrentPage(pageNumber);
+  };
+
+  //Generar la cantidad de paginas
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(dependencies.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -95,7 +117,7 @@ export default function DependenciesCard({ dependencies }) {
             </thead>
 
             <tbody>
-              {dependencies.map((dependency) => (
+              {currentItems.map((dependency) => (
                 <tr scope="row" key={dependency.id}>
                   <td>
                     <input
@@ -107,13 +129,44 @@ export default function DependenciesCard({ dependencies }) {
                       key={dependency.id}
                     />
                   </td>
-
                   <td>{dependency.id}</td>
                   <td>{dependency.dependencia}</td>
                   <td>{dependency.createdAt}</td>
                 </tr>
               ))}
             </tbody>
+            <nav>
+              <ul className="pagination">
+                <select
+                  className="selectPage"
+                  name="selectPage"
+                  onChange={(event) =>
+                    setItemsPerPage(parseInt(event.target.value))
+                  }
+                >
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+
+                <Pagination>
+                  <Pagination.First />
+
+                  {pageNumbers.map((number) => (
+                    <>
+                      <Pagination.Item
+                        onClick={(event) => handlePageChange(event, number)}
+                        href={`?page=${number}`}
+                      >
+                        {number}
+                      </Pagination.Item>
+                    </>
+                  ))}
+
+                  <Pagination.Last />
+                </Pagination>
+              </ul>
+            </nav>
           </table>
 
           <Modal
@@ -150,8 +203,3 @@ export default function DependenciesCard({ dependencies }) {
     </div>
   );
 }
-/*
-DependenciesCard.propTypes = {
-  dependencies: PropTypes.node,
-};
-*/
