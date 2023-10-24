@@ -78,7 +78,7 @@ Content-Type: application/json
 
 }
 ### get all the users
-GET  http://localhost:3030/requests
+GET  http://localhost:3030/mails
 
 ### prueba
 POST http://localhost:3030/send_recovery_email HTTP/1.1

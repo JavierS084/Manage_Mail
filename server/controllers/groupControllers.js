@@ -1,9 +1,24 @@
 import { Sequelize } from "sequelize";
-
+import { createClient } from 'redis';
+import dotenv from "dotenv";
 import Group from "../models/groupModel.js";
+
+
+dotenv.config();
+const client = createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
 
 export const getAllGroups = async (req, res) => {
     try {
+        await client.connect();
+        // Search Data in Redis
+        const reply = await client.get("groups")
+        // if exists returns from redis and finish with response
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
         let response;
         response = await Group.findAll({
             attributes: [
@@ -13,11 +28,20 @@ export const getAllGroups = async (req, res) => {
                 [Sequelize.fn('date_format', Sequelize.col('dateInicialG'), '%d-%m-%Y'), 'dateInicialG'],
                 [Sequelize.fn('date_format', Sequelize.col('dateFinalG'), '%d-%m-%Y'), 'dateFinalG'],],
         });
-        console.table(response);
-        res.status(200).json(response);
+        await client.set(
+            "groups",
+            JSON.stringify(response),
+            {
+                EX: 30,
+            }
+        );
+        res.status(200).json({ source: 'api', data: response });
+        
 
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+        client.disconnect();
     }
 
 }

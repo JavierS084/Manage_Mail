@@ -20,13 +20,13 @@ export const MailsProvider = ({ children }) => {
 
     async function loadMails() {
         const response = await getAllMails();
-        setMails(response.data);
+        setMails(response.data.data);
        
     }
 
     async function loadMailUser(){
         const response = await getMailUser();
-        setMails(response.data);
+        setMails(response.data.data);
     }
 
     const gtMail = async (id) => {
@@ -39,7 +39,6 @@ export const MailsProvider = ({ children }) => {
         }
         
     }   
-     
 
     const crMail = async (mail) => {
         try {

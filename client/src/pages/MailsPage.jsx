@@ -7,6 +7,7 @@ import { useMails } from "../context/MailsContext";
 import MailSearch from "../components/Mails/MailSearch";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Orbit } from "@uiball/loaders";
 
 export function MailsPage() {
   const { mails, loadMails, msg, msgError } = useMails();
@@ -29,6 +30,7 @@ export function MailsPage() {
       return (
         <div className="card">
           <div className="card-body">
+          <Orbit size={25} speed={1.5} color="gray" />
             <h1 className="card-title">No existe correos disponibles</h1>
           </div>
         </div>

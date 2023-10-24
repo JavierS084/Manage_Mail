@@ -24,7 +24,7 @@ export const GroupsProvider = ({ children }) => {
 
   async function loadGroups() {
     const response = await getAllGroups();
-    setGroups(response.data);
+    setGroups(response.data.data);
   }
 
   const gtGroup = async (id) => {

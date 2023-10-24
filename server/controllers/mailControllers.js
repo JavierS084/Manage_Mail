@@ -1,3 +1,5 @@
+import { createClient } from 'redis';
+import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import Mail from "../models/mailModel.js";
 import MailType from "../models/mailTypeModel.js";
@@ -5,8 +7,23 @@ import Dependency from "../models/dependencyModel.js";
 import Request from "../models/requestModel.js";
 import Group from "../models/groupModel.js";
 
+
+dotenv.config();
+const client = createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
+
 export const getAllMails = async (req, res) => {
     try {
+        await client.connect();
+        // Search Data in Redis
+        const reply = await client.get("mails")
+        // if exists returns from redis and finish with response
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+
         let response;
         response = await Mail.findAll({
 
@@ -42,16 +59,31 @@ export const getAllMails = async (req, res) => {
             ]
 
         });
+        // Saving the results in Redis. The "EX" and 30, sets an expiration of 30 Seconds
+        await client.set(
+            "mails",
+            JSON.stringify(response),
+            {
+                EX: 30,
+            }
+        );
 
-        res.status(200).json(response);
+        res.status(200).json({ source: 'api', data: response });
 
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+        client.disconnect();
     }
 }
 
 export const getMailUser = async (req, res) => {
     try {
+        await client.connect();
+        // Search Data in Redis
+        const reply = await client.get("mail-user")
+        // if exists returns from redis and finish with response
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
         let response;
         response = await Mail.findAll({
             attributes: ['id', 'user'],
@@ -64,14 +96,22 @@ export const getMailUser = async (req, res) => {
                 }
             ]
         });
+        // Saving the results in Redis. The "EX" and 30, sets an expiration of 30 Seconds
+        await client.set(
+            "mail-user",
+            JSON.stringify(response),
+            {
+                EX: 30,
+            }
+        );
         res.status(200).json(response);
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+        client.disconnect();
     }
 
 }
-
-
 
 
 export const getAllGroupsMails = async (req, res) => {
