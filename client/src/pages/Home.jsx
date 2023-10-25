@@ -1,7 +1,31 @@
+import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { Orbit } from "@uiball/loaders";
+import MailExpired from "../components/Home/MailExpired";
+import { useMails } from "../context";
 
 export function Home() {
+  const { mailsExpired, loadMailsExpired } = useMails();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadMailsExpired();
+    }, 500)
+    return () => clearTimeout(timer);
+  }, []);
+
+  function renderlista() {
+    if (!mailsExpired) {
+      return (
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
+        </div>
+      );
+    } else {
+      return <MailExpired mailsExpired={mailsExpired} />;
+    }
+  }
   return (
     <div className="container-fluid pt-4">
       <div className="card">
@@ -20,7 +44,7 @@ export function Home() {
               ></div>
             </Tab>
             <Tab eventKey="mailexpired" title="Correos Expirados">
-              <article></article>
+              <article>{renderlista()}</article>
             </Tab>
 
             <Tab eventKey="administracion" title="Administracion"></Tab>

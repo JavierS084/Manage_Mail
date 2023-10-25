@@ -1,15 +1,34 @@
+import { createClient } from 'redis';
+import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import Mail from "../models/mailModel.js";
 import MailType from "../models/mailTypeModel.js";
 import Dependency from "../models/dependencyModel.js";
 import Request from "../models/requestModel.js";
 import Group from "../models/groupModel.js";
+let totalRequests = 1;
+let processedRequests = 0;
+
+dotenv.config();
+const client = createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+const cacheAndRespond = async (key, response, res) => {
+    await client.set(key, JSON.stringify(response), { EX: 30 });
+    res.status(200).json({ source: 'api', data: response });
+};
 
 export const getAllMails = async (req, res) => {
     try {
-        let response;
-        response = await Mail.findAll({
+        await client.connect();
+        const reply = await client.get("mails");
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
 
+        const response = await Mail.findAll({
             attributes: [
                 'id',
                 'user',
@@ -40,20 +59,91 @@ export const getAllMails = async (req, res) => {
                     required: false,
                 }
             ]
-
         });
 
-        res.status(200).json(response);
+        cacheAndRespond("mails", response, res);
 
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+        // Incrementa el contador de solicitudes procesadas
+        processedRequests++;
+
+        if (processedRequests === totalRequests) {
+            // Si todas las solicitudes han sido procesadas, cierra el socket
+            client.quit();
+            totalRequests++;
+        }
+    }
+};
+
+export const getMailsExpired = async (req, res) => {
+    try {
+        await client.connect();
+        const reply = await client.get("mailsExpired");
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+
+        const response = await Mail.findAll({
+            attributes: [
+                'id',
+                'user',
+                'solicitante',
+                [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%d-%m-%Y'), 'dateSolicitud'],
+                [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%d-%m-%Y'), 'dateInicial'],
+                [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],
+            ],
+            include: [
+                {
+                    model: MailType,
+                    attributes: ['id', 'tipo'],
+                    required: true,
+                },
+                {
+                    model: Dependency,
+                    attributes: ['id', 'dependencia'],
+                    required: true,
+                },
+                {
+                    model: Request,
+                    attributes: ['id', 'solicitud'],
+                    required: true,
+                },
+                {
+                    model: Group,
+                    attributes: ['id', 'email', 'description'],
+                    required: false,
+                }
+            ],
+            where: {
+                dateFinal: {
+                    [Sequelize.Op.lte]: new Date()
+                }
+            }
+        });
+
+        cacheAndRespond("mailsExpired", response, res);
+
+    } catch (error) {
+        res.json({ message: error.message });
+    } finally {
+        // Incrementa el contador de solicitudes procesadas
+        processedRequests++;
+
+        if (processedRequests === totalRequests) {
+            // Si todas las solicitudes han sido procesadas, cierra el socket
+            client.quit();
+            totalRequests++;
+        }
     }
 }
 
 export const getMailUser = async (req, res) => {
     try {
-        let response;
-        response = await Mail.findAll({
+        await client.connect();
+        const reply = await client.get("mail-user");
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+
+        const response = await Mail.findAll({
             attributes: ['id', 'user'],
             include: [
                 {
@@ -64,16 +154,27 @@ export const getMailUser = async (req, res) => {
                 }
             ]
         });
-        res.status(200).json(response);
+
+        cacheAndRespond("mail-user", response, res);
+
     } catch (error) {
         res.json({ message: error.message });
+    } finally {
+
+        // Incrementa el contador de solicitudes procesadas
+        processedRequests++;
+
+        if (processedRequests === totalRequests) {
+            // Si todas las solicitudes han sido procesadas, cierra el socket
+            client.quit();
+            totalRequests++;
+        }
     }
 
 }
 
 
-
-
+/*
 export const getAllGroupsMails = async (req, res) => {
     try {
         let response;
@@ -88,16 +189,16 @@ export const getAllGroupsMails = async (req, res) => {
                     required: true,
                 }
             ]
-
+ 
         });
         console.table(response);
         res.status(200).json(response);
-
+ 
     } catch (error) {
         res.json({ message: error.message });
     }
-
-}
+ 
+}*/
 export const getMail = async (req, res) => {
     try {
         const mail = await Mail.findOne({

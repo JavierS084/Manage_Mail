@@ -1,16 +1,16 @@
-/*
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { toast } from "react-hot-toast";
-import { useMails } from "@/context/MailsContext";
 
-export default function MailExpired({ mails }) {
+import { useMails } from "../../context";
+
+export function MailExpired({ mailsExpired }) {
   const { delMail, setMails } = useMails();
   const [accion, setAccion] = useState(false);
   const [select, setSelect] = useState([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
+  const navigate = useNavigate();
   //const [ selectedit , setSelectedit] = useState();
   let date = new Date();
   let output =
@@ -23,9 +23,6 @@ export default function MailExpired({ mails }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const router = useRouter();
-
-  const mailFilter = mails.filter((mail) => output >= mail.dateFinal);
 
   useEffect(() => {
     //pasando los 10 segundos se deshabilita el boton eliminar
@@ -53,7 +50,7 @@ export default function MailExpired({ mails }) {
   };
 
   function Orden(columna) {
-    const datosOrdenados = [...mails];
+    const datosOrdenados = [...mailsExpired];
 
     datosOrdenados.sort((datoA, datoB) => {
       if (datoA[columna] < datoB[columna]) {
@@ -71,33 +68,27 @@ export default function MailExpired({ mails }) {
 
   return (
     <div className="row">
-      <div className="card ">
+      <div className="card">
         <div className="card-body">
-          <h2 className="card-title">Correos para Dar de Baja</h2>
-          <div className="row">
-            <div className="justify-content-start">
-              <button
-                onClick={handleShow}
-                disabled={!accion}
-                type="button"
-                className="btn btn-danger m-1"
-              >
-                Eliminar
-              </button>
-              <button
-                type="button"
-                className="btn btn-warning m-1 px-4"
-                disabled={!accion}
-                onClick={() => router.push(`/mails/edit/${select}`)}
-              >
-                Editar
-              </button>
-            </div>
+          <h2 className="card-title">Lista de Correos</h2>
+          <div className="col-md-5">
+            <button
+              onClick={handleShow}
+              disabled={!accion}
+              type="button"
+              className="btn btn-danger m-1"
+            >
+              Eliminar
+            </button>
+            <button
+              type="button"
+              className="btn btn-warning m-1 px-4"
+              disabled={!accion}
+              onClick={() => navigate(`/mails/edit/${select}`)}
+            >
+              Editar
+            </button>
           </div>
-          <div className="row justify-content-end">
-            Total de Correos Expirados: {mailFilter.length}
-          </div>
-
           <table className="table table-hover mx-auto mt-2">
             <thead>
               <tr>
@@ -117,7 +108,7 @@ export default function MailExpired({ mails }) {
             </thead>
 
             <tbody>
-              {mailFilter.map((mail) => (
+              {mailsExpired.map((mail) => (
                 <tr scope="row" key={mail.id}>
                   <td>
                     <input
@@ -134,7 +125,7 @@ export default function MailExpired({ mails }) {
                   <td>{mail.user}</td>
                   <td>{mail.dependency.dependencia}</td>
                   {mail.group ? (
-                    <td className="ml-2 text-center">
+                    <td>
                       {mail.group.description}
                     </td>
                   ) : (
@@ -144,7 +135,15 @@ export default function MailExpired({ mails }) {
                   <td>{mail.request.solicitud}</td>
                   <td>{mail.dateSolicitud}</td>
                   <td>{mail.dateInicial}</td>
-                  <td>{mail.dateFinal}</td>
+                  {mail.dateFinal ? (
+                    output >= mail.dateFinal ? (
+                      <td id="fechared">{mail.dateFinal}</td>
+                    ) : (
+                      <td>{mail.dateFinal}</td>
+                    )
+                  ) : (
+                    <td>Sin fecha de finalización</td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -171,7 +170,7 @@ export default function MailExpired({ mails }) {
                 onClick={() => {
                   delMail(select);
                   setSelect([]);
-                  toast.success("Se ha eliminado Correctamente");
+
                   handleClose();
                 }}
                 type="button"
@@ -185,4 +184,4 @@ export default function MailExpired({ mails }) {
     </div>
   );
 }
-*/
+export default MailExpired;

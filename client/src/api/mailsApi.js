@@ -4,8 +4,9 @@ import axios from "axios";
 export const getAllMails = async () =>
     await axios.get('http://localhost:3030/mails');
 
-
-
+export const getAllMailsExpired = async () =>
+    await axios.get('http://localhost:3030/mails/expired');
+    
 export const getMailUser = async () =>
     await axios.get('http://localhost:3030/mailUser');
 

@@ -26,7 +26,7 @@ export const DependenciesProvider = ({ children }) => {
 
   async function loadDependencies() {
     const response = await getAllDependencies();
-    setDependencies(response.data);
+    setDependencies(response.data.data);
     setMsg("")
   }
 

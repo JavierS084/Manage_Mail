@@ -2,7 +2,7 @@ import { createClient } from 'redis';
 import dotenv from "dotenv";
 import Request from '../models/requestModel.js'
 
-
+dotenv.config();
 const client = createClient({
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
