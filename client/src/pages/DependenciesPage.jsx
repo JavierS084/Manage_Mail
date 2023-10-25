@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { ToastContainer, toast } from "react-toastify";
+import { Orbit } from "@uiball/loaders";
+import "react-toastify/dist/ReactToastify.css";
 import DependenciesCard from "../components/Dependencies/DependenciesCard";
 import DependenciesForm from "../components/Dependencies/DependenciesForm";
 import { useDependencies } from "../context/DependenciesContext";
 import DependenciesSearch from "../components/Dependencies/DependenciesSearch";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export function DependenciesPage() {
   const { dependencies, loadDependencies, msg, msgError } = useDependencies();
@@ -27,10 +28,8 @@ export function DependenciesPage() {
 function renderlista() {
     if (!dependencies.length) {
       return (
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">No existe dependencias disponibles</h1>
-          </div>
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
         </div>
       );
     } else {

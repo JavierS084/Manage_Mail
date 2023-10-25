@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { Orbit } from "@uiball/loaders";
 import { useAdministrations } from "../context/AdministrationsContext";
 import AdministrationForm from "../components/Administrations/AdministrationsForm";
 import AdministrationCard from "../components/Administrations/AdministrationsCard";
@@ -26,10 +27,8 @@ export function AdministrationsPage() {
   function renderlista() {
     if (administrations.length === 0) {
       return (
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">No hay Usuarios</h1>
-          </div>
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
         </div>
       );
     } else {

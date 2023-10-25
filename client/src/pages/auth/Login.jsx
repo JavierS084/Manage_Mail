@@ -11,12 +11,12 @@ import { useAdministrations } from "../../context";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
-  const { sendEmailRecovery, msg, msgError }= useAdministrations();
+  const { sendEmailRecovery, msg, msgError } = useAdministrations();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //const [otp, setOTP] = useState();
   const [shown, setShown] = useState(false);
- 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ export const Login = () => {
         navigate("/home");
       }
       dispatch(reset());
-    }, 500);
+    }, 600);
     return () => clearTimeout(timer);
   }, [isSuccess, dispatch]);
 
@@ -45,25 +45,23 @@ export const Login = () => {
     } else if (isError && message.length) {
       toast.error(message);
     }
-  
   }, [message]);
 
   useEffect(() => {
-    if(msg){
-      toast.success(msg)
-    }else if (msgError) {
-      toast.error(msgError)
+    if (msg) {
+      toast.success(msg);
+    } else if (msgError) {
+      toast.error(msgError);
     }
-  },[msg, msgError])
+  }, [msg, msgError]);
 
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
   };
-  
-  function navigateToOtp() {
-    sendEmailRecovery(email)
 
+  function navigateToOtp() {
+    sendEmailRecovery(email);
   }
 
   return (
@@ -127,14 +125,16 @@ export const Login = () => {
                 </div>
                 <hr />
                 <div className="d-flex p-2 justify-content-end">
-                  <a className='resetPassword' onClick={navigateToOtp}>
+                  <a className="resetPassword" onClick={navigateToOtp}>
                     ¿Olvidaste tu contraseña?{" "}
                   </a>
                 </div>
                 <div className="form-group pt-2 flex-column d-flex">
                   <button type="submit" className="btn btn-primary">
                     {isLoading ? (
-                      <Orbit size={25} speed={1.5} color="white" />
+                      <div className="row justify-content-center mx-auto">
+                        <Orbit size={25} speed={1.5} color="white" />
+                      </div>
                     ) : (
                       "Iniciar Sesión"
                     )}

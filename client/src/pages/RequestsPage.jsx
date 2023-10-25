@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { ToastContainer, toast } from "react-toastify";
+import { Orbit } from "@uiball/loaders";
 import "react-toastify/dist/ReactToastify.css";
 import RequestForm from "../components/Requests/RequestForm";
 import RequestCard from "../components/Requests/RequestCard";
@@ -26,10 +27,8 @@ export function RequestsPage() {
   function renderlista() {
     if (!requests.length) {
       return (
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">No existe solicitudes disponibles</h1>
-          </div>
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
         </div>
       );
     } else {
