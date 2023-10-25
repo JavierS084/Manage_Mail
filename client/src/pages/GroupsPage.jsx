@@ -5,6 +5,7 @@ import GroupCard from "../components/Groups/GroupsCard";
 import GroupForm from "../components/Groups/GroupsForm";
 import { useGroups } from "../context/GroupsContext";
 import { ToastContainer, toast } from "react-toastify";
+import { Orbit } from "@uiball/loaders";
 import "react-toastify/dist/ReactToastify.css";
 
 export function GroupsPage() {
@@ -26,10 +27,8 @@ export function GroupsPage() {
   function renderlista() {
     if (!groups.length) {
       return (
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">No existe Grupos disponibles</h1>
-          </div>
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
         </div>
       );
     } else {
