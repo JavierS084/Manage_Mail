@@ -1,9 +1,10 @@
 import  { Router } from 'express';
-import { getAllMails, getMail, createMail, updateMail, deleteMail, getMailUser } from '../controllers/mailControllers.js';
+import { getAllMails, getMail, createMail, updateMail, deleteMail, getMailUser, getMailsExpired } from '../controllers/mailControllers.js';
 import { verifyUser } from "../middlewares/authUser.js";
 const router = Router();
 
 router.get('/mails',  getAllMails);
+router.get('/mails/expired',  getMailsExpired);
 router.get('/mailUser',  getMailUser);
 router.get('/mail/:id',  getMail);
 router.post('/mail/create',  createMail);

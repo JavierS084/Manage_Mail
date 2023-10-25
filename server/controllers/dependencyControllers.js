@@ -10,6 +10,7 @@ const client = createClient({
 });
 
 client.on('error', err => console.log('Redis Client Error', err));
+
 export const getAllDependencies = async (req, res) => {
     try {
         await client.connect();

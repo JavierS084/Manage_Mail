@@ -9,8 +9,8 @@ import { useMailTypes } from "../../context/MailTypesContext";
 import { useGroups } from "../../context/GroupsContext";
 import { useDependencies } from "../../context/DependenciesContext";
 
-export function MailForm() {
-  const { mails, crMail } = useMails();
+function MailForm() {
+  const { mails, crMail, msg, gp } = useMails();
 
   const { requests, loadRequests } = useRequests();
   const { mailTypes, loadTypes } = useMailTypes();
@@ -99,7 +99,6 @@ export function MailForm() {
       dateSolicitud: dateSolicitud,
       dateInicial: dateInicial,
     });
-    clearInput();
   };
 
   useEffect(() => {
@@ -108,15 +107,17 @@ export function MailForm() {
 
   const clearInput = () => {
     const timer = setTimeout(() => {
-      setMail([]);
-      setDateFinal("");
-      setGroupOption([]);
-      setDateInicial();
-      setDateSolicitud("");
-      setUser("");
-      setRequestOption([]);
-      setTypeOption([]);
-      setDependenciesOption([]);
+      if (gp === true) {
+        setMail([]);
+        setDateFinal();
+        setGroupOption([]);
+        setDateInicial();
+        setDateSolicitud();
+        setUser("");
+        setRequestOption([]);
+        setTypeOption([]);
+        setDependenciesOption([]);
+      }
     }, 100);
     return () => clearTimeout(timer);
   };
@@ -169,9 +170,9 @@ export function MailForm() {
             }
             return errores;
           }}
-          onSubmit={async (values) => {
+          onSubmit={async (values, actions) => {
             await crMail(values);
-
+            clearInput();
             setMail({
               user: "",
               solicitante: "",
@@ -197,12 +198,12 @@ export function MailForm() {
               <div className="justify-content-center">
                 <div className="form-group p-4">
                   <div className="d-flex flex-row">
-                    {params.id ? (
+                    {params.uuid ? (
                       <div className="col-sm-1 flex-column d-flex">
                         <IconArrowLeft
                           className="mt-1"
                           type="button"
-                          onClick={() => navigate(`/mails`)}
+                          onClick={() => navigate(`/mails/`)}
                           color="grey"
                           size={28}
                         />
@@ -212,13 +213,9 @@ export function MailForm() {
                     )}
                     <div className="col-md-8 flex-column  d-flex">
                       <h2>
-                        {params.uuid ? (
-                          "Editar Correo"
-                        ) : (
-                          <div className="card-title">
-                            Registrar un nuevo correo
-                          </div>
-                        )}
+                        {params.uuid
+                          ? "Editar Usuario"
+                          : "Registrar un nuevo correo"}
                       </h2>
                     </div>
                   </div>
@@ -428,7 +425,7 @@ export function MailForm() {
                       type="submit"
                       disabled={isSubmitting}
                       onChange={handleChange}
-                      onClick={handleSubmit}
+                      onClick={updateProps}
                     >
                       {isSubmitting ? "Guardando..." : "Guardar y Continuar"}
                     </button>

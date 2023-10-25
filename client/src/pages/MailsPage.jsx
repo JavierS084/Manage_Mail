@@ -28,11 +28,8 @@ export function MailsPage() {
   function renderlista() {
     if (!mails.length) {
       return (
-        <div className="card">
-          <div className="card-body">
-          <Orbit size={25} speed={1.5} color="gray" />
-            <h1 className="card-title">No existe correos disponibles</h1>
-          </div>
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
         </div>
       );
     } else {
