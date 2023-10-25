@@ -21,7 +21,7 @@ const cacheAndRespond = async (key, response, res) => {
     await client.set(key, JSON.stringify(response), { EX: 30 });
     res.status(200).json({ source: 'api', data: response });
 };
-
+//Consulta de todos los correos pero sin los detalles
 export const getAllMails = async (req, res) => {
     try {
         await client.connect();
@@ -33,6 +33,8 @@ export const getAllMails = async (req, res) => {
                 'id',
                 'user',
                 'solicitante',
+                /*'observation',
+                'state',*/
                 [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%d-%m-%Y'), 'dateSolicitud'],
                 [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%d-%m-%Y'), 'dateInicial'],
                 [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],
@@ -76,7 +78,77 @@ export const getAllMails = async (req, res) => {
         }
     }
 };
+//consulta del correo consus detalles
 
+export const getMailDetail = async (req, res) => {
+    try {
+        await client.connect();
+        const reply = await client.get("mails");
+        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+        const mail = await Mail.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        if (!mail) return res.status(404).json({ msg: "Contenido no encontrado" });
+
+        const response = await Mail.findOne({
+
+            attributes: [
+                'id',
+                'user',
+                'solicitante',
+                'observation',
+                'state',
+                [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%d-%m-%Y'), 'dateSolicitud'],
+                [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%d-%m-%Y'), 'dateInicial'],
+                [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],
+            ],
+            where: {
+                id: mail.id
+            },
+            include: [
+                {
+                    model: MailType,
+                    attributes: ['id', 'tipo'],
+                    required: true,
+                },
+                {
+                    model: Dependency,
+                    attributes: ['id', 'dependencia'],
+                    required: true,
+                },
+                {
+                    model: Request,
+                    attributes: ['id', 'solicitud'],
+                    required: true,
+                },
+                {
+                    model: Group,
+                    attributes: ['id', 'email', 'description'],
+                    required: false,
+                }
+            ]
+        });
+
+        cacheAndRespond("mails", response, res);
+
+    } catch (error) {
+        res.json({ message: error.message });
+    } finally {
+        // Incrementa el contador de solicitudes procesadas
+        processedRequests++;
+
+        if (processedRequests === totalRequests) {
+            // Si todas las solicitudes han sido procesadas, cierra el socket
+            client.quit();
+            totalRequests++;
+        }
+    }
+};
+
+
+/**Consulta de correos que ya llegaron a su fecha de expiracion */
 export const getMailsExpired = async (req, res) => {
     try {
         await client.connect();
@@ -87,7 +159,9 @@ export const getMailsExpired = async (req, res) => {
             attributes: [
                 'id',
                 'user',
-                'solicitante',
+                'solicitante',/*
+                'observation',
+                'state',*/
                 [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%d-%m-%Y'), 'dateSolicitud'],
                 [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%d-%m-%Y'), 'dateInicial'],
                 [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],
@@ -136,7 +210,7 @@ export const getMailsExpired = async (req, res) => {
         }
     }
 }
-
+/*
 export const getMailUser = async (req, res) => {
     try {
         await client.connect();
@@ -173,7 +247,7 @@ export const getMailUser = async (req, res) => {
 
 }
 
-
+//Consula de 
 /*
 export const getAllGroupsMails = async (req, res) => {
     try {
@@ -199,53 +273,6 @@ export const getAllGroupsMails = async (req, res) => {
     }
  
 }*/
-export const getMail = async (req, res) => {
-    try {
-        const mail = await Mail.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
-        if (!mail) return res.status(404).json({ msg: "Contenido no encontrado" });
-        let response;
-
-        response = await Mail.findOne({
-            attributes: [
-                'id',
-                'user',
-                'solicitante',
-                'mailTypeId',
-                'requestId',
-                'groupId',
-                'dependencyId',
-                [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%Y-%m-%d'), 'dateInicial'],
-                [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%Y-%m-%d'), 'dateFinal'],
-                [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%Y-%m-%d'), 'dateSolicitud'],
-            ],
-            where: {
-                id: mail.id
-            },
-            include: [{
-                model: MailType,
-                attributes: ['tipo'],
-
-                model: Dependency,
-                attributes: ['dependencia'],
-
-                model: Request,
-                attributes: ['solicitante'],
-
-                model: Group,
-                attributes: ['description'],
-
-            }]
-        });
-
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
-}
 
 
 export const createMail = async (req, res) => {

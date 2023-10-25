@@ -50,3 +50,21 @@ select.selectPage {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
+
+.tdSelect{
+  cursor: pointer;
+}
+
+.tdSelect:hover{
+  color: blue;
+  transform: scale(1.1);
+  cursor: pointer;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  background-color: transparent;
+}

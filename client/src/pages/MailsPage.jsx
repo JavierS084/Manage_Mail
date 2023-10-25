@@ -4,7 +4,6 @@ import Tabs from "react-bootstrap/Tabs";
 import MailForm from "../components/Mails/MailForm";
 import MailCard from "../components/Mails/MailCard";
 import { useMails } from "../context/MailsContext";
-import MailSearch from "../components/Mails/MailSearch";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Orbit } from "@uiball/loaders";
@@ -38,7 +37,7 @@ export function MailsPage() {
   }
   //
   return (
-    <div className="container-fluid pt-4">
+    <div className="container pt-4">
       <div className="card">
         <ToastContainer />
         <div className="card-body">
@@ -65,15 +64,7 @@ export function MailsPage() {
                 {<MailForm />}
               </div>
             </Tab>
-            <Tab eventKey="searchMail" title="Buscar Correo">
-              <div
-                className="tab-pane fade active show"
-                id="searchCorreos"
-                role="tabpanel"
-              >
-                <article>{<MailSearch />}</article>
-              </div>
-            </Tab>
+    
           </Tabs>
         </div>
       </div>

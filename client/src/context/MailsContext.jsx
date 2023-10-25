@@ -1,8 +1,7 @@
 import { useContext, createContext, useState } from "react";
 import {
   getAllMails,
-  getMailUser,
-  getMail,
+  getMailDetail,
   createMail,
   updateMail,
   deleteMail,
@@ -33,18 +32,16 @@ export const MailsProvider = ({ children }) => {
   async function loadMailsExpired() {
     const response = await getAllMailsExpired();
     setMailsExpired(response.data.data);
-    console.log(response.data.data)
   }
-
+  /*
   async function loadMailUser() {
     const response = await getMailUser();
     setMails(response.data.data);
-  }
-
-  const gtMail = async (id) => {
+  }*/
+  const gtMailDetail = async (id) => {
     try {
-      const response = await getMail(id);
-      return response.data;
+      const response = await getMailDetail(id);
+      return response.data.data;
     } catch (error) {
       console.error(error);
     }
@@ -96,8 +93,8 @@ export const MailsProvider = ({ children }) => {
         mails,
         msg,
         loadMails,
-        loadMailUser,
-        gtMail,
+        /* loadMailUser,*/
+        gtMailDetail,
         crMail,
         upMail,
         delMail,

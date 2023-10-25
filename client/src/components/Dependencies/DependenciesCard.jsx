@@ -18,7 +18,7 @@ export default function DependenciesCard({ dependencies }) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  console.log(itemsPerPage);
+
 
   // Esto calcula los elementos que se deben mostrar en la página actual
   const indexOfLastItem = currentPage * itemsPerPage;

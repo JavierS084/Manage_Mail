@@ -4,6 +4,21 @@ import DrawerNotification from "../Drawer/DrawerNotification";
 import { useSelector } from "react-redux";
 
 export function Navigation() {
+
+  const links = document.querySelectorAll('.nav-link');
+    
+if (links.length) {
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      links.forEach((link) => {
+          link.classList.remove('active');
+      });
+      //e.preventDefault();
+      link.classList.add('active');
+    });
+  });
+}
+
   const { user } = useSelector((state) => state.auth);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

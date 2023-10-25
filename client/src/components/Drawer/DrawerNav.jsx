@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../../auth/authSlice";
 import Button from "react-bootstrap/Button";
-import {PopoverPassword} from "./PopoverPassword"
+import { PopoverPassword } from "./PopoverPassword";
 import { IconHomeCog } from "@tabler/icons-react";
+import { Orbit } from "@uiball/loaders";
 import {
   useDisclosure,
   Drawer,
@@ -31,10 +32,16 @@ export function DrawerNav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const [isLogout, setIsLogout] = useState(false);
+
   const logout = () => {
+    setIsLogout(true);
     dispatch(LogOut());
     dispatch(reset());
-    navigate("/");
+    const timer = setTimeout(() => {
+      navigate("/");
+    }, 900);
+    return () => clearTimeout(timer);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -84,25 +91,34 @@ export function DrawerNav() {
                     Rol de usuario
                   </Heading>
                   <Badge variant="solid" colorScheme="green">
-                    
                     {user ? <>{user.role}</> : ""}
                   </Badge>
-                  <Text pt="1" fontSize="sm">
-                  </Text>
+                  <Text pt="1" fontSize="sm"></Text>
                 </Box>
               </CardBody>
 
               <Badge variant="outline" colorScheme="green"></Badge>
             </Card>
           </DrawerBody>
-          <PopoverPassword/>
+          <PopoverPassword />
           <Divider />
           <DrawerFooter>
-            <Button colorScheme="gray" variant="outline" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="gray"
+              variant="outline"
+              mr={3}
+              onClick={onClose}
+            >
               Volver
             </Button>
             <Button onClick={logout} colorScheme="blue">
-              Salir
+              {isLogout ? (
+                <div className="row justify-content-center mx-auto">
+                  <Orbit size={25} speed={1.5} color="white" />
+                </div>
+              ) : (
+                "Salir"
+              )}
             </Button>
           </DrawerFooter>
         </DrawerContent>

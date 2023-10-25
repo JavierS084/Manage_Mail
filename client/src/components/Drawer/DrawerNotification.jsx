@@ -26,7 +26,7 @@ export function DrawerNotification() {
   const firstField = React.useRef();
 
   function renderNotifiction() {
-    <List spacing={2}>
+   /* <List spacing={2}>
       {msg.lengt || message.lengt ? (
         <ListItem>
           <ListIcon as={MdCheckCircle} color="green.500" />
@@ -50,7 +50,7 @@ export function DrawerNotification() {
         </ListItem>
       )}
       
-    </List>;
+    </List>;*/
   }
 
   useEffect(() => {}, [msg]);

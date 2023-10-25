@@ -6,13 +6,13 @@ export const getAllMails = async () =>
 
 export const getAllMailsExpired = async () =>
     await axios.get('http://localhost:3030/mails/expired');
-    
+    /*
 export const getMailUser = async () =>
     await axios.get('http://localhost:3030/mailUser');
+*/
 
-
-export const getMail = async (id) =>
-    await axios.get(`http://localhost:3030/mail/${id}`);
+export const getMailDetail = async (id) =>
+    await axios.get(`http://localhost:3030/mail/detail/${id}`);
 
 
 export const createMail = async (mail) =>
