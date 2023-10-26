@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import { useMails } from "../../context";
+import MailDetail from "./MailDetail";
 
 export function MailCard({ mails }) {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ export function MailCard({ mails }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [showDetail, setShowDetail] = useState(false);
+  const handleCloseDetail = () => setShowDetail(false);
+  const handleShowDetail = () => setShowDetail(true);
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
@@ -55,6 +59,12 @@ export function MailCard({ mails }) {
     return () => clearTimeout(timer);
   }, [select]); //se refrezca por cada actualizacion
 
+//Obtiene el id del correo para el componente de mailDetail
+  const handleClick = (event) => {
+   // const valor = event.target.innerText;
+    console.log(event.target.value); // Mostrará el contenido de la etiqueta td
+  };
+
   const handleChange = (event) => {
     const { value, checked } = event.target;
     //console.log(value )
@@ -67,7 +77,13 @@ export function MailCard({ mails }) {
       setSelect(select.filter((o) => o !== value));
     }
   };
+/*** onClick={() => {
+                          handleClick();
+                          handleShowDetail();
+                        }} */
 
+ 
+  
   function Orden(columna) {
     const datosOrdenados = [...mails];
 
@@ -126,59 +142,66 @@ export function MailCard({ mails }) {
             </div>
           </div>
           {filteredData.length !== 0 && (
-          <table className="table table-hover mx-auto mt-2">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">ID</th>
-                <th scope="col" onClick={() => Orden("id")}>
-                  Correo
-                </th>
-                <th className="col">Dependencia</th>
+            <table className="table table-hover mx-auto mt-2">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">ID</th>
+                  <th scope="col" onClick={() => Orden("id")}>
+                    Correo
+                  </th>
+                  <th className="col">Dependencia</th>
 
-                <th className="col">Solicitud</th>
-                <th className="col">Inicio</th>
-                <th className="col">Fin</th>
-              </tr>
-            </thead>
+                  <th className="col">Solicitud</th>
+                  <th className="col">Inicio</th>
+                  <th className="col">Fin</th>
+                </tr>
+              </thead>
 
-            <tbody>
-            {filteredData.slice(0, 15).map((mail) => {
-                return (
-                  <tr scope="row" key={mail.id}>
-                    <td>
-                      <input
-                        onChange={handleChange}
-                        className="form-check-input"
-                        type="checkbox"
+              <tbody>
+                {filteredData.slice(0, 15).map((mail) => {
+                  return (
+                    <tr scope="row" key={mail.id}>
+                      <td>
+                        <input
+                          onChange={handleChange}
+                          className="form-check-input"
+                          type="checkbox"
+                          value={mail.id}
+                          id="flexCheckDefault"
+                          key={mail.id}
+                        />
+                      </td>
+
+                      <td>{mail.id}</td>
+                      <td
+                        className="tdSelect"
+                        onClick={handleClick}
                         value={mail.id}
-                        id="flexCheckDefault"
-                        key={mail.id}
-                      />
-                    </td>
+                        disabled={!accion}
+                      
+                      >
+                        {mail.user}
+                      </td>
+                      <td>{mail.dependency.dependencia}</td>
 
-                    <td>{mail.id}</td>
-                    <td className="tdSelect" onClick={ () => navigate(`mail/detail/${mail.id}`)}>{mail.user}</td>
-                    <td>{mail.dependency.dependencia}</td>
-
-                    <td>{mail.dateSolicitud}</td>
-                    <td>{mail.dateInicial}</td>
-                    {mail.dateFinal ? (
-                      output >= mail.dateFinal ? (
-                        <td id="fechared">{mail.dateFinal}</td>
+                      <td>{mail.dateSolicitud}</td>
+                      <td>{mail.dateInicial}</td>
+                      {mail.dateFinal ? (
+                        output >= mail.dateFinal ? (
+                          <td id="fechared">{mail.dateFinal}</td>
+                        ) : (
+                          <td>{mail.dateFinal}</td>
+                        )
                       ) : (
-                        <td>{mail.dateFinal}</td>
-                      )
-                    ) : (
-                      <td>Sin fecha de finalización</td>
-                    )}
-                  </tr>
-                );
-                    })}
-            </tbody>
-          </table>
+                        <td>Sin fecha de finalización</td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           )}
-         
 
           <Modal
             show={show}
@@ -201,13 +224,35 @@ export function MailCard({ mails }) {
                 onClick={() => {
                   delMail(select);
                   setSelect([]);
-
                   handleClose();
                 }}
                 type="button"
               >
                 Entendido
               </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={showDetail}
+            onHide={handleCloseDetail}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Detalle de Correo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <MailDetail />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleCloseDetail}>
+                Cerrar
+              </Button>
+            
             </Modal.Footer>
           </Modal>
         </div>

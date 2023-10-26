@@ -32,7 +32,7 @@ const Mails = db.define('mails',{
         }
     },
     observation: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, 
         allowNull: true,
         validate:{
             notEmpty: false,
