@@ -37,6 +37,16 @@ div#card-mail.card {
 .resetPassword{
   cursor: pointer;
 }
+.resetPassword:hover{
+  cursor: pointer;
+  color: blue;
+  transform: scale(.94);
+  -webkit-transform: scale(.94);
+  -moz-transform: scale(.94);
+  -ms-transform: scale(.94);
+  -o-transform: scale(.94);
+}
+
 
 select.selectPage {
   background-color: rgb(218, 218, 218);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 //import { useParams } from "react-router-dom";
+import { Orbit } from "@uiball/loaders";
 import { useMails } from "../../context/MailsContext";
 export function MailDetail({ idDetail }) {
   const { gtMailDetail } = useMails();
@@ -58,7 +59,8 @@ export function MailDetail({ idDetail }) {
 
   return (
     <div className="row">
-      <div className="card">
+      { mailDetail && mailDetail.user ? (
+        <div className="card">
         <div className="form-group d-flex align-items-center p-2">
           <label className="form-label mx-2">Solicitante: </label>
           <p className="col-8 pt-2 ">{solicitante}</p>
@@ -113,6 +115,14 @@ export function MailDetail({ idDetail }) {
           <p className="col-8 pt-2 ">{observation}</p>
         </div>
       </div>
+      ):(
+        <div className="row col-md-6 p-4 justify-content-center mx-auto">
+          <Orbit size={32} speed={1.5} color="#567bff" />
+        </div>
+      )
+
+    }
+      
     </div>
   );
 }

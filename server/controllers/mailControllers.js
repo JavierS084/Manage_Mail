@@ -18,6 +18,12 @@ const client = createClient({
 
 client.on('error', err => console.log('Redis Client Error', err));
 
+/*const cacheAndRespond = async (keyArray, response, res) => {
+    const key = `myArray:${JSON.stringify(keyArray)}`;
+    await client.set(key, JSON.stringify(response), { EX: 30 });
+    res.status(200).json({ source: 'api', data: response });
+  };
+*/
 const cacheAndRespond = async (key, response, res) => {
     await client.set(key, JSON.stringify(response), { EX: 30 });
     res.status(200).json({ source: 'api', data: response });
@@ -118,7 +124,9 @@ export const getMailDetail = async (req, res) => {
                 }
             ]
         });
-
+        /*const keyArray = [req.params.id]; // Puedes usar cualquier otro valor del arreglo según sea necesario
+  
+        cacheAndRespond(keyArray, "mailDetail", response, res);*/
         cacheAndRespond("mailDetail", response, res);
 
     } catch (error) {

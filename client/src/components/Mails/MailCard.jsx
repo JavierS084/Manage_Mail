@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Orbit } from "@uiball/loaders";
+
 import { useMails } from "../../context";
 import MailDetail from "./MailDetail";
 
