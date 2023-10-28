@@ -9,6 +9,7 @@ import Group from "../models/groupModel.js";
 let totalRequests = 1;
 let processedRequests = 0;
 
+
 dotenv.config();
 const client = createClient({
     host: process.env.REDIS_HOST,
@@ -24,9 +25,7 @@ const cacheAndRespond = async (key, response, res) => {
 //Consulta de todos los correos pero sin los detalles
 export const getAllMails = async (req, res) => {
     try {
-        await client.connect();
-        const reply = await client.get("mails");
-        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+
 
         const response = await Mail.findAll({
             attributes: [
@@ -40,51 +39,40 @@ export const getAllMails = async (req, res) => {
                 [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],
             ],
             include: [
-                {
-                    model: MailType,
-                    attributes: ['id', 'tipo'],
-                    required: true,
-                },
+
                 {
                     model: Dependency,
                     attributes: ['id', 'dependencia'],
                     required: true,
                 },
-                {
-                    model: Request,
-                    attributes: ['id', 'solicitud'],
-                    required: true,
-                },
-                {
-                    model: Group,
-                    attributes: ['id', 'email', 'description'],
-                    required: false,
-                }
+
             ]
         });
 
-        cacheAndRespond("mails", response, res);
+        return res.status(200).json(response);
 
     } catch (error) {
         res.json({ message: error.message });
-    } finally {
-        // Incrementa el contador de solicitudes procesadas
-        processedRequests++;
-
-        if (processedRequests === totalRequests) {
-            // Si todas las solicitudes han sido procesadas, cierra el socket
-            client.quit();
-            totalRequests++;
-        }
     }
 };
 //consulta del correo consus detalles
 
 export const getMailDetail = async (req, res) => {
+    let processedRequestsDetail = 0;
+    let totalRequestsDetail = 1;
     try {
+
         await client.connect();
-        const reply = await client.get("mails");
-        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
+        const reply = await client.get("mailDetail");
+        if (reply) {
+
+            const replyObject = JSON.parse(reply);
+            if (replyObject.id == req.params.id) {
+                console.log(replyObject.id);
+                return res.status(200).json({ source: 'cache', data: replyObject });
+            }
+        }
+        //if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
         const mail = await Mail.findOne({
             where: {
                 id: req.params.id
@@ -131,18 +119,18 @@ export const getMailDetail = async (req, res) => {
             ]
         });
 
-        cacheAndRespond("mails", response, res);
+        cacheAndRespond("mailDetail", response, res);
 
     } catch (error) {
         res.json({ message: error.message });
     } finally {
         // Incrementa el contador de solicitudes procesadas
-        processedRequests++;
+        processedRequestsDetail++;
 
-        if (processedRequests === totalRequests) {
+        if (processedRequestsDetail === totalRequestsDetail) {
             // Si todas las solicitudes han sido procesadas, cierra el socket
             client.quit();
-            totalRequests++;
+            totalRequestsDetail++;
         }
     }
 };
@@ -277,12 +265,14 @@ export const getAllGroupsMails = async (req, res) => {
 
 export const createMail = async (req, res) => {
     try {
-        const { user, solicitante, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId } = req.body;
+        const { user, solicitante, state, observation, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId } = req.body;
 
         if (dateFinal && groupId) {
             await Mail.create({
                 user: user,
                 solicitante: solicitante,
+                state: state,
+                observation: observation,
                 dateSolicitud: dateSolicitud,
                 dateInicial: dateInicial,
                 dateFinal: dateFinal,
@@ -296,6 +286,8 @@ export const createMail = async (req, res) => {
         } else if (!dateFinal && !groupId) {
             await Mail.create({
                 user: user,
+                state: state,
+                observation: observation,
                 solicitante: solicitante,
                 dateSolicitud: dateSolicitud,
                 dateInicial: dateInicial,
@@ -307,6 +299,8 @@ export const createMail = async (req, res) => {
         } else if (!groupId && dateFinal) {
             await Mail.create({
                 user: user,
+                state: state,
+                observation: observation,
                 solicitante: solicitante,
                 dateSolicitud: dateSolicitud,
                 dateInicial: dateInicial,
@@ -320,6 +314,8 @@ export const createMail = async (req, res) => {
         } else if (!dateFinal && groupId) {
             await Mail.create({
                 user: user,
+                state: state,
+                observation: observation,
                 solicitante: solicitante,
                 dateSolicitud: dateSolicitud,
                 dateInicial: dateInicial,

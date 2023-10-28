@@ -98,9 +98,6 @@ export function MailExpired({ mailsExpired }) {
                   Correo
                 </th>
                 <th className="col">Dependencia</th>
-                <th className="col">Grupo</th>
-                <th className="col">Tipo de Correo</th>
-                <th className="col">Formato </th>
                 <th className="col">Solicitud</th>
                 <th className="col">Inicio</th>
                 <th className="col">Fin</th>
@@ -124,15 +121,6 @@ export function MailExpired({ mailsExpired }) {
                   <td>{mail.id}</td>
                   <td>{mail.user}</td>
                   <td>{mail.dependency.dependencia}</td>
-                  {mail.group ? (
-                    <td>
-                      {mail.group.description}
-                    </td>
-                  ) : (
-                    <td>Sin Grupo</td>
-                  )}
-                  <td>{mail.mailType.tipo}</td>
-                  <td>{mail.request.solicitud}</td>
                   <td>{mail.dateSolicitud}</td>
                   <td>{mail.dateInicial}</td>
                   {mail.dateFinal ? (

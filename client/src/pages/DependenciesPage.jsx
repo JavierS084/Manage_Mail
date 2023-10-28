@@ -21,7 +21,7 @@ export function DependenciesPage() {
     const timer = setTimeout(() => {
       loadDependencies();
     }, 500);
-    
+    renderlista();
     return () => clearTimeout(timer);
   }, [msg]);
 

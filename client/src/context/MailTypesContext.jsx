@@ -26,7 +26,7 @@ export const MailTypesProvider = ({ children }) => {
   async function loadTypes() {
     const response = await getAllTypes();
     setMailTypes(response.data);
-     
+    setMsg("")
   }
 
   const getType = async (id) => {

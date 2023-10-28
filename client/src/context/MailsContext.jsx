@@ -21,17 +21,19 @@ export const useMails = () => {
 export const MailsProvider = ({ children }) => {
   const [mails, setMails] = useState([]);
   const [mailsExpired, setMailsExpired] = useState([]);
-  const [gp, setGp] = useState(false);
+  const [msgError, setMsgError] = useState("");
   const [msg, setMsg] = useState("");
 
   async function loadMails() {
     const response = await getAllMails();
-    setMails(response.data.data);
+    setMails(response.data);
+    setMsg("")
   }
 
   async function loadMailsExpired() {
     const response = await getAllMailsExpired();
     setMailsExpired(response.data.data);
+    setMsg("")
   }
   /*
   async function loadMailUser() {
@@ -41,9 +43,12 @@ export const MailsProvider = ({ children }) => {
   const gtMailDetail = async (id) => {
     try {
       const response = await getMailDetail(id);
+      setMsg(response.data.msg);
+      console.table(response.data.source)
       return response.data.data;
     } catch (error) {
       console.error(error);
+      setMsgError(error.response.data.msg);
     }
   };
 
@@ -52,13 +57,11 @@ export const MailsProvider = ({ children }) => {
       const response = await createMail(mail);
       setMsg(response.data.msg);
       if (response.status === 201) {
-        setGp(true);
-      } else {
-        setGp(false);
+        setMsg(response.data.msg);
       }
     } catch (error) {
       console.error(error);
-      setMsg(error.response.data.msg);
+      setMsgError(error.response.data.msg);
     }
   };
   const upMail = async (id, newFields) => {
@@ -66,12 +69,10 @@ export const MailsProvider = ({ children }) => {
       const response = await updateMail(id, newFields);
       setMsg(response.data.msg);
       if (response.status === 200) {
-        setGp(true);
-      } else {
-        setGp(false);
+        setMsg(response.data.msg);
       }
     } catch (error) {
-      setMsg(error.response.data.msg);
+      setMsgError(error.response.data.msg);
     }
   };
 
@@ -82,14 +83,13 @@ export const MailsProvider = ({ children }) => {
       setMsg(response.data.msg);
       console.log(response);
     } catch (error) {
-      console.error(error);
+      setMsgError(error.response.data.msg);
     }
   };
 
   return (
     <contextMail.Provider
       value={{
-        gp,
         mails,
         msg,
         loadMails,
@@ -100,6 +100,7 @@ export const MailsProvider = ({ children }) => {
         delMail,
         loadMailsExpired,
         mailsExpired,
+        msgError
       }}
     >
       {children}

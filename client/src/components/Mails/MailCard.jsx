@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
+import { Orbit } from "@uiball/loaders";
 import { useMails } from "../../context";
 import MailDetail from "./MailDetail";
 
@@ -15,6 +15,7 @@ export function MailCard({ mails }) {
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   const [filteredData, setFilteredData] = useState(mails);
   const [wordEntered, setWordEntered] = useState("");
+  const [idDetail, setIdDetail] = useState(null);
 
   let date = new Date();
   let output =
@@ -30,7 +31,9 @@ export function MailCard({ mails }) {
 
   const [showDetail, setShowDetail] = useState(false);
   const handleCloseDetail = () => setShowDetail(false);
-  const handleShowDetail = () => setShowDetail(true);
+  const handleShowDetail = () => {
+    setShowDetail(true);
+  };
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
@@ -59,10 +62,11 @@ export function MailCard({ mails }) {
     return () => clearTimeout(timer);
   }, [select]); //se refrezca por cada actualizacion
 
-//Obtiene el id del correo para el componente de mailDetail
+  //Obtiene el id del correo para el componente de mailDetail
   const handleClick = (event) => {
-   // const valor = event.target.innerText;
-    console.log(event.target.value); // Mostrará el contenido de la etiqueta td
+    const value = event.target.getAttribute("value");
+    setIdDetail(value);
+    handleShowDetail();
   };
 
   const handleChange = (event) => {
@@ -70,20 +74,14 @@ export function MailCard({ mails }) {
     //console.log(value )
     if (checked) {
       setSelect([...select, value]);
-      console.log(value);
+      //console.log(value);
       setAccion(checked);
     } else {
       //pasa todos los datos menos los selecionados
       setSelect(select.filter((o) => o !== value));
     }
   };
-/*** onClick={() => {
-                          handleClick();
-                          handleShowDetail();
-                        }} */
 
- 
-  
   function Orden(columna) {
     const datosOrdenados = [...mails];
 
@@ -151,7 +149,6 @@ export function MailCard({ mails }) {
                     Correo
                   </th>
                   <th className="col">Dependencia</th>
-
                   <th className="col">Solicitud</th>
                   <th className="col">Inicio</th>
                   <th className="col">Fin</th>
@@ -179,7 +176,7 @@ export function MailCard({ mails }) {
                         onClick={handleClick}
                         value={mail.id}
                         disabled={!accion}
-                      
+                        key={mail.id}
                       >
                         {mail.user}
                       </td>
@@ -246,13 +243,12 @@ export function MailCard({ mails }) {
               <Modal.Title>Detalle de Correo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <MailDetail />
+              <MailDetail idDetail={idDetail} />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="primary" onClick={handleCloseDetail}>
                 Cerrar
               </Button>
-            
             </Modal.Footer>
           </Modal>
         </div>
