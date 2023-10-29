@@ -2,6 +2,8 @@ import { createClient } from 'redis';
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import Dependencies from '../models/dependencyModel.js'
+let totalRequests = 1;
+let processedRequests = 0;
 
 dotenv.config();
 const client = createClient({
@@ -10,6 +12,10 @@ const client = createClient({
 });
 
 client.on('error', err => console.log('Redis Client Error', err));
+const cacheAndRespond = async (key, response, res) => {
+    await client.set(key, JSON.stringify(response), { EX: 5 });
+    res.status(200).json({ source: 'api', data: response });
+};
 
 export const getAllDependencies = async (req, res) => {
     try {
@@ -18,26 +24,27 @@ export const getAllDependencies = async (req, res) => {
         const reply = await client.get("dependencies")
         // if exists returns from redis and finish with response
         if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
-        let response;
-        response = await Dependencies.findAll({
+
+        const response = await Dependencies.findAll({
             attributes: ['id', 'dependencia',
                 [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%d-%m-%Y'), 'createdAt'],],
 
         });
         // Saving the results in Redis. The "EX" and 30, sets an expiration of 30 Seconds
-        await client.set(
-            "dependencies",
-            JSON.stringify(response),
-            {
-                EX: 40,
-            }
-        );
-        res.status(200).json({ source: 'api', data: response });
+
+        cacheAndRespond("dependencies", response, res);
 
     } catch (error) {
         res.json({ message: error.message });
     } finally {
-        client.disconnect();
+        // Incrementa el contador de solicitudes procesadas
+        processedRequests++;
+
+        if (processedRequests === totalRequests) {
+            // Si todas las solicitudes han sido procesadas, cierra el socket
+            client.quit();
+            totalRequests++;
+        }
     }
 
 }
@@ -101,9 +108,10 @@ export const updateDependency = async (req, res) => {
     }
 }
 
-
+/*
 export const deleteDependency = async (req, res) => {
     try {
+        const ids = req.params.ids.split(',');
         const dependency = await Dependencies.findOne({
             where: {
                 id: req.params.id
@@ -121,3 +129,35 @@ export const deleteDependency = async (req, res) => {
     }
 
 }
+*/
+
+export const deleteDependency = async (req, res) => {
+    try {
+        const ids = req.params.ids.split(',');
+
+        // Utilizamos la función 'findAll' para buscar las dependencias que corresponden a los IDs
+        const dependencies = await Dependencies.findAll({
+            where: {
+                id: ids,
+            },
+        });
+
+        // Si la búsqueda no encuentra dependencias, enviamos un mensaje de respuesta y estado 404.
+        if (!dependencies) {
+            return res.status(404).json({ msg: 'Data not found' });
+        }
+
+        // Utilizamos el método 'destroy' para eliminar las dependencias que corresponden a los IDs
+        await Dependencies.destroy({
+            where: {
+                id: ids,
+            },
+        });
+
+        res
+            .status(200)
+            .json({ msg: 'Las dependencias se han eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};

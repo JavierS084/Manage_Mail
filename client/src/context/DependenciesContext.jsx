@@ -40,9 +40,9 @@ export const DependenciesProvider = ({ children }) => {
     }
   };
 
-  const crDp = async (depart) => {
+  const crDp = async (dependency) => {
     try {
-      const response = await createDependency(depart);
+      const response = await createDependency(dependency);
       if (response.status === 201) {
         setMsg(response.data.msg);
       }
@@ -61,7 +61,20 @@ export const DependenciesProvider = ({ children }) => {
       setMsgError(error.response.data.msg);
     }
   };
-  const delDp = async (id) => {
+  const delDp = async (ids) => {
+    console.log(ids);
+    try {
+      const response = await deleteDependency(ids);
+      setDependencies(
+        dependencies.filter((dependency) => !ids.includes(dependency.id))
+      );
+      if (response.status === 200) {
+        setMsg(response.data.msg);
+      }
+    } catch (error) {
+      setMsgError(error.response.data.msg);
+    }
+    /*
     try {
       const response = await deleteDependency(id);
       setDependencies(
@@ -72,7 +85,7 @@ export const DependenciesProvider = ({ children }) => {
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
-    }
+    }*/
   };
 
   //retorna su contexto a traves el Provider

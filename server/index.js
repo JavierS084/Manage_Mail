@@ -13,22 +13,19 @@ import groupRoutes from "./routes/groupRoutes.js";
 import mailRoutes from "./routes/mailRoutes.js";
 import db from "./config/database.js"
 
-
-
 dotenv.config();
 
 const app = express();
-
-
 
 const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({
     db: db
 });
-/*
-(async () => {
-    await db.sync();
-})();*/
+
+/* shift + A + ALT */
+/*  (async () => {
+     await db.sync();
+ })(); */
 
 app.use(session({
     secret: process.env.SESS_SECRET,
@@ -56,7 +53,6 @@ app.use(responseTime());
 app.use(express.json({ limit: "25mb" }));
 //app.use(express.urlencoded({ limit: "25mb" }));
 app.use(userRoute, authRoute, requestRoutes, dependencyRoutes, typeRoutes, groupRoutes, mailRoutes);
-
 
 
 /**

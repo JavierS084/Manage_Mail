@@ -5,9 +5,9 @@ const router = Router();
 
 router.get('/dependencies',verifyUser, getAllDependencies);
 router.get('/dependency/:id',verifyUser, getDependency);
-router.post('/dependency/create',verifyUser, createDependency);
+router.post('/dependency/create', createDependency);
 router.put('/dependency/update/:id',verifyUser, updateDependency); 
-router.delete('/dependency/delete/:id',verifyUser, deleteDependency);
+router.delete('/dependency/delete/:ids',verifyUser, deleteDependency);
 
 
 export default router;

@@ -78,3 +78,7 @@ select.selectPage {
 .navbar-dark .navbar-nav .nav-link.active {
   background-color: transparent;
 }
+.navbar .navbar-nav .nav-link:hover {
+  color: white;
+  background-color: transparent;
+}

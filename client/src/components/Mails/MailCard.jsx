@@ -24,6 +24,7 @@ export function MailCard({ mails }) {
     String(date.getMonth() + 1).padStart(2, "0") +
     "-" +
     date.getFullYear();
+    console.log(select)
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

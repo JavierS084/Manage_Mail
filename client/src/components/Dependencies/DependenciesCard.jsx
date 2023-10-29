@@ -8,6 +8,7 @@ import { useDependencies } from "../../context/DependenciesContext";
 export default function DependenciesCard({ dependencies }) {
   const { delDp, setDependencies } = useDependencies();
   const [accion, setAccion] = useState(false);
+  const [accionEdit, setAccionEdit] = useState(false);
   const [select, setSelect] = useState([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   //const [ selectedit , setSelectedit] = useState();
@@ -18,7 +19,6 @@ export default function DependenciesCard({ dependencies }) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
 
   // Esto calcula los elementos que se deben mostrar en la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -43,9 +43,17 @@ export default function DependenciesCard({ dependencies }) {
     //pasando los 10 segundos se deshabilita el boton eliminar
     const timer = setTimeout(() => {
       setAccion(false);
+      setAccionEdit(false);
     }, 10000);
+
+    
     if (select.length === 0) {
       setAccion(false);
+      setAccionEdit(false);
+    } else if (select.length === 1) {
+      setAccionEdit(true);
+    }else{
+      setAccionEdit(false);
     }
 
     return () => clearTimeout(timer);
@@ -98,7 +106,7 @@ export default function DependenciesCard({ dependencies }) {
             <button
               type="button"
               className="btn btn-warning m-1 px-4"
-              disabled={!accion}
+              disabled={!accionEdit}
               onClick={() => navigate(`/dependencies/edit/${select}`)}
             >
               Editar

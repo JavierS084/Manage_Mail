@@ -14,5 +14,5 @@ export const createDependency = async (dependency) =>
     await axios.put(`http://localhost:3030/dependency/update/${id}`, newFields);
 
 
-export const deleteDependency = async (id) => 
-    await axios.delete(`http://localhost:3030/dependency/delete/${id}`);
+export const deleteDependency = async (ids) => 
+    await axios.delete(`http://localhost:3030/dependency/delete/${ids}`);

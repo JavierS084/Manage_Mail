@@ -14,7 +14,7 @@ export function PopoverPassword() {
         </PopoverTrigger>
         <PopoverContent color='white' bg='blue.800' borderColor='blue.800'>
           <PopoverHeader pt={4} fontWeight='bold' border='0' bg='red.500'>
-           Atencion!! este proceso es irreversible
+           Atención!! este proceso es irreversible
           </PopoverHeader>
           <PopoverArrow bg='blue.800' />
           <PopoverCloseButton />

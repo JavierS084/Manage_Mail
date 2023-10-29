@@ -401,7 +401,7 @@ export const deleteMail = async (req, res) => {
             }
         });
 
-        res.status(200).json({ msg: "mail deleted successfuly" });
+        res.status(200).json({ msg: "El correo fue eliminado correctamente" });
     } catch (error) {
         res.json({ message: error.message });
     }
