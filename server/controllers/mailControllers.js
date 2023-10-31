@@ -206,42 +206,7 @@ export const getMailsExpired = async (req, res) => {
         }
     }
 }
-/*
-export const getMailUser = async (req, res) => {
-    try {
-        await client.connect();
-        const reply = await client.get("mail-user");
-        if (reply) return res.status(200).json({ source: 'cache', data: JSON.parse(reply) });
 
-        const response = await Mail.findAll({
-            attributes: ['id', 'user'],
-            include: [
-                {
-                    model: Group,
-                    attributes: ['id', 'email', 'description'],
-                    order: ['description', 'ASC'],
-                    required: true,
-                }
-            ]
-        });
-
-        cacheAndRespond("mail-user", response, res);
-
-    } catch (error) {
-        res.json({ message: error.message });
-    } finally {
-
-        // Incrementa el contador de solicitudes procesadas
-        processedRequests++;
-
-        if (processedRequests === totalRequests) {
-            // Si todas las solicitudes han sido procesadas, cierra el socket
-            client.quit();
-            totalRequests++;
-        }
-    }
-
-}
 
 //Consula de 
 /*
@@ -270,75 +235,32 @@ export const getAllGroupsMails = async (req, res) => {
  
 }*/
 
-
 export const createMail = async (req, res) => {
     try {
         const { user, solicitante, state, observation, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId } = req.body;
 
-        if (dateFinal && groupId) {
-            await Mail.create({
-                user: user,
-                solicitante: solicitante,
-                state: state,
-                observation: observation,
-                dateSolicitud: dateSolicitud,
-                dateInicial: dateInicial,
-                dateFinal: dateFinal,
-                mailTypeId: mailTypeId,
-                requestId: requestId,
-                dependencyId: dependencyId,
-                groupId: groupId
-            });
-            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
+        const mailData = {
+            user: user,
+            solicitante: solicitante,
+            state: state,
+            observation: observation || null,
+            dateSolicitud: dateSolicitud,
+            dateInicial: dateInicial,
+            dateFinal: dateFinal || null,
+            mailTypeId: mailTypeId,
+            requestId: requestId,
+            dependencyId: dependencyId,
+            groupId: groupId || null
+        };
 
-        } else if (!dateFinal && !groupId) {
-            await Mail.create({
-                user: user,
-                state: state,
-                observation: observation,
-                solicitante: solicitante,
-                dateSolicitud: dateSolicitud,
-                dateInicial: dateInicial,
-                mailTypeId: mailTypeId,
-                requestId: requestId,
-                dependencyId: dependencyId,
-            });
-            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
-        } else if (!groupId && dateFinal) {
-            await Mail.create({
-                user: user,
-                state: state,
-                observation: observation,
-                solicitante: solicitante,
-                dateSolicitud: dateSolicitud,
-                dateInicial: dateInicial,
-                dateFinal: dateFinal,
-                mailTypeId: mailTypeId,
-                requestId: requestId,
-                dependencyId: dependencyId,
+        await Mail.create(mailData);
 
-            });
-            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
-        } else if (!dateFinal && groupId) {
-            await Mail.create({
-                user: user,
-                state: state,
-                observation: observation,
-                solicitante: solicitante,
-                dateSolicitud: dateSolicitud,
-                dateInicial: dateInicial,
-                mailTypeId: mailTypeId,
-                requestId: requestId,
-                dependencyId: dependencyId,
-                groupId: groupId
-            });
-            res.status(201).json({ msg: "El correo electronico fue registrado correctamente" });
-        }
+        res.status(201).json({ msg: "El correo electrónico fue registrado correctamente" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
-
 }
+
 
 
 export const updateMail = async (req, res) => {
@@ -349,37 +271,28 @@ export const updateMail = async (req, res) => {
             }
         });
         if (!mail) return res.status(404).json({ msg: "Data not found" });
-        const { user, solicitante, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId } = req.body;
-        if (dateFinal && groupId) {
+        const { user, solicitante, state, observation, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId } = req.body;
+        const mailData = {
+            user: user,
+            solicitante: solicitante,
+            state: state,
+            observation: observation || null,
+            dateSolicitud: dateSolicitud,
+            dateInicial: dateInicial,
+            dateFinal: dateFinal || null,
+            mailTypeId: mailTypeId,
+            requestId: requestId,
+            dependencyId: dependencyId,
+            groupId: groupId || null
+        };
 
-            await Mail.update({ user, solicitante, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId, groupId }, {
-                where: {
-                    id: mail.id
-                }
-            });
-            res.status(200).json({ msg: "Mail updated successfuly" });
-        } else if (!dateFinal && !groupId) {
-            await Mail.update({ user, solicitante, dateSolicitud, dateInicial, mailTypeId, requestId, dependencyId }, {
-                where: {
-                    id: mail.id
-                }
-            });
-            res.status(200).json({ msg: "Mail updated successfuly" });
-        } else if (!groupId && dateFinal) {
-            await Mail.update({ user, solicitante, dateSolicitud, dateInicial, dateFinal, mailTypeId, requestId, dependencyId }, {
-                where: {
-                    id: mail.id
-                }
-            });
-            res.status(200).json({ msg: "Mail updated successfuly" });
-        } else if (!dateFinal && groupId) {
-            await Mail.update({ user, solicitante, dateSolicitud, dateInicial, mailTypeId, requestId, dependencyId, groupId }, {
-                where: {
-                    id: mail.id
-                }
-            });
-            res.status(200).json({ msg: "Mail updated successfuly" });
-        }
+        await Mail.update(mailData, {
+            where: {
+                id: mail.id
+            }
+        });
+        res.status(200).json({ msg: "Mail updated successfuly" });
+
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

@@ -3,7 +3,7 @@ import { getAllMails, getMailDetail, createMail, updateMail, deleteMail,/* getMa
 import { verifyUser } from "../middlewares/authUser.js";
 const router = Router();
 
-router.get('/mails',  getAllMails);
+router.get('/mails', verifyUser, getAllMails);
 router.get('/mails/expired',  getMailsExpired);
 /*router.get('/mailUser',  getMailUser);*/
 router.get('/mail/detail/:id',  getMailDetail);

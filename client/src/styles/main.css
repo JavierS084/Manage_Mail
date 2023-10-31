@@ -49,17 +49,18 @@ div#card-mail.card {
 
 
 select.selectPage {
-  background-color: rgb(218, 218, 218);
-  max-width: 10rem;
-  max-height: 4rem;
+  background-color: rgb(255 255 255);
+  max-width: 4rem;
+  border: 1px solid rgb(220 220 220);
   margin: 1rem 0rem 1rem 0.5rem;
   padding: 0rem 0.5rem 0rem 1rem;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  -o-border-radius: 5px
 }
+
 
 .tdSelect{
   cursor: pointer;
@@ -81,4 +82,18 @@ select.selectPage {
 .navbar .navbar-nav .nav-link:hover {
   color: white;
   background-color: transparent;
+}
+img, svg {
+  vertical-align: text-bottom;
+  cursor: pointer;
+}
+
+.table {
+  font-size: .875rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 2px 0 rgba(0 0 0 / 20%);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }

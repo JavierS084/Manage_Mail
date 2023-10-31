@@ -27,13 +27,13 @@ export const MailsProvider = ({ children }) => {
   async function loadMails() {
     const response = await getAllMails();
     setMails(response.data);
-    setMsg("")
+    setMsg("");
   }
 
   async function loadMailsExpired() {
     const response = await getAllMailsExpired();
     setMailsExpired(response.data.data);
-    setMsg("")
+    setMsg("");
   }
   /*
   async function loadMailUser() {
@@ -44,35 +44,39 @@ export const MailsProvider = ({ children }) => {
     try {
       const response = await getMailDetail(id);
       setMsg(response.data.msg);
-      console.table(response.data.source)
+      setMsgError("");
       return response.data.data;
     } catch (error) {
-      console.error(error);
       setMsgError(error.response.data.msg);
+      setMsg("");
+  
     }
   };
 
   const crMail = async (mail) => {
     try {
       const response = await createMail(mail);
-      setMsg(response.data.msg);
       if (response.status === 201) {
         setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
   const upMail = async (id, newFields) => {
     try {
       const response = await updateMail(id, newFields);
-      setMsg(response.data.msg);
+
       if (response.status === 200) {
         setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
 
@@ -81,9 +85,11 @@ export const MailsProvider = ({ children }) => {
       const response = await deleteMail(id);
       setMails(mails.filter((mail) => mail.id !== id));
       setMsg(response.data.msg);
-      console.log(response);
+      setMsgError("");
+      //console.log(response);
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
 
@@ -100,7 +106,7 @@ export const MailsProvider = ({ children }) => {
         delMail,
         loadMailsExpired,
         mailsExpired,
-        msgError
+        msgError,
       }}
     >
       {children}

@@ -11,6 +11,8 @@ export function MailCard({ mails }) {
 
   const { delMail, setMails } = useMails();
   const [accion, setAccion] = useState(false);
+  const [accionEdit, setAccionEdit] = useState(false); //estado de boton editar
+
   const [select, setSelect] = useState([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   const [filteredData, setFilteredData] = useState(mails);
@@ -24,7 +26,6 @@ export function MailCard({ mails }) {
     String(date.getMonth() + 1).padStart(2, "0") +
     "-" +
     date.getFullYear();
-    console.log(select)
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -55,9 +56,16 @@ export function MailCard({ mails }) {
     //pasando los 10 segundos se deshabilita el boton eliminar
     const timer = setTimeout(() => {
       setAccion(false);
+      setAccionEdit(false);
     }, 10000);
+
     if (select.length === 0) {
       setAccion(false);
+      setAccionEdit(false);
+    } else if (select.length === 1) {
+      setAccionEdit(true);
+    } else {
+      setAccionEdit(false);
     }
 
     return () => clearTimeout(timer);
@@ -105,40 +113,35 @@ export function MailCard({ mails }) {
       <div className="card">
         <div className="card-body">
           <h2 className="card-title">Lista de Correos</h2>
-          <div className="row col-md-12">
-            <div className="col-sm-1">
-              <button
-                onClick={handleShow}
-                disabled={!accion}
-                type="button"
-                className="btn btn-danger"
-              >
-                Eliminar
-              </button>
-            </div>
-            <div className="col-sm-1">
-              <button
-                type="button"
-                className="btn btn-warning "
-                disabled={!accion}
-                onClick={() => navigate(`/mails/edit/${select}`)}
-              >
-                Editar
-              </button>
-            </div>
-
-            <div className="row justify-content-end">
-              <form className="col-5">
-                <input
-                  className="form-control"
-                  type="text"
-                  autoFocus={true}
-                  placeholder="Search..."
-                  value={wordEntered}
-                  onChange={handleFilter}
-                />
-              </form>
-            </div>
+          <div className="row justify-content-start">
+            <button
+              onClick={handleShow}
+              disabled={!accion}
+              type="button"
+              className="btn btn-danger m-1 col-1"
+            >
+              Eliminar
+            </button>
+        
+            <button
+              type="button"
+              className="btn btn-warning m-1 px-4 col-1"
+              disabled={!accionEdit}
+              onClick={() => navigate(`/dependencies/edit/${select}`)}
+            >
+              Editar
+            </button>
+          </div>
+          <div className="row justify-content-end">
+            <form className="col-5">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Ej: jperez@uni..."
+                value={wordEntered}
+                onChange={handleFilter}
+              />
+            </form>
           </div>
           {filteredData.length !== 0 && (
             <table className="table table-hover mx-auto mt-2">

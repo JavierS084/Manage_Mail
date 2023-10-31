@@ -22,7 +22,7 @@ export function MailsPage() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [msg]);
+  }, [msg, msgError]);
 
   function renderlista() {
     if (!mails.length) {

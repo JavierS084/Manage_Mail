@@ -34,9 +34,11 @@ export const DependenciesProvider = ({ children }) => {
     try {
       const response = await getDependency(id);
       setMsg(response.data.msg);
+      setMsgError("");
       return response.data;
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("")
     }
   };
 
@@ -45,24 +47,29 @@ export const DependenciesProvider = ({ children }) => {
       const response = await createDependency(dependency);
       if (response.status === 201) {
         setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("")
       console.error(error.response.data)
     }
   };
+
   const upDp = async (id, newFields) => {
     try {
       const response = await updateDependency(id, newFields);
       if (response.status === 200) {
         setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("")
     }
   };
   const delDp = async (ids) => {
-    console.log(ids);
+
     try {
       const response = await deleteDependency(ids);
       setDependencies(
@@ -70,9 +77,11 @@ export const DependenciesProvider = ({ children }) => {
       );
       if (response.status === 200) {
         setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
       setMsgError(error.response.data.msg);
+      setMsg("")
     }
     /*
     try {
