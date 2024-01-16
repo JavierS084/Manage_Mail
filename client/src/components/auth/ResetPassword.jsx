@@ -119,7 +119,7 @@ export function ResetPassword() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword2"
-                    placeholder="Escriba su confirmacion de contraseña "
+                    placeholder="Escriba su confirmación de contraseña "
                     name="confPassword"
                     onChange={handleChange}
                     value={values.confPassword}

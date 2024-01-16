@@ -1,13 +1,12 @@
 import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Orbit } from "@uiball/loaders";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import "react-toastify/dist/ReactToastify.css";
 import MailForm from "../components/Mails/MailForm";
 import MailCard from "../components/Mails/MailCard";
 import { useMails } from "../context/MailsContext";
-import MailSearch from "../components/Mails/MailSearch";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Orbit } from "@uiball/loaders";
 
 export function MailsPage() {
   const { mails, loadMails, msg, msgError } = useMails();
@@ -21,9 +20,9 @@ export function MailsPage() {
     const timer = setTimeout(() => {
       loadMails();
     }, 500);
-
+    renderlista();
     return () => clearTimeout(timer);
-  }, [msg]);
+  }, [msg, msgError]);
 
   function renderlista() {
     if (!mails.length) {
@@ -38,7 +37,7 @@ export function MailsPage() {
   }
   //
   return (
-    <div className="container-fluid pt-4">
+    <div className="container pt-4">
       <div className="card">
         <ToastContainer />
         <div className="card-body">
@@ -65,15 +64,7 @@ export function MailsPage() {
                 {<MailForm />}
               </div>
             </Tab>
-            <Tab eventKey="searchMail" title="Buscar Correo">
-              <div
-                className="tab-pane fade active show"
-                id="searchCorreos"
-                role="tabpanel"
-              >
-                <article>{<MailSearch />}</article>
-              </div>
-            </Tab>
+    
           </Tabs>
         </div>
       </div>

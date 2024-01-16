@@ -13,12 +13,12 @@ import { verifyUser, adminOnly } from "../middlewares/authUser.js";
 
 const router = express.Router();
 // verifyUser, adminOnly,
-router.get('/users', verifyUser, adminOnly, getUsers);
-router.get('/user/:id', verifyUser, adminOnly, getUserById);
-router.post('/user/create', /*verifyUser, adminOnly,*/ createUser);
-router.put('/user/update/:id', verifyUser, adminOnly, updateUser);
+router.get('/v1/api/managemail/users', verifyUser, adminOnly, getUsers);
+router.get('/v1/api/managemail/user/:id', verifyUser, adminOnly, getUserById);
+router.post('/v1/api/managemail/user/create', verifyUser, adminOnly, createUser);
+router.put('/v1/api/managemail/user/update/:id', verifyUser, adminOnly, updateUser);
 
 
-router.delete('/user/delete/:id', verifyUser, adminOnly, deleteUser);
+router.delete('/v1/api/managemail/user/delete/:id', verifyUser, adminOnly, deleteUser);
 
 export default router;

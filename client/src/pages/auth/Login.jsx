@@ -35,7 +35,7 @@ export const Login = () => {
         navigate("/home");
       }
       dispatch(reset());
-    }, 600);
+    }, 800);
     return () => clearTimeout(timer);
   }, [isSuccess, dispatch]);
 

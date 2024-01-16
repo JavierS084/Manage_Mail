@@ -31,6 +31,21 @@ const Mails = db.define('mails',{
             notEmpty: true
         }
     },
+    observation: {
+        type: DataTypes.STRING, 
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+        }
+        
+    },
+    state:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        validate:{ 
+            notEmpty: true
+        }
+    },
     dateInicial:{
         type: DataTypes.DATE,
         allowNull: false,

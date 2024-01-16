@@ -3,11 +3,11 @@ import { getAllDependencies, getDependency, createDependency, updateDependency, 
 import { verifyUser } from "../middlewares/authUser.js";
 const router = Router();
 
-router.get('/dependencies',verifyUser, getAllDependencies);
-router.get('/dependency/:id',verifyUser, getDependency);
-router.post('/dependency/create',verifyUser, createDependency);
-router.put('/dependency/update/:id',verifyUser, updateDependency); 
-router.delete('/dependency/delete/:id',verifyUser, deleteDependency);
+router.get('/v1/api/managemail/dependencies',verifyUser, getAllDependencies);
+router.get('/v1/api/managemail/dependency/:id',verifyUser, getDependency);
+router.post('/v1/api/managemail/dependency/create', createDependency);
+router.put('/v1/api/managemail/dependency/update/:id',verifyUser, updateDependency); 
+router.delete('/v1/api/managemail/dependency/delete/:ids',verifyUser, deleteDependency);
 
 
 export default router;

@@ -4,11 +4,11 @@ import { recoveryPassword } from '../controllers/sendMailControllers.js'
 import { resetPassword } from "../controllers/userController.js";
 const router = express.Router();
 
-router.get('/me', Me);
-router.post('/login', Login);
-router.delete('/logout', logOut);
-router.post('/send_recovery_email', recoveryPassword);
-router.put('/user/reset-password/:id', resetPassword);
+router.get('/v1/api/managemail/me', Me);
+router.post('/v1/api/managemail/login', Login);
+router.delete('/v1/api/managemail/logout', logOut);
+router.post('/v1/api/managemail/send_recovery_email', recoveryPassword);
+router.put('/v1/api/managemail/user/reset-password/:id', resetPassword);
 
 
 export default router;

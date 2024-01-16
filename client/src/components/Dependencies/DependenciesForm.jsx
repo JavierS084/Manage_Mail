@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
+import { IconArrowBackUpDouble } from "@tabler/icons-react";
 import { useDependencies } from "../../context/DependenciesContext";
 
-function DependenciesForm() {
+export function DependenciesForm() {
   const { crDp, upDp, getDp } = useDependencies();
+  const navigate = useNavigate();
   const params = useParams();
- 
 
   const [dependency, setDependency] = useState({
     dependencia: "",
@@ -22,15 +23,12 @@ function DependenciesForm() {
       }
     };
     load_Dependencies();
-  }, []);
+  }, [params, getDp]);
 
-
- // console.log(dependency)
-  const clearInput  = () => {
-
+  const clearInput = (resetForm) => {
     const timer = setTimeout(() => {
-      setDependency([])
-      
+      setDependency({ dependencia: "" });
+      resetForm();
     }, 300);
     return () => clearTimeout(timer);
   };
@@ -42,25 +40,23 @@ function DependenciesForm() {
         enableReinitialize={true}
         validate={(values) => {
           let errores = {};
-
-          if (!values.dependencia) {
-            errores.dependencia = "Por favor ingrese una dependencia";
-          } else if (
-            !/^.{2}[A-z Á-ź\D\s\s\s\s\s\s]+$/.test(values.dependencia)
-          ) {
-            errores.dependencia = "Por favor ingrese un Dependencia Valida";
+          if (values) {
+            if (!values.dependencia) {
+              errores.dependencia = "Por favor ingrese una dependencia";
+            } else if (!/^.{1}[\w\s][^\d]+$/.test(values.dependencia)) {
+              errores.dependencia = "Por favor ingrese una Dependencia Valida";
+            }
           }
+
           return errores;
         }}
         onSubmit={async (values) => {
           if (params.id) {
             await upDp(params.id, values);
-
-            
           } else {
             await crDp(values);
-       
           }
+
           setDependency({
             dependencia: "",
           });
@@ -74,16 +70,26 @@ function DependenciesForm() {
           errors,
           touched,
           handleBlur,
+          resetForm,
         }) => (
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
               <div className="form-group col-md-6 p-4">
+                {params.id ? (
+                  <p>
+                    <button onClick={() => navigate("/dependencies")} className="btn btn-close-white">
+                      <IconArrowBackUpDouble size={24} /> Volver
+                    </button>
+                    <h2 className="row justify-content-center">
+                      Editar Dependencia
+                    </h2>
+                  </p>
+                ) : (
+                  <h2>Crear Nueva Dependencia</h2>
+                )}
 
-                <h2>Crear una Nueva Dependencia</h2>
                 <fieldset>
-                  <label className="form-label mt-4" id="readOnlyInput">
-                    Nueva dependencia
-                  </label>
+                  <label className="form-label mt-4" id="readOnlyInput"></label>
                   <input
                     type="text"
                     placeholder="Inserte aqui la nueva dependencia..."
@@ -92,6 +98,7 @@ function DependenciesForm() {
                     value={values.dependencia}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    required
                     className="form-control"
                   />
                   {touched.dependencia && errors.dependencia && (
@@ -104,7 +111,7 @@ function DependenciesForm() {
                     className="btn btn-success"
                     type="submit"
                     disabled={isSubmitting}
-                    onClick={clearInput}
+                    onClick={() => clearInput(resetForm)}
                   >
                     {isSubmitting ? "Guardando..." : "Guardar y Continuar"}
                   </button>

@@ -1,8 +1,7 @@
 import { useContext, createContext, useState } from "react";
 import {
   getAllMails,
-  getMailUser,
-  getMail,
+  getMailDetail,
   createMail,
   updateMail,
   deleteMail,
@@ -22,59 +21,61 @@ export const useMails = () => {
 export const MailsProvider = ({ children }) => {
   const [mails, setMails] = useState([]);
   const [mailsExpired, setMailsExpired] = useState([]);
-  const [gp, setGp] = useState(false);
+  const [msgError, setMsgError] = useState("");
   const [msg, setMsg] = useState("");
 
   async function loadMails() {
     const response = await getAllMails();
-    setMails(response.data.data);
+    setMails(response.data);
+    setMsg("");
   }
 
   async function loadMailsExpired() {
     const response = await getAllMailsExpired();
     setMailsExpired(response.data.data);
-    console.log(response.data.data)
+    setMsg("");
   }
-
+  /*
   async function loadMailUser() {
     const response = await getMailUser();
     setMails(response.data.data);
-  }
-
-  const gtMail = async (id) => {
+  }*/
+  const gtMailDetail = async (id) => {
     try {
-      const response = await getMail(id);
-      return response.data;
+      const response = await getMailDetail(id);
+      setMsg(response.data.msg);
+      setMsgError("");
+      return response.data.data;
     } catch (error) {
-      console.error(error);
+      setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
 
   const crMail = async (mail) => {
     try {
       const response = await createMail(mail);
-      setMsg(response.data.msg);
       if (response.status === 201) {
-        setGp(true);
-      } else {
-        setGp(false);
+        setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
-      console.error(error);
-      setMsg(error.response.data.msg);
+      //console.error(error);
+      setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
   const upMail = async (id, newFields) => {
     try {
       const response = await updateMail(id, newFields);
-      setMsg(response.data.msg);
+
       if (response.status === 200) {
-        setGp(true);
-      } else {
-        setGp(false);
+        setMsg(response.data.msg);
+        setMsgError("");
       }
     } catch (error) {
-      setMsg(error.response.data.msg);
+      setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
 
@@ -83,26 +84,28 @@ export const MailsProvider = ({ children }) => {
       const response = await deleteMail(id);
       setMails(mails.filter((mail) => mail.id !== id));
       setMsg(response.data.msg);
-      console.log(response);
+      setMsgError("");
+      //console.log(response);
     } catch (error) {
-      console.error(error);
+      setMsgError(error.response.data.msg);
+      setMsg("");
     }
   };
 
   return (
     <contextMail.Provider
       value={{
-        gp,
         mails,
         msg,
         loadMails,
-        loadMailUser,
-        gtMail,
+        /* loadMailUser,*/
+        gtMailDetail,
         crMail,
         upMail,
         delMail,
         loadMailsExpired,
         mailsExpired,
+        msgError,
       }}
     >
       {children}

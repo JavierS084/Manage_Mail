@@ -93,7 +93,7 @@ export function GroupForm() {
         }) => (
           <Form onSubmit={handleSubmit}>
             <div className="row justify-content-center">
-              <div className="form-group col-md-9 p-4">
+              <div className="form-group col-md-6 p-4">
 
               <div className="d-flex flex-row">
                   {params.id ? (
@@ -187,7 +187,7 @@ export function GroupForm() {
                   </div>
                   <div className="form-group">
                     <button
-                      className="btn btn-warning"
+                      className="btn btn-success"
                       type="submit"
                       disabled={isSubmitting}
                       onClick={clearInput}

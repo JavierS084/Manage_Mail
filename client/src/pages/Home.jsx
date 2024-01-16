@@ -4,6 +4,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { Orbit } from "@uiball/loaders";
 import MailExpired from "../components/Home/MailExpired";
 import { useMails } from "../context";
+import Dashboard from "../components/Home/Dashboard";
 
 export function Home() {
   const { mailsExpired, loadMailsExpired } = useMails();
@@ -37,11 +38,7 @@ export function Home() {
             className="mb-3"
           >
             <Tab eventKey="listaUsers" title="Dashboard">
-              <div
-                className="tab-pane fade active show"
-                id="listaUsers"
-                role="tabpanel"
-              ></div>
+              <Dashboard/>
             </Tab>
             <Tab eventKey="mailexpired" title="Correos Expirados">
               <article>{renderlista()}</article>

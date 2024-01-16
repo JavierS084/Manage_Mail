@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DependenciesCard from "../components/Dependencies/DependenciesCard";
 import DependenciesForm from "../components/Dependencies/DependenciesForm";
 import { useDependencies } from "../context/DependenciesContext";
-import DependenciesSearch from "../components/Dependencies/DependenciesSearch";
+
 
 export function DependenciesPage() {
   const { dependencies, loadDependencies, msg, msgError } = useDependencies();
@@ -21,9 +21,9 @@ export function DependenciesPage() {
     const timer = setTimeout(() => {
       loadDependencies();
     }, 500);
-    
+    renderlista();
     return () => clearTimeout(timer);
-  }, [msg]);
+  }, [msg, msgError]);
 
 function renderlista() {
     if (!dependencies.length) {
@@ -65,15 +65,7 @@ function renderlista() {
                 {<DependenciesForm />}
               </div>
             </Tab>
-            <Tab eventKey="searchDependencia" title="Buscar Dependencia">
-              <div
-                className="tab-pane fade active show"
-                id="searchdependencias"
-                role="tabpanel"
-              >
-                {<DependenciesSearch />}
-              </div>
-            </Tab>
+         
           </Tabs>
         </div>
       </div>

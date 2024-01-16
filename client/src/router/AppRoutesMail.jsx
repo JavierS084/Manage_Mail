@@ -11,7 +11,7 @@ import {
   RequestsPage,
   GroupsPage,
   AdministrationsPage,
-  MailsPage
+  MailsPage,
 } from "../pages";
 import {
   AdministrationsProvider,
@@ -21,7 +21,7 @@ import {
   GroupsProvider,
   MailsProvider,
 } from "../context";
-import { AdministrationsForm } from "../components";
+import { AdministrationsForm, DependenciesForm } from "../components";
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -43,32 +43,30 @@ export default function AppRoutesMail() {
             <DependenciesProvider>
               <RequestsProvider>
                 <Navigation />
-               
-                  <Routes>
-                    <Route
-                      path="/administrations"
-                      element={<AdministrationsPage />}
-                    />
-                    <Route
-                      path="/mails"
-                      element={<MailsPage />}
-                    />
-                    <Route
-                      path="/administrations/edit/:uuid"
-                      element={<AdministrationsForm />}
-                    />
 
-                    <Route
-                      path="/dependencies"
-                      element={<DependenciesPage />}
-                    />
-                    <Route path="/groups" element={<GroupsPage />} />
-                    <Route path="/mail-types" element={<MailTypesPage />} />
-                    <Route path="/requests" element={<RequestsPage />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/*" element={<NotFound />} />
-                  </Routes>
-                
+                <Routes>
+                  <Route
+                    path="/administrations"
+                    element={<AdministrationsPage />}
+                  />
+                  <Route path="/mails" element={<MailsPage />} />
+                  <Route
+                    path="/administrations/edit/:uuid"
+                    element={<AdministrationsForm />}
+                  />
+
+                  <Route path="/dependencies" element={<DependenciesPage />} />
+                  <Route
+                    path="/dependency/edit/:id"
+                    element={<DependenciesForm/>}
+                  />
+
+                  <Route path="/groups" element={<GroupsPage />} />
+                  <Route path="/mail-types" element={<MailTypesPage />} />
+                  <Route path="/requests" element={<RequestsPage />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/*" element={<NotFound />} />
+                </Routes>
               </RequestsProvider>
             </DependenciesProvider>
           </MailTypesProvider>
