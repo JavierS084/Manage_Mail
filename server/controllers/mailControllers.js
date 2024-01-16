@@ -32,7 +32,6 @@ const cacheAndRespond = async (key, response, res) => {
 export const getAllMails = async (req, res) => {
     try {
 
-
         const response = await Mail.findAll({
             attributes: [
                 'id',
@@ -94,6 +93,7 @@ export const getMailDetail = async (req, res) => {
                 'solicitante',
                 'observation',
                 'state',
+               /*  [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%d-%m-%Y'), 'createdAt'], */
                 [Sequelize.fn('date_format', Sequelize.col('dateSolicitud'), '%d-%m-%Y'), 'dateSolicitud'],
                 [Sequelize.fn('date_format', Sequelize.col('dateInicial'), '%d-%m-%Y'), 'dateInicial'],
                 [Sequelize.fn('date_format', Sequelize.col('dateFinal'), '%d-%m-%Y'), 'dateFinal'],

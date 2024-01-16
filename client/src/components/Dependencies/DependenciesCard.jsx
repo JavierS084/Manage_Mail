@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Pagination from "react-bootstrap/Pagination";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Pagination } from "react-bootstrap";
 import { IconArrowsMoveVertical } from "@tabler/icons-react";
-//import Modal from "react-bootstrap";
 import { useDependencies } from "../../context/DependenciesContext";
 
 export default function DependenciesCard({ dependencies }) {
@@ -156,8 +154,8 @@ export default function DependenciesCard({ dependencies }) {
               <thead>
                 <tr>
                   <th scope="col">Accion</th>
-                  <th scope="col">ID</th>
-                  <th scope="col" onClick={() => Orden("id")}>
+                  <th scope="col" onClick={() => Orden("id")}>ID<IconArrowsMoveVertical size={16} color="gray" /></th>
+                  <th scope="col" onClick={() => Orden("dependencia")}>
                     Dependencia
                     <IconArrowsMoveVertical size={16} color="gray" />
                   </th>

@@ -11,7 +11,7 @@ import { useGroups } from "../../context/GroupsContext";
 import { useDependencies } from "../../context/DependenciesContext";
 
 function MailForm() {
-  const { mails, crMail, } = useMails();
+  const { mails, crMail } = useMails();
 
   const { requests, loadRequests } = useRequests();
   const { mailTypes, loadTypes } = useMailTypes();
@@ -111,13 +111,25 @@ function MailForm() {
 
   useEffect(() => {
     updateProps();
-  }, [user, dateFinal, dateSolicitud, dateInicial]);
+  }, [user, dateFinal, dateSolicitud, dateInicial, observation, state]);
 
   const clearInput = () => {
     const timer = setTimeout(() => {
-      setMail([]);
- 
-    }, 100);
+      setMail({
+        user: "",
+        solicitante: "",
+        state: "",
+        observation: "",
+        dateInicial: "",
+        dateFinal: "",
+        dateSolicitud: "",
+        mailTypeId: "",
+        groupId: "",
+        dependencyId: "",
+        requestId: "",
+      });
+      updateProps()
+    }, 300);
     return () => clearTimeout(timer);
   };
 
@@ -169,9 +181,8 @@ function MailForm() {
             }
             return errores;
           }}
-          onSubmit={async (values, actions) => {
+          onSubmit={async (values) => {
             await crMail(values);
-            clearInput();
             setMail({
               user: "",
               solicitante: "",
@@ -194,6 +205,7 @@ function MailForm() {
             touched,
             handleSubmit,
             handleBlur,
+            resetForm,
           }) => (
             <Form onSubmit={handleSubmit}>
               <div className="justify-content-center">
@@ -472,7 +484,10 @@ function MailForm() {
                       type="submit"
                       disabled={isSubmitting}
                       onChange={handleChange}
-                      onClick={updateProps}
+                      onClick={() => {
+                        updateProps;
+                        clearInput(resetForm);
+                      }}
                     >
                       {isSubmitting ? "Guardando..." : "Guardar y Continuar"}
                     </button>

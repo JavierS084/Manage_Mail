@@ -19,6 +19,7 @@ export function MailDetail({ idDetail }) {
     groupId: "",
     dependencyId: "",
     requestId: "",
+    
   });
 
   const {
@@ -33,6 +34,7 @@ export function MailDetail({ idDetail }) {
     groupId,
     dependencyId,
     requestId,
+
   } = mailDetail;
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export function MailDetail({ idDetail }) {
           groupId: MailDetail.group.description,
           dependencyId: MailDetail.dependency.dependencia,
           requestId: MailDetail.request.solicitud,
+          
         });
       }
     };
@@ -109,6 +112,7 @@ export function MailDetail({ idDetail }) {
             <p className="col-8 pt-2 ">Sin fecha de finalización</p>
           )}
         </div>
+     
 
         <div className="form-group d-flex align-items-center p-2">
           <label className="form-label mx-2">Observación:</label>

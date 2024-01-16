@@ -49,7 +49,6 @@ export const MailsProvider = ({ children }) => {
     } catch (error) {
       setMsgError(error.response.data.msg);
       setMsg("");
-  
     }
   };
 

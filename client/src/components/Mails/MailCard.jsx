@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-
+import { Button, Modal, Pagination } from "react-bootstrap";
+import { IconArrowsMoveVertical } from "@tabler/icons-react";
 import { useMails } from "../../context";
 import MailDetail from "./MailDetail";
 
@@ -10,15 +9,38 @@ export function MailCard({ mails }) {
   const navigate = useNavigate();
 
   const { delMail, setMails } = useMails();
-  const [accion, setAccion] = useState(false);
+  const [accion, setAccion] = useState(false); //accion de eliminar
   const [accionEdit, setAccionEdit] = useState(false); //estado de boton editar
 
+/**Input de fila seleccionada */
   const [select, setSelect] = useState([]);
-  const [ordenAscendente, setOrdenAscendente] = useState(true);
-  const [filteredData, setFilteredData] = useState(mails);
-  const [wordEntered, setWordEntered] = useState("");
   const [idDetail, setIdDetail] = useState(null);
 
+  const [ordenAscendente, setOrdenAscendente] = useState(true);
+  /**Buscador */
+  const [filteredData, setFilteredData] = useState(mails);
+  const [wordEntered, setWordEntered] = useState("");
+/**Paginaction */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // Esto calcula los elementos que se deben mostrar en la página actual
+   const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem); //calcula a traves del filtrado de datos
+
+  /**Modal de eliminacion */
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  /**Modal de detalle */
+
+  const [showDetail, setShowDetail] = useState(false);
+  const handleCloseDetail = () => setShowDetail(false);
+  const handleShowDetail = () => {
+    setShowDetail(true);
+  };
+/**Obtencion de fecha actual */
   let date = new Date();
   let output =
     String(date.getDate()).padStart(2, "0") +
@@ -27,15 +49,7 @@ export function MailCard({ mails }) {
     "-" +
     date.getFullYear();
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  const [showDetail, setShowDetail] = useState(false);
-  const handleCloseDetail = () => setShowDetail(false);
-  const handleShowDetail = () => {
-    setShowDetail(true);
-  };
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
@@ -70,6 +84,12 @@ export function MailCard({ mails }) {
 
     return () => clearTimeout(timer);
   }, [select]); //se refrezca por cada actualizacion
+
+  useEffect(() => {
+    setFilteredData(mails);
+    setWordEntered("");
+  }, [mails]);
+
 
   //Obtiene el id del correo para el componente de mailDetail
   const handleClick = (event) => {
@@ -107,6 +127,20 @@ export function MailCard({ mails }) {
     setMails(datosOrdenados);
     setOrdenAscendente(!ordenAscendente);
   }
+
+
+  // Manejar cambio de página
+  const handlePageChange = (event, pageNumber) => {
+    event.preventDefault();
+    setCurrentPage(pageNumber);
+  };
+
+  //Generar la cantidad de paginas
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredData.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
 
   return (
     <div className="row">
@@ -150,7 +184,7 @@ export function MailCard({ mails }) {
                   <th scope="col"></th>
                   <th scope="col">ID</th>
                   <th scope="col" onClick={() => Orden("id")}>
-                    Correo
+                    Correo<IconArrowsMoveVertical size={16} color="gray" />
                   </th>
                   <th className="col">Dependencia</th>
                   <th className="col">Solicitud</th>
@@ -160,7 +194,7 @@ export function MailCard({ mails }) {
               </thead>
 
               <tbody>
-                {filteredData.slice(0, 15).map((mail) => {
+                {currentItems.map((mail) => {
                   return (
                     <tr scope="row" key={mail.id}>
                       <td>
@@ -201,6 +235,41 @@ export function MailCard({ mails }) {
                   );
                 })}
               </tbody>
+              <nav>
+                <ul className="pagination">
+                  <select
+                    className="selectPage"
+                    name="selectPage"
+                    onChange={(event) =>
+                      setItemsPerPage(parseInt(event.target.value))
+                    }
+                  >
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+
+                  <Pagination>
+                    <Pagination.First
+                      onClick={(event) => handlePageChange(event, 1)}
+                    />
+                    {pageNumbers.map((number) => (
+                      <Pagination.Item
+                        key={number}
+                        active={number === currentPage}
+                        onClick={(event) => handlePageChange(event, number)}
+                      >
+                        {number}
+                      </Pagination.Item>
+                    ))}
+                    <Pagination.Last
+                      onClick={(event) =>
+                        handlePageChange(event, pageNumbers.length)
+                      }
+                    />
+                  </Pagination>
+                </ul>
+              </nav>
             </table>
           )}
 

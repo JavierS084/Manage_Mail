@@ -1,12 +1,12 @@
 import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Orbit } from "@uiball/loaders";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import "react-toastify/dist/ReactToastify.css";
 import MailForm from "../components/Mails/MailForm";
 import MailCard from "../components/Mails/MailCard";
 import { useMails } from "../context/MailsContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Orbit } from "@uiball/loaders";
 
 export function MailsPage() {
   const { mails, loadMails, msg, msgError } = useMails();
@@ -20,7 +20,7 @@ export function MailsPage() {
     const timer = setTimeout(() => {
       loadMails();
     }, 500);
-
+    renderlista();
     return () => clearTimeout(timer);
   }, [msg, msgError]);
 
