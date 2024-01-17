@@ -1,5 +1,5 @@
 import  { Router } from 'express';
-import { getAllRequests, getRequest, createRequest, updateRequest, deleteRequest} from '../controllers/v1/api/managemail/requestControllers.js';
+import { getAllRequests, getRequest, createRequest, updateRequest, deleteRequest} from '../controllers/requestControllers.js';
 import { verifyUser } from "../middlewares/authUser.js";
 const router = Router();
 

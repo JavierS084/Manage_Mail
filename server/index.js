@@ -45,7 +45,6 @@ app.use(cors({
     credentials: true,
     origin: `http://${process.env.HOSTNAME}:5173`,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    origin: true,
 }));
 
 
