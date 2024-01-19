@@ -10,8 +10,8 @@ import { useMailTypes } from "../../context/MailTypesContext";
 import { useGroups } from "../../context/GroupsContext";
 import { useDependencies } from "../../context/DependenciesContext";
 
-function MailForm() {
-  const { mails, crMail } = useMails();
+export function MailForm() {
+  const { mails, crMail, gtMailDetail } = useMails();
 
   const { requests, loadRequests } = useRequests();
   const { mailTypes, loadTypes } = useMailTypes();
@@ -110,6 +110,18 @@ function MailForm() {
   };
 
   useEffect(() => {
+    const loadmail = async () => {
+      if (params && params.id) {
+        const mail = await gtMailDetail(params.id);
+        setUser(mail.user);
+        setState(mail.state);
+        setObservation(mail.observation);
+        //console.log( mail.mailType.id )
+        setTypeOption({ mailTypeId: mail.mailType.id });
+        setDependenciesOption({ dependencyId: mail.dependency.id})
+      }
+    };
+    loadmail();
     updateProps();
   }, [user, dateFinal, dateSolicitud, dateInicial, observation, state]);
 
@@ -128,7 +140,7 @@ function MailForm() {
         dependencyId: "",
         requestId: "",
       });
-      updateProps()
+      //updateProps()
     }, 300);
     return () => clearTimeout(timer);
   };
@@ -226,7 +238,7 @@ function MailForm() {
                     )}
                     <div className="col-md-8 flex-column  d-flex">
                       <h2>
-                        {params.uuid
+                        {params.id
                           ? "Editar Usuario"
                           : "Registrar un nuevo correo"}
                       </h2>
@@ -306,6 +318,9 @@ function MailForm() {
                         placeholder="Seleccione una opción..."
                         isSearchable
                         required
+                        value={mailTypesList.find(
+                          (item) => item.mailTypeId === mail.mailTypeId
+                        )}
                       />
                       <small className="form-text text-danger">
                         {touched.typeOption && errors.typeOption && (
@@ -335,6 +350,9 @@ function MailForm() {
                         placeholder="Seleccione una opción..."
                         isSearchable
                         required
+                        value={typeRequestList.find(
+                          (item) => item.requestId === mail.requestId
+                        )}
                       />
                       <small className="form-text text-danger">
                         {touched.requestOption && errors.requestOption && (
@@ -364,6 +382,9 @@ function MailForm() {
                         placeholder="Seleccione una opción..."
                         isSearchable
                         required
+                        value={dependenciesList.find(
+                          (item) => item.dependencyId === mail.dependencyId
+                        )}
                       />
                       {touched.dependenciesOption &&
                         errors.dependenciesOption && (
@@ -485,8 +506,10 @@ function MailForm() {
                       disabled={isSubmitting}
                       onChange={handleChange}
                       onClick={() => {
-                        updateProps;
-                        clearInput(resetForm);
+                        updateProps();
+                        resetForm();
+                        clearInput();
+                        
                       }}
                     >
                       {isSubmitting ? "Guardando..." : "Guardar y Continuar"}

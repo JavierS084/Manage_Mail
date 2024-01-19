@@ -49,8 +49,8 @@ export function MailDetail({ idDetail }) {
           dateSolicitud: MailDetail.dateSolicitud,
           state: MailDetail.state,
           observation: MailDetail.observation,
-          mailTypeId: MailDetail.mailType.tipo,
-          groupId: MailDetail.group.description,
+          mailTypeId: MailDetail.mailType.tipo ,
+          groupId: MailDetail.group ? MailDetail.group.description : "" ,
           dependencyId: MailDetail.dependency.dependencia,
           requestId: MailDetail.request.solicitud,
           
@@ -94,7 +94,14 @@ export function MailDetail({ idDetail }) {
         </div>
         <div className="form-group d-flex align-items-center p-2">
           <label className="form-label mx-2">Grupo:</label>
-          <p className="col-8 pt-2 ">{groupId}</p>
+          {
+            groupId ? (
+
+              <p className="col-8 pt-2 ">{groupId}</p>
+            ):(
+              <p className="col-8 pt-2 ">No pertenece a ningun grupo</p>
+            )
+          }
         </div>
         <div className="form-group d-flex align-items-center p-2">
           <label className="form-label mx-2">Fecha de Solicitud:</label>

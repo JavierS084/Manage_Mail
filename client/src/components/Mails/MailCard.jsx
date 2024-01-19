@@ -161,7 +161,7 @@ export function MailCard({ mails }) {
               type="button"
               className="btn btn-warning m-1 px-4 col-1"
               disabled={!accionEdit}
-              onClick={() => navigate(`/dependencies/edit/${select}`)}
+              onClick={() => navigate(`/mail/edit/${select}`)}
             >
               Editar
             </button>

@@ -121,7 +121,7 @@ export const getMailDetail = async (req, res) => {
                     model: Group,
                     attributes: ['id', 'email', 'description'],
                     required: false,
-                }
+                },
             ]
         });
         /*const keyArray = [req.params.id]; // Puedes usar cualquier otro valor del arreglo según sea necesario

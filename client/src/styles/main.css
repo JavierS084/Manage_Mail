@@ -67,7 +67,7 @@ select.selectPage {
 }
 
 .tdSelect:hover{
-  color: blue;
+  color: rgb(72, 72, 252);
   transform: scale(1.1);
   cursor: pointer;
   -webkit-transform: scale(1.1);

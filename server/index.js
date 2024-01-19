@@ -22,10 +22,10 @@ const store = new sessionStore({
     db: db
 });
 
-/* shift + A + ALT */
- (async () => {
+/* shift + ALT+ A */
+ /* (async () => {
      await db.sync();
- })();
+ })(); */
 
 app.use(session({
     secret: process.env.SESS_SECRET,

@@ -21,7 +21,7 @@ import {
   GroupsProvider,
   MailsProvider,
 } from "../context";
-import { AdministrationsForm, DependenciesForm } from "../components";
+import { AdministrationsForm, DependenciesForm, MailForm } from "../components";
 
 export default function AppRoutesMail() {
   const dispatch = useDispatch();
@@ -50,6 +50,10 @@ export default function AppRoutesMail() {
                     element={<AdministrationsPage />}
                   />
                   <Route path="/mails" element={<MailsPage />} />
+                  <Route
+                    path="/mail/edit/:id"
+                    element={<MailForm/>}
+                  />
                   <Route
                     path="/administrations/edit/:uuid"
                     element={<AdministrationsForm />}
